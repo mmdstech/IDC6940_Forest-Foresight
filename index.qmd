@@ -18,8 +18,12 @@ editor:
     wrap: 72
 ---
 
-Slides: [slides.html](slides.html){target="_blank"} ( Go to `slides.qmd`
+Slides: [Slides](slides.html){target="_blank"} ( Go to `slides.qmd`
 to edit)
+
+Journal Summaries: [Summaries](summaries.html){target="_blank"}
+
+Literature Review: [Literature Review](litReview.html){target="_blank"}
 
 ::: callout-important
 **Remember:** Your goal is to make your audience understand and care
