@@ -161,7 +161,6 @@ ggplot1 = murders %>% ggplot(mapping = aes(x=population/10^6, y=total))
 
 
 
-
 ```{r, echo=FALSE, results='hide'}
 # List of qmd files to render
 files <- c("slides.qmd", "summaries.qmd", "litReview.qmd")
