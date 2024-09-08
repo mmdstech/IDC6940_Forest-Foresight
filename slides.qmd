@@ -2,7 +2,7 @@
 title: "Present a great story for data science projects"
 subtitle: "This is a Slide Template"
 author: "Matt McGehee (Advisor: Dr. Seals)"
-date: '`r Sys.Date()`'
+date: last-modified
 format:
   revealjs
 course: Capstone Projects in Data Science

@@ -2,7 +2,7 @@
 title: "Journal Summaries"
 subtitle: "This is a Summaries Template"
 author: "Matt McGehee (Advisor: Dr. Seals)"
-date: '`r Sys.Date()`'
+date: last-modified
 format:
   html:
     code-fold: true

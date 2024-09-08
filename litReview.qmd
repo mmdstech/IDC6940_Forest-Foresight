@@ -2,7 +2,7 @@
 title: "Literature Review"
 subtitle: "This is a Lit Review Template"
 author: "Matt McGehee (Advisor: Dr. Seals)"
-date: '`r Sys.Date()`'
+date: last-modified
 format:
   html:
     code-fold: true

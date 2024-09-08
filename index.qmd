@@ -2,7 +2,7 @@
 title: "Writing a great story for data science projects"
 subtitle: "This is a Report Template"
 author: "Matt McGehee (Advisor: Dr. Seals)"
-date: '`r Sys.Date()`'
+date: last-modified
 format:
   html:
     code-fold: true
