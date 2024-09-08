@@ -3,6 +3,7 @@ title: "Present a great story for data science projects"
 subtitle: "This is a Slide Template"
 author: "Matt McGehee (Advisor: Dr. Seals)"
 date: last-modified
+date-format: long
 format:
   revealjs
 course: Capstone Projects in Data Science

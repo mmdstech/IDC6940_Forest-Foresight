@@ -3,6 +3,7 @@ title: "Journal Summaries"
 subtitle: "This is a Summaries Template"
 author: "Matt McGehee (Advisor: Dr. Seals)"
 date: last-modified
+date-format: long
 format:
   html:
     code-fold: true

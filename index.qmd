@@ -3,13 +3,15 @@ title: "Writing a great story for data science projects"
 subtitle: "This is a Report Template"
 author: "Matt McGehee (Advisor: Dr. Seals)"
 date: last-modified
+date-format: long
 format:
   html:
     code-fold: true
+    embed-resources: true
+    self-contained-math: true
 course: Capstone Projects in Data Science
 bibliography: references.bib # file contains bibtex for references
 #always_allow_html: true # this allows to get PDF with HTML features
-self-contained: true
 execute: 
   warning: false
   message: false
@@ -17,6 +19,17 @@ editor:
   markdown: 
     wrap: 72
 ---
+
+```{r, echo=FALSE, results='hide'}
+# List of qmd files to render
+files <- c("slides.qmd", "summaries.qmd", "litReview.qmd")
+
+# Loop through each file and render it
+for (file in files) {
+  quarto::quarto_render(file)
+}
+
+```
 
 Slides: [Slides](slides.html){target="_blank"} ( Go to `slides.qmd`
 to edit)
