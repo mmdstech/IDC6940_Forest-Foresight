@@ -1,6 +1,6 @@
 ---
 title: "Journal Summaries"
-subtitle: "This is a Summaries Template"
+subtitle: "Summaries from 6 different journal articles"
 author: "Matt McGehee (Advisor: Dr. Seals)"
 date: last-modified
 date-format: long
@@ -19,20 +19,28 @@ editor:
     wrap: 72
 ---
 
-# Summaries
+# Articles and Their Summaries
 
-## 1. Blah
+## 1. A Comparison of Random Forest Based Algorithms: Random Credal Random Forest versus Oblique Random Forest
 
-Testing
+The study compares Random Credal Random Forest and Oblique Random Forest models to distinguish if one model performs better than the other when applied to noisy data sets in particular. Both algorithms use bagging and feature randomness in the trees.  However, the Random Credal Random Forest also modifies the output data using credal sets, or a range of possibilities.  Applying probability ranges made the RCRF model more robust, improving accuracy and computational efficiency.
 
-## 2. Blarg
+## 2. An Empirical Study of Learning from Imbalanced Data Using Random Forest
 
-123
+The article attempts to create an empirical analysis of the Random Forest classifier's performance.  The emphasis is on the number of trees in the ensemble and the number of attributes randomly selected at each node of the trees.  The AUC, or Area Under the ROC Curve, was used to measure the classifier's ability to distinguish between the major and minority classes.
 
-## 3. Foo
+## 3. A Random Forest Guided Tour
 
 Foo
 
-## 4. Bar
+## 4. Predicting Customer Retention and Profitability by Using Random Forests and Regression Forests Techniques
 
 Bar
+
+## 5. Identification of Core Suppliers Based on E-Invoice Data Using Supervised Machine Learning
+
+dd
+
+## 6. Benefit Segmentation of Online Customer Reviews Using Random Forest
+
+adf
