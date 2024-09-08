@@ -20,17 +20,6 @@ editor:
     wrap: 72
 ---
 
-```{r, echo=FALSE, results='hide'}
-# List of qmd files to render
-files <- c("slides.qmd", "summaries.qmd", "litReview.qmd")
-
-# Loop through each file and render it
-for (file in files) {
-  quarto::quarto_render(file)
-}
-
-```
-
 Slides: [Slides](slides.html){target="_blank"} ( Go to `slides.qmd`
 to edit)
 
@@ -166,3 +155,20 @@ ggplot1 = murders %>% ggplot(mapping = aes(x=population/10^6, y=total))
 -   Discuss the implications of your results.
 
 ## References
+
+
+
+
+
+
+
+```{r, echo=FALSE, results='hide'}
+# List of qmd files to render
+files <- c("slides.qmd", "summaries.qmd", "litReview.qmd")
+
+# Loop through each file and render it
+for (file in files) {
+  quarto::quarto_render(file)
+}
+
+```
