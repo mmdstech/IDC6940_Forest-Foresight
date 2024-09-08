@@ -17,7 +17,6 @@ editor:
   markdown: 
     wrap: 72
 ---
-testing 123
 
 Slides: [Slides](slides.html){target="_blank"} ( Go to `slides.qmd`
 to edit)
