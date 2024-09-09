@@ -29,11 +29,21 @@ The study compares Random Credal Random Forest and Oblique Random Forest models 
 
 “Key properties of the Random Forest method include using the bagging technique for the decision tree instances and then using random sets of features in each node.”
 
+Mantas, C. J., Castellano, J. G., Moral-García, S., & Abellán, J. (2019). 
+  A comparison of random forest based algorithms: Random credal random forest versus oblique random forest. 
+  Soft Computing, 23(21), 10739-10754. 
+  doi:https://doi.org/10.1007/s00500-018-3628-5
+
 ## 2. An Empirical Study of Learning from Imbalanced Data Using Random Forest
 
 The article attempts to create an empirical analysis of the Random Forest classifier's performance.  The emphasis is on the number of trees in the ensemble and the number of attributes randomly selected at each node of the trees.  The AUC, or Area Under the ROC Curve, was used to measure the classifier's ability to distinguish between the major and minority classes.
 
 “Statistical analysis using Analysis of Variance (ANOVA) models are used to determine reasonable default values for the numTrees and numFeatures parameters for all 10 datasets. In addition, we conduct experimentation to benchmark the RF learner (with the recommended numTrees and numFeatures values) with six different learners commonly-used in data mining and machine learning research. By varying the parameters numTrees and numFeatures, this work is the first to compare the RF learner's performance on imbalanced data and recommend a default setting for each of the parameters.”
+
+Khoshgoftaar, T. M., Golawala, M., & Van Hulse, J. (2007). 
+  An Empirical Study of Learning from Imbalanced Data Using Random Forest. 
+  19th IEEE International Conference on Tools with Artificial Intelligence(ICTAI 2007), 2, 310–317. 
+  https://doi.org/10.1109/ICTAI.2007.46
 
 ## 3. A Random Forest Guided Tour
 
@@ -51,6 +61,11 @@ The article's goal is an overall review of the Random Forest algorithm.  Random 
 
 “The Random Forest method is widely used for its performance, despite the underlying mathematical complexities.”
 
+Biau, G., & Scornet, E. (2016). 
+  A random forest guided tour. 
+  Test, 25(2), 197–227. 
+  https://doi.org/10.1007/s11749-016-0481-7
+
 ## 4. Predicting Customer Retention and Profitability by Using Random Forests and Regression Forests Techniques
 
 The study aims to examine "next buy", "partial defection", and "profitability evolution" for predicting customer outcomes.  Basically, whether the customer will purchase a new product, cancel an active product, and the customer's profitability over time.  The goal is to use RF to reduce costs associated with acquiring new customers. The sample data was mined from a European financial services company. Area Under the ROC Curve was used to evaluate the "next buy" and "partial defection" classifications, while the Mean Absolute Deviation was used to evaluate the "profitability evolution".  RF handled the profit drop classification better than logistic regression.  The most influential variables were total product ownership, cross-buying, and monetary value.  Interestingly, older customers were more likely to repurchase and less likely to defect.  A major point of the study was that salespeople played a critical role in the customer outcomes.
@@ -59,10 +74,29 @@ The study aims to examine "next buy", "partial defection", and "profitability ev
 
 “By incorporating intermediary variables, we observed that the sales agent’s behavior plays a critical role in predicting customer retention.”
 
+Larivière, B., & Van den Poel, D. (2005). 
+  Predicting customer retention and profitability by using random forests and regression forests techniques. 
+  Expert Systems with Applications, 29(2), 472–484. 
+  https://doi.org/10.1016/j.eswa.2005.04.043
+
 ## 5. Identification of Core Suppliers Based on E-Invoice Data Using Supervised Machine Learning
 
-dd
+The purpose of the study was to identify core suppliers with significant impact on the buyer's profitability. And, more importantly perhaps, to streamline the analysis using data samples instead of subjective, time-consuming evaluations. Data was collected using E-invoice data corresponding to suppliers and buyers. The RF model was trained on 70/30 split, and cross-validation was used to evaluate model performance.  The AUC for out-of-bag data was 89.58%, showcasing the predictive power of the RF model.The article was an example of how RF can assist in evaluating supplier segmentation.
+
+“Using e-invoice data for supplier segmentation not only automates the process but also provides more reliable segmentation results, reducing human bias.”
+
+Hong, J., Yeo, H., Cho, N. W., & Ahn, T. (2018). 
+  Identification of core suppliers based on e-invoice data using supervised machine learning. 
+  Journal of Risk and Financial Management, 11(4), 1–13. 
+  https://doi.org/10.3390/jrfm11040070
 
 ## 6. Benefit Segmentation of Online Customer Reviews Using Random Forest
 
-adf
+The study examined customers reviews from Japan's largest hotel reservation website. First, topics were extracted from the review data using Non-Negative Matrix Factorization.  Second, RF was used to learn how different topics from the first step influenced to the classification of customer reviews into separate "benefit" categories.  Third, the outcomes were displayed in nice visuals to highlight the key factors that influenced the categories. The model in the study had 81% precision.  The article was an example of how RF can assist in evaluating benefit segmentation.
+
+“Benefit segmentation based on customer reviews offers a more nuanced understanding of customer needs, which can inform product and service development.”
+
+Torizuka, K., Oi, H., Saitoh, F., & Ishizu, S. (2018). 
+  Benefit Segmentation of Online Customer Reviews Using Random Forest. 
+  2018 IEEE International Conference on Industrial Engineering and Engineering Management (IEEM), 487–491. 
+  https://doi.org/10.1109/IEEM.2018.8607697
