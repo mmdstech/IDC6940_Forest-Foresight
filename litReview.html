@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Matt McGehee (Advisor: Dr. Seals)">
-<meta name="dcterms.date" content="2024-09-08">
+<meta name="dcterms.date" content="2024-09-14">
 
 <title>Literature Review</title>
 <style>
@@ -21,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
-</style>
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}</style>
 
 
 <script>/*!
@@ -3044,7 +3064,7 @@ vertical-align: -.125em;
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Literature Review</h1>
-<p class="subtitle lead">This is a Lit Review Template</p>
+<p class="subtitle lead">This is a Lit Review from Summaries</p>
 </div>
 
 
@@ -3061,7 +3081,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 8, 2024</p>
+      <p class="date">September 14, 2024</p>
     </div>
   </div>
   
@@ -3073,27 +3093,48 @@ vertical-align: -.125em;
 </header>
 
 
-<section id="summaries" class="level1">
-<h1>Summaries</h1>
-<section id="blah" class="level2">
-<h2 class="anchored" data-anchor-id="blah">1. Blah</h2>
-<p>Testing</p>
+<section id="applications-of-random-forests-in-machine-learning-and-segmentation" class="level1">
+<h1>Applications of Random Forests in Machine Learning and Segmentation</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Machine learning, and specifically the Random Forest (RF) algorithm, has become a highly valuable tool in various domains, from customer and supplier segmentation to predicting outcomes in complex datasets. Random Forest’s robustness, accuracy, and ability to handle both classification and regression tasks make it ideal for data that contain noise, uncertainty, or complex relationships between variables.</p>
+<p>This report synthesizes findings from six research articles, focusing on different aspects of machine learning applications using Random Forest. These include handling imbalanced data, supplier and customer segmentation, predicting customer retention, and leveraging online reviews for benefit segmentation. Each article emphasizes the flexibility and power of Random Forest in solving diverse problems across industries.</p>
 </section>
-<section id="blarg" class="level2">
-<h2 class="anchored" data-anchor-id="blarg">2. Blarg</h2>
-<p>123</p>
+<section id="summary-of-articles" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-articles">Summary of Articles</h2>
+<p>The first article I reviewed compares two Random Forest-based algorithms: Random Credal Random Forest (RCRF) and Oblique Random Forest (oRF). Both models use bagging and feature randomness, but RCRF includes credal sets, which offer a range of probabilities, making the model more robust and accurate. This allows RCRF to handle noisy datasets better than oRF, while also improving computational efficiency. One limitation is the complexity of the credal set approach, which can add overhead to the model. <span class="citation" data-cites="Mantas2019-li">(<a href="#ref-Mantas2019-li" role="doc-biblioref">Mantas et al. 2019</a>)</span></p>
+<p>The second article explored how Random Forest (RF) performs on imbalanced datasets. The authors analyzed the effect of different tree numbers and feature selections on classification performance, using Area Under the ROC Curve (AUC) as the primary metric. RF outperformed several other models, including Naive Bayes and SVM, and provided recommendations on parameter settings for improving accuracy when handling imbalanced data. The findings emphasize RF’s capability to handle this challenging dataset type more effectively than most conventional methods. <span class="citation" data-cites="Khoshgoftaar2007-bo">(<a href="#ref-Khoshgoftaar2007-bo" role="doc-biblioref">Khoshgoftaar, Golawala, and Van Hulse 2007</a>)</span></p>
+<p>The third article gave an in-depth review of Random Forest (RF), discussing how it works for both classification and regression tasks. RF creates multiple decision trees using subsets of the data and applies bagging to reduce variance and improve prediction accuracy. The article highlights RF’s ability to work with high-dimensional data while being resilient to overfitting. However, it also notes the difficulty of analyzing the algorithm due to its complex nature. <span class="citation" data-cites="Biau2016-ac">(<a href="#ref-Biau2016-ac" role="doc-biblioref">Biau and Scornet 2016</a>)</span></p>
+<p>Next, I looked at a study that used Random Forest to predict customer retention and profitability. The goal was to assess “next buy,” “partial defection,” and “profitability evolution” for a European financial services company. RF outperformed logistic regression, particularly when predicting customer retention based on total product ownership and cross-buying habits. Additionally, the study highlighted the importance of salespeople’s behavior in influencing customer outcomes. One downside is that RF, while accurate, can be challenging to interpret for business users without technical expertise. <span class="citation" data-cites="Lariviere2005-uq">(<a href="#ref-Lariviere2005-uq" role="doc-biblioref">Lariviere and Vandenpoel 2005</a>)</span></p>
+<p>Another article focused on using Random Forest for supplier segmentation. This study aimed to identify core suppliers based on their impact on a buyer’s profitability using e-invoice data. The RF model performed well, achieving an AUC of 89.58%, which demonstrated its strong predictive ability. Automating supplier segmentation through RF improved accuracy and reduced human bias, making it a reliable method for procurement departments. However, the model’s accuracy is highly dependent on the quality of input data. <span class="citation" data-cites="Hong2018-fr">(<a href="#ref-Hong2018-fr" role="doc-biblioref">Hong et al. 2018</a>)</span></p>
+<p>Lastly, I examined a study on benefit segmentation using Random Forest with customer reviews from a hotel booking platform. The study used Non-Negative Matrix Factorization (NMF) to extract topics from reviews, then applied RF to classify the reviews based on benefits, such as business travel or leisure travel. RF achieved a precision of 81%, showcasing how it can effectively analyze text data for segmentation. The authors concluded that benefit segmentation with RF could help businesses tailor their products and services to specific customer needs, although it might require large datasets for optimal performance. <span class="citation" data-cites="Torizuka2018-if">(<a href="#ref-Torizuka2018-if" role="doc-biblioref">Torizuka et al. 2018</a>)</span></p>
 </section>
-<section id="foo" class="level2">
-<h2 class="anchored" data-anchor-id="foo">3. Foo</h2>
-<p>Foo</p>
-</section>
-<section id="bar" class="level2">
-<h2 class="anchored" data-anchor-id="bar">4. Bar</h2>
-<p>Bar</p>
+<section id="references" class="level2 unnumbered">
+
+
 </section>
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Biau2016-ac" class="csl-entry" role="listitem">
+Biau, Gérard, and Erwan Scornet. 2016. <span>“A Random Forest Guided Tour.”</span> <em>Test (Madr.)</em> 25 (2): 197–227.
+</div>
+<div id="ref-Hong2018-fr" class="csl-entry" role="listitem">
+Hong, Jung-Sik, Hyeongyu Yeo, Nam-Wook Cho, and Taeuk Ahn. 2018. <span>“Identification of Core Suppliers Based on e-Invoice Data Using Supervised Machine Learning.”</span> <em>J. Risk Fin. Manag.</em> 11 (4): 70.
+</div>
+<div id="ref-Khoshgoftaar2007-bo" class="csl-entry" role="listitem">
+Khoshgoftaar, Taghi M, Moiz Golawala, and Jason Van Hulse. 2007. <span>“An Empirical Study of Learning from Imbalanced Data Using Random Forest.”</span> In <em>19th <span>IEEE</span> International Conference on Tools with Artificial <span>Intelligence(ICTAI</span> 2007)</em>. Patras, Greece: IEEE.
+</div>
+<div id="ref-Lariviere2005-uq" class="csl-entry" role="listitem">
+Lariviere, B, and D Vandenpoel. 2005. <span>“Predicting Customer Retention and Profitability by Using Random Forests and Regression Forests Techniques.”</span> <em>Expert Syst. Appl.</em> 29 (2): 472–84.
+</div>
+<div id="ref-Mantas2019-li" class="csl-entry" role="listitem">
+Mantas, Carlos J, Javier G Castellano, Serafı́n Moral-Garcı́a, and Joaquı́n Abellán. 2019. <span>“A Comparison of Random Forest Based Algorithms: Random Credal Random Forest Versus Oblique Random Forest.”</span> <em>Soft Comput.</em> 23 (21): 10739–54.
+</div>
+<div id="ref-Torizuka2018-if" class="csl-entry" role="listitem">
+Torizuka, K, H Oi, F Saitoh, and S Ishizu. 2018. <span>“Benefit Segmentation of Online Customer Reviews Using Random Forest.”</span> In <em>2018 <span>IEEE</span> International Conference on Industrial Engineering and Engineering Management (<span>IEEM</span>)</em>. Bangkok: IEEE.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -1,6 +1,6 @@
 ---
 title: "Literature Review"
-subtitle: "This is a Lit Review Template"
+subtitle: "This is a Lit Review from Summaries"
 author: "Matt McGehee (Advisor: Dr. Seals)"
 date: last-modified
 date-format: long
@@ -19,20 +19,29 @@ editor:
     wrap: 72
 ---
 
-# Summaries
+# Applications of Random Forests in Machine Learning and Segmentation
 
-## 1. Blah
+## Introduction
 
-Testing
+Machine learning, and specifically the Random Forest (RF) algorithm, has become a highly valuable tool in various domains, from customer and supplier segmentation to predicting outcomes in complex datasets. Random Forest’s robustness, accuracy, and ability to handle both classification and regression tasks make it ideal for data that contain noise, uncertainty, or complex relationships between variables.
 
-## 2. Blarg
+This report synthesizes findings from six research articles, focusing on different aspects of machine learning applications using Random Forest. These include handling imbalanced data, supplier and customer segmentation, predicting customer retention, and leveraging online reviews for benefit segmentation. Each article emphasizes the flexibility and power of Random Forest in solving diverse problems across industries.
 
-123
+## Summary of Articles
 
-## 3. Foo
+The first article I reviewed compares two Random Forest-based algorithms: Random Credal Random Forest (RCRF) and Oblique Random Forest (oRF). Both models use bagging and feature randomness, but RCRF includes credal sets, which offer a range of probabilities, making the model more robust and accurate. This allows RCRF to handle noisy datasets better than oRF, while also improving computational efficiency. One limitation is the complexity of the credal set approach, which can add overhead to the model. [@Mantas2019-li]
 
-Foo
+The second article explored how Random Forest (RF) performs on imbalanced datasets. The authors analyzed the effect of different tree numbers and feature selections on classification performance, using Area Under the ROC Curve (AUC) as the primary metric. RF outperformed several other models, including Naive Bayes and SVM, and provided recommendations on parameter settings for improving accuracy when handling imbalanced data. The findings emphasize RF’s capability to handle this challenging dataset type more effectively than most conventional methods. [@Khoshgoftaar2007-bo]
 
-## 4. Bar
+The third article gave an in-depth review of Random Forest (RF), discussing how it works for both classification and regression tasks. RF creates multiple decision trees using subsets of the data and applies bagging to reduce variance and improve prediction accuracy. The article highlights RF’s ability to work with high-dimensional data while being resilient to overfitting. However, it also notes the difficulty of analyzing the algorithm due to its complex nature. [@Biau2016-ac]
 
-Bar
+Next, I looked at a study that used Random Forest to predict customer retention and profitability. The goal was to assess "next buy," "partial defection," and "profitability evolution" for a European financial services company. RF outperformed logistic regression, particularly when predicting customer retention based on total product ownership and cross-buying habits. Additionally, the study highlighted the importance of salespeople’s behavior in influencing customer outcomes. One downside is that RF, while accurate, can be challenging to interpret for business users without technical expertise. [@Lariviere2005-uq]
+
+Another article focused on using Random Forest for supplier segmentation. This study aimed to identify core suppliers based on their impact on a buyer’s profitability using e-invoice data. The RF model performed well, achieving an AUC of 89.58%, which demonstrated its strong predictive ability. Automating supplier segmentation through RF improved accuracy and reduced human bias, making it a reliable method for procurement departments. However, the model's accuracy is highly dependent on the quality of input data. [@Hong2018-fr]
+
+Lastly, I examined a study on benefit segmentation using Random Forest with customer reviews from a hotel booking platform. The study used Non-Negative Matrix Factorization (NMF) to extract topics from reviews, then applied RF to classify the reviews based on benefits, such as business travel or leisure travel. RF achieved a precision of 81%, showcasing how it can effectively analyze text data for segmentation. The authors concluded that benefit segmentation with RF could help businesses tailor their products and services to specific customer needs, although it might require large datasets for optimal performance. [@Torizuka2018-if]
+
+## References
+
+
+
