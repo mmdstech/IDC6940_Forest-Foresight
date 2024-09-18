@@ -1,0 +1,51 @@
+---
+title: "Forest Foresight Slides"
+subtitle: "Lit Review Slides"
+author: "Forest Foresight (Advisor: Dr. Seals)"
+date: last-modified
+date-format: long
+format:
+  revealjs:
+    css: custom.css
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+csl: ieee.csl
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Lit Reviews
+
+-   Article one said Foo. [@Mantas2019-li]
+
+-   Article two mentioned a Bar.[@Khoshgoftaar2007-bo]
+
+-   Article three suggests we meet at the FooBar.... [@Biau2016-ac]
+
+-   Article four suggests I digress. [@Lariviere2005-uq]
+
+-   Article 5 makes us leave the Bar. [@Hong2018-fr]
+
+-   Article 6. Well... Foo. [@Torizuka2018-if]
+
+**References**
+
+::: {#refs .small}
+:::
+
+## Methods
+
+-   Detail the models or algorithms used.
+
+-   Justify your choices based on the problem and data.
+
+## Appendix
+
+-   More tables and graphs to come....
+

@@ -1,0 +1,147 @@
+---
+title: "Random Forest Equations"
+subtitle: "Equations formatted for Quarto"
+author: "Matt McGehee (Advisor: Dr. Seals)"
+date: last-modified
+date-format: long
+format:
+  html:
+    code-fold: true
+    embed-resources: true
+    self-contained-math: true
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+### 1. Gini Impurity (for Classification Tasks)
+
+$$
+I_G(t) = 1 - \sum_{k=1}^{K} p_k^2
+$$
+
+Where:
+- \( p_k \) is the proportion of samples of class \( k \) in the node.
+- \( K \) is the total number of classes.
+
+---
+
+### 2. Entropy (for Classification Tasks)
+
+$$
+H(t) = - \sum_{k=1}^{K} p_k \log_2(p_k)
+$$
+
+Where:
+- \( p_k \) is the proportion of class \( k \) samples in the node.
+
+---
+
+### 3. Information Gain
+
+$$
+\text{Information Gain} = H(\text{parent}) - \sum_{i=1}^{n} \frac{N_i}{N} H(\text{child}_i)
+$$
+
+Where:
+- \( H(\text{parent}) \) is the entropy of the parent node.
+- \( H(\text{child}_i) \) is the entropy of the \( i \)-th child node.
+- \( N_i \) is the number of samples in the child node.
+- \( N \) is the total number of samples in the parent node.
+
+---
+
+### 4. Mean Squared Error (for Regression Tasks)
+
+$$
+MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+$$
+
+Where:
+- \( y_i \) is the actual value for sample \( i \),
+- \( \hat{y}_i \) is the predicted value for sample \( i \),
+- \( n \) is the number of samples.
+
+---
+
+### 5. Bootstrap Sampling (Bagging)
+
+$$
+S_i = \{x_1, x_2, \dots, x_N\} \quad \text{with replacement}
+$$
+
+Where \( N \) is the total number of observations, and the sampling is done with replacement.
+
+---
+
+### 6. Out-of-Bag (OOB) Error Estimate
+
+$$
+\text{OOB Error} = \frac{1}{N} \sum_{i=1}^{N} L(y_i, \hat{y}_{OOB})
+$$
+
+Where:
+- \( L(y_i, \hat{y}_{OOB}) \) is the loss function for the \( i \)-th observation.
+- \( \hat{y}_{OOB} \) is the predicted outcome based on trees where \( x_i \) was not used for training.
+
+---
+
+### 7. Majority Voting (for Classification)
+
+$$
+\hat{y} = \text{mode}(y_1, y_2, \dots, y_T)
+$$
+
+Where:
+- \( y_i \) is the predicted class from the \( i \)-th tree.
+- \( T \) is the total number of trees in the forest.
+
+---
+
+### 8. Averaging (for Regression)
+
+$$
+\hat{y} = \frac{1}{T} \sum_{i=1}^{T} y_i
+$$
+
+Where:
+- \( y_i \) is the predicted value from the \( i \)-th tree.
+- \( T \) is the number of trees in the forest.
+
+---
+
+### 9. Variable Importance (Gini Importance)
+
+$$
+\text{Gini Importance}(X_j) = \sum_{t} p(t) \Delta I_G(t)
+$$
+
+Where:
+- \( p(t) \) is the proportion of samples reaching node \( t \),
+- \( \Delta I_G(t) \) is the reduction in Gini impurity due to the split at node \( t \),
+- \( X_j \) is the feature.
+
+---
+
+### 10. Feature Selection: Number of Features to Split (mtry)
+
+For classification:
+
+$$
+m_{\text{try}} = \sqrt{M}
+$$
+
+For regression:
+
+$$
+m_{\text{try}} = \frac{M}{3}
+$$
+
+Where:
+- \( M \) is the total number of features available.

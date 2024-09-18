@@ -1,0 +1,122 @@
+---
+title: "Forest Foresight Slides"
+subtitle: "Lit Review Slides"
+author: "Forest Foresight (Advisor: Dr. Seals)"
+date: last-modified
+date-format: long
+format:
+  revealjs:
+    css: custom.css
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+csl: ieee.csl
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Lit Reviews
+
+<!-- ## Introduction  {.smaller} -->
+
+<!-- -   Develop a storyline that captures attention and maintains interest. -->
+
+<!-- -   Your audience is your peers -->
+
+<!-- -   Clearly state the problem or question you're addressing. -->
+
+<!-- -   Introduce why it is relevant needs. -->
+
+<!-- -   Provide an overview of your approach. -->
+
+-   Article one said Foo. [@Mantas2019-li]
+
+-   Article two mentioned a Bar.[@Khoshgoftaar2007-bo]
+
+-   Article three suggests we meet at the FooBar.... [@Biau2016-ac]
+
+-   Article four suggests I digress. [@Lariviere2005-uq]
+
+-   Article 5 makes us leave the Bar. [@Hong2018-fr]
+
+-   Article 6. Well... Foo. [@Torizuka2018-if]
+
+<!-- **References** -->
+
+<!-- ::: {#refs} -->
+<!-- ::: -->
+
+## Methods
+
+-   Detail the models or algorithms used.
+
+-   Justify your choices based on the problem and data.
+
+<!-- ## Data Exploration and Visualization -->
+
+<!-- -   Describe your data sources and collection process. -->
+
+<!-- -   Present initial findings and insights through visualizations. -->
+
+<!-- -   Highlight unexpected patterns or anomalies. -->
+
+<!-- ## Data Exploration and Visualization {.smaller} -->
+
+<!-- A study was conducted to determine how... -->
+
+<!-- ```{r, warning=FALSE, echo=F, message=FALSE} -->
+<!-- # loading packages  -->
+<!-- library(tidyverse) -->
+<!-- library(knitr) -->
+<!-- library(ggthemes) -->
+<!-- library(ggrepel) -->
+<!-- library(dslabs) -->
+<!-- ``` -->
+
+<!-- ```{r, warning=FALSE, echo=F} -->
+<!-- # Load Data -->
+<!-- #kable(head(murders)) -->
+
+<!-- ggplot1 = murders %>% ggplot(mapping = aes(x=population/10^6, y=total))  -->
+
+<!--   ggplot1 + geom_point(aes(col=region), size = 4) + -->
+<!--   geom_text_repel(aes(label=abb)) + -->
+<!--   scale_x_log10() + -->
+<!--   scale_y_log10() + -->
+<!--   geom_smooth(formula = "y~x", method=lm,se = F)+ -->
+<!--   xlab("Populations in millions (log10 scale)") +  -->
+<!--   ylab("Total number of murders (log10 scale)") + -->
+<!--   ggtitle("US Gun Murders in 2010") + -->
+<!--   scale_color_discrete(name = "Region")+ -->
+<!--       theme_bw() -->
+
+
+<!-- ``` -->
+
+<!-- ## Modeling and Results -->
+
+<!-- -   Explain your data preprocessing and cleaning steps. -->
+
+<!-- -   Present your key findings in a clear and concise manner. -->
+
+<!-- -   Use visuals to support your claims. -->
+
+<!-- -   **Tell a story about what the data reveals.** -->
+
+<!-- ```{r} -->
+
+<!-- ``` -->
+
+<!-- ## Conclusion -->
+
+<!-- -   Summarize your key findings. -->
+
+<!-- -   Discuss the implications of your results. -->
+
+## References
+

@@ -9,6 +9,7 @@ format:
     code-fold: true
 course: Capstone Projects in Data Science
 bibliography: references.bib # file contains bibtex for references
+csl: ieee.csl
 #always_allow_html: true # this allows to get PDF with HTML features
 self-contained: true
 execute: 
@@ -40,8 +41,4 @@ Next, I looked at a study that used Random Forest to predict customer retention 
 Another article focused on using Random Forest for supplier segmentation. This study aimed to identify core suppliers based on their impact on a buyer’s profitability using e-invoice data. The RF model performed well, achieving an AUC of 89.58%, which demonstrated its strong predictive ability. Automating supplier segmentation through RF improved accuracy and reduced human bias, making it a reliable method for procurement departments. However, the model's accuracy is highly dependent on the quality of input data. [@Hong2018-fr]
 
 Lastly, I examined a study on benefit segmentation using Random Forest with customer reviews from a hotel booking platform. The study used Non-Negative Matrix Factorization (NMF) to extract topics from reviews, then applied RF to classify the reviews based on benefits, such as business travel or leisure travel. RF achieved a precision of 81%, showcasing how it can effectively analyze text data for segmentation. The authors concluded that benefit segmentation with RF could help businesses tailor their products and services to specific customer needs, although it might require large datasets for optimal performance. [@Torizuka2018-if]
-
-## References
-
-
 
