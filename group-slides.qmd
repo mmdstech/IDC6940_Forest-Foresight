@@ -20,103 +20,19 @@ editor:
     wrap: 72
 ---
 
-## Lit Reviews
+## Literature Review {.smaller}
 
-<!-- ## Introduction  {.smaller} -->
+-   RF outperforms models like Naive Bayes and SVM by adjusting tree numbers and feature selection, using AUC as the main performance metric.[@Khoshgoftaar2007-bo]
 
-<!-- -   Develop a storyline that captures attention and maintains interest. -->
+-   RF handles both classification and regression tasks by creating multiple decision trees, offering resilience against overfitting.[@Biau2016-ac]
 
-<!-- -   Your audience is your peers -->
+-   RF outperforms logistic regression in predicting retention and profitability, emphasizing the role of sales behavior in customer outcomes.[@Lariviere2005-uq]
 
-<!-- -   Clearly state the problem or question you're addressing. -->
+-   RF accurately identifies core suppliers using e-invoice data with an AUC of 89.58%, improving procurement accuracy while reducing human bias.[@Hong2018-fr]
 
-<!-- -   Introduce why it is relevant needs. -->
+-   RF, using Non-Negative Matrix Factorization (NMF), classifies customer reviews with 81% precision, offering valuable insights for tailoring business offerings to specific customer needs.[@Torizuka2018-if]
 
-<!-- -   Provide an overview of your approach. -->
-
--   Article one said Foo. [@Mantas2019-li]
-
--   Article two mentioned a Bar.[@Khoshgoftaar2007-bo]
-
--   Article three suggests we meet at the FooBar.... [@Biau2016-ac]
-
--   Article four suggests I digress. [@Lariviere2005-uq]
-
--   Article 5 makes us leave the Bar. [@Hong2018-fr]
-
--   Article 6. Well... Foo. [@Torizuka2018-if]
-
-<!-- **References** -->
-
-<!-- ::: {#refs} -->
-<!-- ::: -->
-
-## Methods
-
--   Detail the models or algorithms used.
-
--   Justify your choices based on the problem and data.
-
-<!-- ## Data Exploration and Visualization -->
-
-<!-- -   Describe your data sources and collection process. -->
-
-<!-- -   Present initial findings and insights through visualizations. -->
-
-<!-- -   Highlight unexpected patterns or anomalies. -->
-
-<!-- ## Data Exploration and Visualization {.smaller} -->
-
-<!-- A study was conducted to determine how... -->
-
-<!-- ```{r, warning=FALSE, echo=F, message=FALSE} -->
-<!-- # loading packages  -->
-<!-- library(tidyverse) -->
-<!-- library(knitr) -->
-<!-- library(ggthemes) -->
-<!-- library(ggrepel) -->
-<!-- library(dslabs) -->
-<!-- ``` -->
-
-<!-- ```{r, warning=FALSE, echo=F} -->
-<!-- # Load Data -->
-<!-- #kable(head(murders)) -->
-
-<!-- ggplot1 = murders %>% ggplot(mapping = aes(x=population/10^6, y=total))  -->
-
-<!--   ggplot1 + geom_point(aes(col=region), size = 4) + -->
-<!--   geom_text_repel(aes(label=abb)) + -->
-<!--   scale_x_log10() + -->
-<!--   scale_y_log10() + -->
-<!--   geom_smooth(formula = "y~x", method=lm,se = F)+ -->
-<!--   xlab("Populations in millions (log10 scale)") +  -->
-<!--   ylab("Total number of murders (log10 scale)") + -->
-<!--   ggtitle("US Gun Murders in 2010") + -->
-<!--   scale_color_discrete(name = "Region")+ -->
-<!--       theme_bw() -->
-
-
-<!-- ``` -->
-
-<!-- ## Modeling and Results -->
-
-<!-- -   Explain your data preprocessing and cleaning steps. -->
-
-<!-- -   Present your key findings in a clear and concise manner. -->
-
-<!-- -   Use visuals to support your claims. -->
-
-<!-- -   **Tell a story about what the data reveals.** -->
-
-<!-- ```{r} -->
-
-<!-- ``` -->
-
-<!-- ## Conclusion -->
-
-<!-- -   Summarize your key findings. -->
-
-<!-- -   Discuss the implications of your results. -->
+-   Random Credal RF uses credal sets for increased robustness and accuracy, handling noisy datasets better than Oblique RF, but with added complexity.[@Mantas2019-li]
 
 ## References
 
