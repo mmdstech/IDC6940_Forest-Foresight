@@ -100,3 +100,5 @@ The book ‘Data Mining with decision trees: theory and applications’[@Rokach_
 
 ## References
 
+::: {#refs .small}
+:::
