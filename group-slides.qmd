@@ -60,7 +60,7 @@ This review of six influential papers in the field of machine learning, with a f
 
 ## Lit Review 1 {.smaller .scrollable}
 
-The book *Data Mining with Decision Trees: Theory and Applications* [@Horobet2023-bv] provides an in-depth look at decision trees, a popular tool in data mining for their simplicity, transparency, and efficiency. Decision trees are easy to follow, require minimal computational effort, and perform well on large datasets with various data types. The book explains how to prevent overfitting using pre-pruning, post-pruning, and cost-complexity pruning, and covers evaluation techniques like cross-validation and bootstrapping. It also discusses common algorithms (ID3, C4.5, CART) and the limitations of decision trees, such as their tendency to overlook attribute combinations. Overall, it’s a valuable guide for understanding decision trees and their applications.
+The book *Data Mining with Decision Trees: Theory and Applications* [@Rokach_undated-sg] provides an in-depth look at decision trees, a popular tool in data mining for their simplicity, transparency, and efficiency. Decision trees are easy to follow, require minimal computational effort, and perform well on large datasets with various data types. The book explains how to prevent overfitting using pre-pruning, post-pruning, and cost-complexity pruning, and covers evaluation techniques like cross-validation and bootstrapping. It also discusses common algorithms (ID3, C4.5, CART) and the limitations of decision trees, such as their tendency to overlook attribute combinations. Overall, it’s a valuable guide for understanding decision trees and their applications.
 
 ## Lit Review 2 {.smaller .scrollable}
 
