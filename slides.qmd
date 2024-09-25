@@ -18,101 +18,37 @@ editor:
     wrap: 72
 ---
 
-::: callout-important
-**Remember:** Your goal is to make your audience understand and care
-about your findings. By crafting a compelling story, you can effectively
-communicate the value of your data science project.
-
-Carefully read this template since it has instructions and tips to
-writing!
-
-More information about `revealjs`:
-<https://quarto.org/docs/reference/formats/presentations/revealjs.html>
-:::
-
-## Introduction  {.smaller}
-
--   Develop a storyline that captures attention and maintains interest.
-
--   Your audience is your peers
-
--   Clearly state the problem or question you're addressing.
-
--   Introduce why it is relevant needs.
-
--   Provide an overview of your approach.
-
-In kernel estimator, weight function is known as kernel function
-[@efr2008]. Cite this paper [@bro2014principal]. The GEE [@wang2014].
-The PCA [@daffertshofer2004pca]\*
-
-## Methods
-
--   Detail the models or algorithms used.
-
--   Justify your choices based on the problem and data.
-
-
-
-## Data Exploration and Visualization
-
--   Describe your data sources and collection process.
-
--   Present initial findings and insights through visualizations.
-
--   Highlight unexpected patterns or anomalies.
-
-## Data Exploration and Visualization {.smaller}
-
-A study was conducted to determine how...
-
-```{r, warning=FALSE, echo=F, message=FALSE}
-# loading packages 
-library(tidyverse)
-library(knitr)
-library(ggthemes)
-library(ggrepel)
-library(dslabs)
-```
-
-```{r, warning=FALSE, echo=F}
-# Load Data
-#kable(head(murders))
-
-ggplot1 = murders %>% ggplot(mapping = aes(x=population/10^6, y=total)) 
-
-  ggplot1 + geom_point(aes(col=region), size = 4) +
-  geom_text_repel(aes(label=abb)) +
-  scale_x_log10() +
-  scale_y_log10() +
-  geom_smooth(formula = "y~x", method=lm,se = F)+
-  xlab("Populations in millions (log10 scale)") + 
-  ylab("Total number of murders (log10 scale)") +
-  ggtitle("US Gun Murders in 2010") +
-  scale_color_discrete(name = "Region")+
-      theme_bw()
-  
-
-```
-
-## Modeling and Results
-
--   Explain your data preprocessing and cleaning steps.
-
--   Present your key findings in a clear and concise manner.
-
--   Use visuals to support your claims.
-
--   **Tell a story about what the data reveals.**
+## Table 1
 
 ```{r}
+library(dplyr)
+library(Hmisc)
+library(table1)
 
+sales_data <- read.csv("data_as_csv.csv")
+
+# Filter out rows where UnitPrice is <= 0
+sales_data <- sales_data %>%
+  filter(UnitPrice > 0, TotalPrice > 0)
+
+label(sales_data$QuantityFulfilled)   <- "Quantity Fulfilled"
+label(sales_data$UnitPrice)           <- "Unit Price"
+label(sales_data$TotalPrice)          <- "Total Price"
+
+caption  <- "Basic stats"
+
+group_top_n <- function(column, n = 4) {
+  top_n <- names(sort(table(column), decreasing = TRUE))[1:n]
+  column <- ifelse(column %in% top_n, column, "Other")
+  return(column)
+}
+
+sales_data <- sales_data %>%
+  mutate(Substrates = group_top_n(Substrate),
+         Suppliers = group_top_n(Class))
+
+table1(~ Suppliers + Substrates + QuantityFulfilled + UnitPrice + TotalPrice | SalesOrderStatus,
+       data=sales_data,
+       overall=c(left="Total"), 
+       caption=caption)
 ```
-
-## Conclusion
-
--   Summarize your key findings.
-
--   Discuss the implications of your results.
-
-## References
