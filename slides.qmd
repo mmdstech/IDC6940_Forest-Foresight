@@ -45,7 +45,10 @@ group_top_n <- function(column, n = 4) {
 
 sales_data <- sales_data %>%
   mutate(Substrates = group_top_n(Substrate),
-         Suppliers = group_top_n(Class))
+         Substrates = ifelse(Substrates %in% c("Other", "other"), "Other", Substrates),
+         Suppliers = group_top_n(Class)) %>%
+  mutate(Substrates = factor(Substrates, levels = c(setdiff(unique(Substrates), "Other"), "Other")),
+         Suppliers = factor(Suppliers, levels = c(setdiff(unique(Suppliers), "Other"), "Other")))
 
 table1(~ Suppliers + Substrates + QuantityFulfilled + UnitPrice + TotalPrice | SalesOrderStatus,
        data=sales_data,
