@@ -1,6 +1,6 @@
 ---
-title: "Present a great story for data science projects"
-subtitle: "This is a Slide Template"
+title: "Random Forests For All"
+subtitle: "A Journey Through One Random Forest"
 author: "Matt McGehee (Advisor: Dr. Seals)"
 date: last-modified
 date-format: long
@@ -17,6 +17,61 @@ editor:
   markdown: 
     wrap: 72
 ---
+
+## Data Exploration {.smaller}
+
+The dataset contains sales transaction details from a B2B context. The data tracks information on sales orders, quantities ordered, shipping details, and item-level statuses. Below is the data definition table that explains the key attributes.
+
+```{r}
+library(dplyr)
+library(kableExtra)
+
+data_def <- data.frame(
+  Attribute = c("OPCO", "SalesOrderID", "CustomerPO", "Product", "Description", 
+                "Substrate", "RequestedDeliveryDate", "DateFulfilled", 
+                "qtyOrdered", "qtyFulfilled", "UnitPrice", "TotalPrice", 
+                "Class", "ShipToName", "ShipToAddress", "SalesOrderStatus", "SalesItemStatus"),
+  Format = c("Varchar", "Numeric", "Numeric", "Varchar", "Varchar", 
+             "Varchar", "Date", "Date", 
+             "Numeric", "Numeric", "Numeric", "Numeric", 
+             "Varchar", "Varchar", "Varchar", "Varchar", "Varchar"),
+  Description = c("The customer placing the order, typically a distributor.",
+                  "Unique identifier assigned to each sales order.",
+                  "Customer's identifier for their order, sent to BCC.",
+                  "Unique identifier assigned to each product.",
+                  "Description of the product being sold.",
+                  "Type of product/material.",
+                  "Date the delivery was scheduled originally.",
+                  "Date the delivery was made.",
+                  "Quantity ordered on the order.",
+                  "Quantity delivered on the order.",
+                  "Price of each case of product SSI charges the customer.",
+                  "Total price of the sales order.",
+                  "Customer name.",
+                  "Name of the ordering party.",
+                  "Address where the order needs to be delivered.",
+                  "Status of sales order.",
+                  "Status of each line item on the sales order.")
+)
+
+
+data_def %>%
+  kbl(caption = "Sales Transaction Dataset Definition", align = "l") %>%
+  kable_styling(font_size = 14, full_width = FALSE)  # Set smaller font and narrower table width
+
+```
+
+## Data Summary {.smaller}
+
+This dataset allows for various analyses including:
+
+-   Order fulfillment performance: By comparing the qtyOrdered and qtyFulfilled attributes, and the RequestedDeliveryDate against the DateFulfilled, one can analyze how efficiently orders are being fulfilled and whether delivery deadlines are met.
+
+-   Sales trends and pricing: The UnitPrice and TotalPrice fields, alongside Product and Class, provide opportunities to evaluate product pricing strategies and customer buying patterns.
+
+-   Customer segmentation: With attributes like Class and ShipToName, you can analyze customer behavior and segment them based on order sizes, frequency, or geography.
+
+This dataset provides a detailed overview of the company's sales transactions. By leveraging these attributes, one can assess order performance, customer segmentation, and pricing strategies.
 
 ## Table 1
 
@@ -54,4 +109,55 @@ table1(~ Suppliers + Substrates + QuantityFulfilled + UnitPrice + TotalPrice | S
        data=sales_data,
        overall=c(left="Total"), 
        caption=caption)
+```
+
+## Data Visualizations
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+sales_data <- read.csv("data_as_csv.csv")
+
+product_qty <- sales_data %>%
+  group_by(Product) %>%
+  summarise(TotalQuantityOrdered = sum(qtyOrdered, na.rm = TRUE)) %>%
+  arrange(desc(TotalQuantityOrdered)) %>%
+  slice(1:20)
+
+ggplot(product_qty, aes(x = reorder(Product, TotalQuantityOrdered), y = TotalQuantityOrdered)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  theme_minimal() +
+  coord_flip() +
+  labs(title = "Top 20 Products by Total Quantity Ordered", x = "Product", y = "Total Quantity Ordered")
+
+```
+
+## Data Visualizations (cont)
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+sales_data <- read.csv("data_as_csv.csv")
+
+filtered_data <- sales_data %>%
+  filter(TotalPrice > 0)
+
+Q1 <- quantile(filtered_data$TotalPrice, 0.25, na.rm = TRUE)
+Q3 <- quantile(filtered_data$TotalPrice, 0.75, na.rm = TRUE)
+IQR_value <- IQR(filtered_data$TotalPrice, na.rm = TRUE)
+
+lower_bound <- Q1 - 1.5 * IQR_value
+upper_bound <- Q3 + 1.5 * IQR_value
+
+filtered_data_IQR <- filtered_data %>%
+  filter(TotalPrice >= lower_bound & TotalPrice <= upper_bound)
+
+ggplot(filtered_data_IQR, aes(x = TotalPrice)) +
+  geom_histogram(binwidth = 100, fill = "lightblue", color = "black") +
+  theme_minimal() +
+  labs(title = "Distribution of Total Prices (Filtered by IQR)", x = "Total Price", y = "Frequency")
+
+
 ```

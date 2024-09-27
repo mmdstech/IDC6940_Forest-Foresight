@@ -24,7 +24,7 @@ Slides: [Slides](group-slides.html){target="_blank"}
 
 Journal Summaries: [Summaries](summaries.html){target="_blank"}
 
-Literature Review: [Literature Review](litReview.html){target="_blank"}
+Literature Review: [Literature Review](lit-review.html){target="_blank"}
 
 ::: callout-important
 **Remember:** Your goal is to make your audience understand and care
