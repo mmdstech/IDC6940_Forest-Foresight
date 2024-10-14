@@ -1,0 +1,52 @@
+---
+title: "Writing a great story for data science projects"
+subtitle: "This is a Report Template for the Methods Section"
+author: "Matt McGehee (Advisor: Dr. Seals)"
+date: last-modified
+date-format: long
+format:
+  html:
+    code-fold: true
+    embed-resources: true
+    self-contained-math: true
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Methods
+
+### Random Forest Classification
+
+Random Forest is a machine learning method that builds multiple decision trees and merges them to obtain a more accurate and stable prediction. The model was chosen because of its ability to handle large datasets and its robustness to overfitting by averaging the results of many trees.
+
+The `SalesOrderStatus` variable was modeled using the `randomForest()` function in R. The Random Forest model was trained to classify orders as either "Fulfilled" or "Unfulfilled" based on the following predictors:
+
+-   `qtyOrdered`: The quantity of items ordered in a sales transaction.
+-   `UnitPrice`: The price per unit of each product.
+-   `Substrate`: The material type of the product.
+-   `Product`: The name of the product being sold.
+
+The dataset was divided into a training set (80%) and a test set (20%) using stratified sampling to ensure an even distribution of fulfilled and unfulfilled orders. A total of 500 trees were used in the forest model (`ntree = 500`), and the number of variables randomly sampled at each split (`mtry`) was set to the default value for classification tasks (`sqrt(p)`).
+
+### Model Evaluation
+
+Model performance was assessed using the test dataset. A confusion matrix was generated to evaluate classification accuracy, precision, recall, and the F1 score. Additionally, the area under the Receiver Operating Characteristic (ROC) curve, or simply AUC, was calculated to measure the model’s ability to distinguish between fulfilled and unfulfilled orders. Feature importance was examined to determine which predictors contributed most to the classification decisions.
+
+Hyperparameter tuning was performed by conducting a grid search across the following parameters:
+
+-   `mtry`: The number of features sampled at each split.
+-   `ntree`: The number of trees grown.
+-   `nodesize`: The minimum number of samples required to split a node.
+
+Five-fold cross-validation was employed to ensure model robustness and to avoid overfitting. The best-performing model was selected based on cross-validation accuracy.
+
+### Statistical Programming
+
+Data management and analysis were performed using R Version 4.4.1 [@r-cit]. The characteristics of the dataset were summarized using counts and percentages for categorical variables and means and standard deviations for continuous variables. Random Forest classification was applied to predict SalesOrderStatus (Fulfilled vs. Unfulfilled) using the features `qtyOrdered`, `UnitPrice`, `Substrate`, and `Product`. The Random Forest model was implemented using the `randomForest` package in R. Additional packages used for data management and evaluation include `dplyr`[@dplyr-cit], `caret`[@caret-cit], and `pROC`[@pROC-cit].
