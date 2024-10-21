@@ -309,3 +309,59 @@ ggplot(filtered_data_IQR, aes(x = TotalPrice)) +
   labs(title = "Distribution of Total Prices (Filtered by IQR)", x = "Total Price", y = "Frequency")
 
 ```
+
+## Methodolgy - Random Forest Classification {.smaller}
+
+- **Random Forest Overview**:
+  - Builds multiple decision trees for stable predictions.
+  - Handles large datasets and reduces overfitting by averaging results.
+  
+- **Variables Used**:
+  - **SalesOrderStatus**: Fulfilled vs. Unfulfilled.
+  - **qtyOrdered**: Quantity of items ordered.
+  - **UnitPrice**: Price per unit.
+  - **Substrate**: Product material type.
+  - **Product**: Product name.
+  
+- **Sampling**:
+  - Stratified sampling used to ensure balanced Fulfilled/Unfulfilled orders.
+  - 80% of the data was used for training and 20% for testing.
+
+## Methodolgy - Tree Building Process {.smaller}
+
+- **Algorithm**: CART (Classification and Regression Trees)
+  - **Gini Impurity** for classification:
+    $$ G = 1 - \sum_{k=1}^{K} p_k^2 $$
+  - **Mean Squared Error (MSE)** for regression:
+    $$ MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y})^2 $$
+
+- **Bootstrapping**:
+  - Random samples with replacement to build decision trees.
+  - Predictions aggregated from all trees.
+
+## Methodolgy - Hyperparameter Tuning {.smaller}
+
+- **Tuned Parameters**:
+  - **mtry**: Number of features sampled at each split.
+  - **ntree**: Number of trees in the forest.
+  - **nodesize**: Minimum observations required to split a node.
+  
+- **Cross-Validation**:
+  - 5-fold cross-validation used to prevent overfitting.
+  - Final model based on best cross-validation accuracy.
+
+## Methodolgy - Model Evaluation {.smaller}
+
+- **Metrics**:
+  - **Confusion Matrix**: Accuracy, precision, recall, F1 Score.
+  - **ROC Curve** & AUC: Measures model's discrimination ability.
+  
+- **Feature Importance**:
+  - **Mean Decrease in Impurity (MDI)**.
+  - **Mean Decrease in Accuracy (MDA)**.
+  
+## Methodolgy - Statistical Programming {.smaller}
+
+- **Tools Used**:
+  - **R Version 4.4.1** for statistical computing.
+  - Libraries used: `randomForest`, `dplyr`, `caret`, `pROC`.
