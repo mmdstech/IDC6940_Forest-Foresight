@@ -10,8 +10,8 @@ format:
     embed-resources: true
     self-contained-math: true
 course: Capstone Projects in Data Science
-bibliography: references.bib # file contains bibtex for references
-#always_allow_html: true # this allows to get PDF with HTML features
+bibliography: references.bib
+csl: ieee.csl
 execute: 
   warning: false
   message: false
@@ -20,33 +20,126 @@ editor:
     wrap: 72
 ---
 
-## Methods
+## **Methods**
 
 ### Random Forest Classification
 
-Random Forest is a machine learning method that builds multiple decision trees and merges them to obtain a more accurate and stable prediction. The model was chosen because of its ability to handle large datasets and its robustness to overfitting by averaging the results of many trees.
-
-The `SalesOrderStatus` variable was modeled using the `randomForest()` function in R. The Random Forest model was trained to classify orders as either "Fulfilled" or "Unfulfilled" based on the following predictors:
+The `SalesOrderStatus` variable was modeled using the `randomForest()`
+function in `R`. The Random Forest model was trained to classify orders
+as either “Fulfilled” or “Unfulfilled” based on the following
+predictors:
 
 -   `qtyOrdered`: The quantity of items ordered in a sales transaction.
 -   `UnitPrice`: The price per unit of each product.
 -   `Substrate`: The material type of the product.
 -   `Product`: The name of the product being sold.
 
-The dataset was divided into a training set (80%) and a test set (20%) using stratified sampling to ensure an even distribution of fulfilled and unfulfilled orders. A total of 500 trees were used in the forest model (`ntree = 500`), and the number of variables randomly sampled at each split (`mtry`) was set to the default value for classification tasks (`sqrt(p)`).
+The dataset was divided into a training set (80%) and a test set (20%)
+using stratified sampling to ensure an even distribution of fulfilled
+and unfulfilled orders. A total of 500 trees were used in the forest
+model (`ntree = 500`), and the number of variables randomly sampled at
+each split (`mtry`) was set to the default value for classification
+tasks ($\sqrt{p}$), consistent with the approach outlined by Mantas et
+al. (2019)[@Mantas2019-li]. Biau et al. does a great job covering the
+Random Forest techniques that follow [@Biau2016-ac].
+
+### Tree Building Process
+
+Each decision tree in the forest was grown using the CART
+(Classification and Regression Trees) algorithm. In classification
+tasks, the model splits each node based on the Gini impurity criterion:
+
+$$ G = 1 - \sum_{k=1}^{K} p_k^2 $$
+
+where $p_k$ is the proportion of samples belonging to class $k$, and $K$
+is the number of classes. The split that minimizes Gini impurity is
+selected to grow each tree.
+
+### Bootstrap Sampling and Aggregation
+
+Random Forest employs bootstrapping, where multiple random samples with
+replacement are drawn from the original dataset. Each decision tree is
+built on a different bootstrapped dataset, and the predictions from each
+tree are then aggregated. For classification, which was used in the
+analysis, the final prediction was made by majority voting (the most
+frequent class predicted by the trees).
+
+### Out-of-Bag (OOB) Error
+
+Random Forests have a built-in mechanism for cross-validation called the
+out-of-bag (OOB) error. Since each tree is trained on a bootstrapped
+sample, some observations (typically around 37%) are left out of the
+training data for any given tree. These out-of-bag samples can be used
+to compute an unbiased error estimate. The OOB error for a
+classification task is:
+
+$$ OOB_{Error} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{1}(\hat{y}_{OOB, i} \neq y_i) $$
+
+where $N$ is the number of observations and $\hat{y}_{OOB, i}$ is the
+predicted class for observation $i$ from the out-of-bag data.
+
+### Feature Selection
+
+At each split, the Random Forest model selects a random subset of
+features to consider, which helps reduce correlation among the trees.
+This subset is defined by the parameter `mtry`, which is typically set
+to $\sqrt{p}$ for classification tasks, where $p$ is the total number of
+predictors. By introducing randomness into the feature selection
+process, the model is less likely to overfit.
 
 ### Model Evaluation
 
-Model performance was assessed using the test dataset. A confusion matrix was generated to evaluate classification accuracy, precision, recall, and the F1 score. Additionally, the area under the Receiver Operating Characteristic (ROC) curve, or simply AUC, was calculated to measure the model’s ability to distinguish between fulfilled and unfulfilled orders. Feature importance was examined to determine which predictors contributed most to the classification decisions.
+Model performance was assessed using the test dataset. A confusion
+matrix was generated to evaluate classification accuracy, precision,
+recall, and the F1 score. Additionally, the area under the Receiver
+Operating Characteristic (ROC) curve (AUC) was calculated to measure the
+model’s ability to distinguish between fulfilled and unfulfilled orders.
+Torizuka et al. (2018) highlight that "random forest is not only a
+high-performance classification model but also calculates the importance
+and influence of variables used in the
+classification"[@Torizuka2018-if]. Therefore, feature importance
+analysis was used to determine which predictors contributed most to the
+classification decisions.
 
-Hyperparameter tuning was performed by conducting a grid search across the following parameters:
+### Feature Importance
 
--   `mtry`: The number of features sampled at each split.
--   `ntree`: The number of trees grown.
--   `nodesize`: The minimum number of samples required to split a node.
+The feature importance metric was computed using two methods:
 
-Five-fold cross-validation was employed to ensure model robustness and to avoid overfitting. The best-performing model was selected based on cross-validation accuracy.
+1.  Mean Decrease in Impurity (MDI): This measures the average reduction
+    in impurity (e.g., Gini impurity) brought by each feature across all
+    trees.
+2.  Mean Decrease in Accuracy (MDA): This measures how much the model's
+    accuracy decreases when a given feature is permuted. The formula for
+    MDA is:
+
+$$ MDA(X_j) = \frac{1}{T} \sum_{t=1}^{T} (OOB_{Error_t} - OOB_{Error_{t, permuted(j)}}) $$
+
+where $OOB_{Error_{t, permuted(j)}}$ is the out-of-bag error when
+feature $j$ is permuted.
+
+### Hyperparameter Tuning
+
+A grid search was performed to optimize the hyperparameters of the
+Random Forest model. The following hyperparameters were tuned:
+
+-   `mtry`: The number of features considered at each split.
+-   `ntree`: The number of trees in the forest.
+-   `nodesize`: The minimum number of observations required in a node
+    before it can be split.
+
+As noted in Biau and Scornet (2016), cross-validation is essential in
+ensuring model robustness [@Biau2016-ac]. In this study, five-fold
+cross-validation was employed to avoid overfitting. The best-performing
+model was selected based on cross-validation accuracy.
 
 ### Statistical Programming
 
-Data management and analysis were performed using R Version 4.4.1 [@r-cit]. The characteristics of the dataset were summarized using counts and percentages for categorical variables and means and standard deviations for continuous variables. Random Forest classification was applied to predict SalesOrderStatus (Fulfilled vs. Unfulfilled) using the features `qtyOrdered`, `UnitPrice`, `Substrate`, and `Product`. The Random Forest model was implemented using the `randomForest` package in R. Additional packages used for data management and evaluation include `dplyr`[@dplyr-cit], `caret`[@caret-cit], and `pROC`[@pROC-cit].
+Data management and analysis were performed using `R` Version 4.4.1
+[@r-cit]. The characteristics of the dataset were summarized using
+counts and percentages for categorical variables and means and standard
+deviations for continuous variables. Random Forest classification was
+applied to predict `SalesOrderStatus` (Fulfilled vs. Unfulfilled) using
+the features `qtyOrdered`, `UnitPrice`, `Substrate`, and `Product`. The
+Random Forest model was implemented using the `randomForest` package in
+R. Additional packages used for data management and evaluation include
+`dplyr` [@dplyr-cit], `caret` [@caret-cit], and `pROC` [@pROC-cit].
