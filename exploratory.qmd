@@ -20,7 +20,7 @@ editor:
     wrap: 72
 ---
 
-The dataset contains sales transaction details from a B2B context. The data tracks information on sales orders, quantities ordered, shipping details, and item-level statuses. Below is the data definition table that explains the key attributes.
+The dataset, provided by a fellow student [@stutti], contains sales transaction details from a B2B context. The data tracks information on sales orders, quantities ordered, shipping details, and item-level statuses. Below is the data definition table that explains the key attributes.
 
 ```{r}
 data_def <- data.frame(

@@ -1,0 +1,297 @@
+---
+title: "Random Forest Classification Analysis"
+subtitle: "Prelim Analysis"
+author: "Matt McGehee (Advisor: Dr. Seals)"
+date: last-modified
+date-format: long
+format:
+  html:
+    code-fold: true
+    embed-resources: true
+    self-contained-math: true
+course: Capstone Projects in Data Science
+bibliography: references.bib
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Analysis
+
+The objective of the following analysis will apply a Random Forest
+classification model to predict the `SalesOrderStatus` (Fulfilled vs.
+Unfulfilled) using several predictor variables. This process will follow
+the steps described in the Methods section, with the analysis performed
+using the `randomForest` package in R [@rf-cit].
+
+Data cleaning was performed to remove irrelevant line items, such as
+shipping and customer refunds.
+
+## Load necessary libraries
+
+```{r}
+library(knitr)
+library(kableExtra)
+library(dplyr)
+library(randomForest)
+library(caret)
+library(pROC)
+```
+
+## Loading the Data
+
+Read in the data from the corresponding 'csv' file that contains the
+sales data.
+
+```{r}
+sales_data <- read.csv("data_as_csv.csv")
+```
+
+## Data Cleaning and Preprocessing
+
+The raw dataset initially contained some irrelevant products, including
+shipping line items and "credits" back to customers, which were not
+relevant to the analysis. To ensure relevancy, the following filtering
+steps were applied:
+
+-   Excluded line items related to shipping and fees, such as "OUTBOUND
+    SHIPPING", "Shipping Charge".
+-   Filtered out negative `UnitPrice`, `TotalPrice`, and `qtyOrdered`
+    values related to refunds.
+
+```{r}
+exclude_products <- c("OUTBOUND SHIPPING", "Outbound Shipping", "Shipping Charge", "SHIPPING CHARGE")
+
+# Filter the data to remove shipping line items and any customer credits
+filtered_data <- sales_data %>%
+  filter(UnitPrice > 0, TotalPrice > 0, qtyOrdered > 0, !Product %in% exclude_products) %>%
+  select(SalesOrderStatus, qtyOrdered, UnitPrice, Substrate, Product) %>%
+  filter(!is.na(SalesOrderStatus), !is.na(qtyOrdered), !is.na(UnitPrice), !is.na(Substrate), !is.na(Product))
+
+# Convert SalesOrderStatus to a factor variable
+filtered_data$SalesOrderStatus <- as.factor(filtered_data$SalesOrderStatus)
+
+set.seed(123)
+```
+
+### Variable Selection
+
+The key variables selected for classification are: - `qtyOrdered`:
+Reflects the size of the order. - `UnitPrice`: Indicates the price per
+unit of the product. - `Substrate`: Material type of the product -
+`Product`: The product being sold.
+
+## Analysis
+
+### Training the Random Forest Model
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: Random Forest Model Summary
+
+# Split into training (80%) and testing (20%)
+trainIndex <- createDataPartition(filtered_data$SalesOrderStatus, p = 0.8, list = FALSE)
+train_data <- filtered_data[trainIndex, ]
+test_data <- filtered_data[-trainIndex, ]
+
+rf_model <- randomForest(SalesOrderStatus ~ qtyOrdered + UnitPrice + Substrate + Product, 
+                         data = train_data, 
+                         ntree = 100, 
+                         proximity = TRUE,
+                         importance = TRUE)
+
+# Extract model results
+model_results <- data.frame(
+  Metric = c("Number of Trees", "Variables Tried at Each Split (mtry)", "OOB Estimate of Error Rate"),
+  Value = c(rf_model$ntree, rf_model$mtry, paste0(round(rf_model$err.rate[nrow(rf_model$err.rate), "OOB"] * 100, 2), "%"))
+)
+
+# Print the model results in a nice table
+model_results %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+```
+
+### Model Evaluation on Test Set
+
+```{r}
+#| label: tbl-conf-matrix
+#| tbl-cap: Confusion Matrix
+
+# Predict on test set
+test_pred <- predict(rf_model, newdata = test_data)
+
+# Confusion matrix
+conf_matrix <- confusionMatrix(test_pred, test_data$SalesOrderStatus)
+
+# Extract the confusion matrix table
+conf_matrix_table <- as.data.frame(conf_matrix$table)
+
+# Display Confusion Matrix
+conf_matrix_table %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+```
+
+#### Model Statistics
+
+```{r}
+#| label: tbl-model-stats
+#| tbl-cap: Model Statistics
+
+# Extract relevant statistics from the confusion matrix object
+stats <- data.frame(
+  Metric = c("Accuracy", "95% CI", "Kappa", "Sensitivity", "Specificity", "Pos Pred Value", 
+             "Neg Pred Value", "Prevalence", "Detection Rate", "Balanced Accuracy"),
+  Value = c(
+    round(conf_matrix$overall['Accuracy'], 3),
+    paste0("(", round(conf_matrix$overall['AccuracyLower'], 3), ", ", round(conf_matrix$overall['AccuracyUpper'], 3), ")"),
+    round(conf_matrix$overall['Kappa'], 3),
+    round(conf_matrix$byClass['Sensitivity'], 5),
+    round(conf_matrix$byClass['Specificity'], 5),
+    round(conf_matrix$byClass['Pos Pred Value'], 5),
+    round(conf_matrix$byClass['Neg Pred Value'], 5),
+    round(conf_matrix$byClass['Prevalence'], 5),
+    round(conf_matrix$byClass['Detection Rate'], 5),
+    round(conf_matrix$byClass['Balanced Accuracy'], 5)
+  )
+)
+
+# Display Model Statistics
+stats %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+```
+
+```{r}
+#| label: fig-roc-curve
+#| fig-cap: "ROC Curve for SalesOrderStatus Classification"
+
+# ROC Curve and AUC
+roc_curve <- roc(test_data$SalesOrderStatus, as.numeric(test_pred))
+plot.roc(roc_curve, print.auc = TRUE)  
+```
+
+### Feature Importance
+
+```{r}
+#| label: fig-importance
+#| fig-cap: Feature Importance for SalesOrderStatus Classification
+
+# Plot Mean Decrease in Accuracy and Mean Decrease in Gini
+varImpPlot(rf_model, main = "")
+```
+
+```{r}
+#| label: tbl-feature-importance
+#| tbl-cap: Random Forest Feature Importance
+
+# Retrieve numerical importance values
+# Get importance scores
+importance_scores <- importance(rf_model)
+
+# Convert importance matrix to a data frame
+importance_df <- as.data.frame(importance_scores)
+
+# Add row names (the feature names) as a new column
+importance_df$Feature <- rownames(importance_df)
+
+# Reorder columns to display "Feature" first
+importance_df <- importance_df[, c("Feature", "MeanDecreaseAccuracy", "MeanDecreaseGini")]
+
+# Display the importance table
+importance_df %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+
+```
+
+## Results
+
+### Model Summary
+
+The Random Forest model (see [@tbl-summary]) was trained using 100
+trees, with two variables being tried at each split (`mtry = 2`). The
+out-of-bag (OOB) estimate of the error rate was 17.52%, indicating that
+approximately 17.52% of the predictions made by the model on unseen data
+are expected to be incorrect.
+
+### Confusion Matrix
+
+The model’s performance was evaluated on the test set using a confusion
+matrix (see [@tbl-conf-matrix]):
+
+-   **82** instances were correctly predicted as "Closed Short."
+
+-   **1241** instances were incorrectly predicted as "Fulfilled" but
+    were actually "Closed Short."
+
+-   **107** instances were incorrectly predicted as "Closed Short" but
+    were actually "Fulfilled."
+
+-   **4430** instances were correctly predicted as "Fulfilled."
+
+### Model Performance Metrics
+
+The model’s performance was evaluated using standard classification
+metrics (see [@tbl-model-stats]):
+
+-   **Accuracy**: The overall accuracy on the test set was 0.77 (77%),
+    indicating that the model correctly classified 77% of the test
+    samples.
+
+-   **95% Confidence Interval (CI)**: The accuracy falls within a 95% CI
+    of (0.759, 0.781), reflecting the precision of the estimate.
+
+-   **Kappa**: The Kappa statistic, measuring the agreement beyond
+    chance, was 0.055, indicating low agreement beyond random chance.
+
+-   **Sensitivity**: The sensitivity (true positive rate) was 0.06198,
+    indicating the model's low ability to correctly identify "Closed
+    Short" cases.
+
+-   **Specificity**: The specificity (true negative rate) was 0.97642,
+    showing that the model was highly accurate in identifying
+    "Fulfilled" cases.
+
+-   **Positive Predictive Value (PPV)**: The PPV was 0.43386, meaning
+    that 43.39% of instances predicted as "Closed Short" were correct.
+
+-   **Negative Predictive Value (NPV)**: The NPV was 0.78117, showing
+    that 78.12% of the predictions made as "Fulfilled" were correct.
+
+-   **Balanced Accuracy**: The balanced accuracy, which accounts for
+    both sensitivity and specificity, was 0.5192.
+
+### ROC Curve and AUC
+
+The ROC curve demonstrated the model’s ability to distinguish between
+"Fulfilled" and "Closed Short" orders, with an Area Under the Curve
+(AUC) of approximately 0.77 (see [@fig-roc-curve]). This suggests that
+the model has moderate discriminatory ability between the two classes.
+
+### Feature Importance
+
+Feature importance was assessed using the metrics of Mean Decrease in
+Accuracy and Mean Decrease in Gini (see [@tbl-feature-importance]
+[@fig-importance]):
+
+-   `UnitPrice` emerged as the most important predictor in terms of both
+    metrics, followed by `Product`, `qtyOrdered`, and `Substrate`.
+
+-   Mean Decrease in Accuracy reflects the reduction in model accuracy
+    when each feature is removed.
+
+-   Mean Decrease in Gini shows each feature’s contribution to reducing
+    uncertainty (impurity) within the model’s trees.
+
+### Conclusions
+
+The Random Forest model achieved an overall accuracy of 77%, with high
+specificity but low sensitivity, indicating that it was better at
+identifying fulfilled orders than unfulfilled ones. `UnitPrice` and
+`Product` were the most significant predictors in making classification
+decisions.
