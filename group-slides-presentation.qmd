@@ -57,7 +57,7 @@ by Gérard Biau and Erwan Scornet [@Biau2016-ac]
     using a training dataset $D_n$.
 -   **Forest Structure**: A Random Forest consists of $M$ independent
     randomized regression trees.
--   **Tree Prediction**[@Biau2016-ac]:
+-   **Tree Prediction**:
     -   Each tree estimates the response at point $x$ as: $$
         m_n(x; \Theta_j, D_n) = \frac{\sum_{i \in D_n(\Theta_j)} \mathbf{1}_{X_i \in A_n(x; \Theta_j, D_n)} Y_i}{N_n(x; \Theta_j, D_n)}
         $$ where $D_n(\Theta_j)$ is the resampled data subset,
@@ -127,6 +127,246 @@ Classification
         -   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
         -   $M$: Total number of trees in the forest.
 :::
+
+## Like this...
+
+![](images/rf-tree-ex.png){.enlarge-image}
+[@fu2017combination]
+
+## The Data
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;border-style: solid;border-width: 1px;border-color: black;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:13px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-bobw{font-weight:bold;text-align:center;vertical-align:bottom}
+.tg .tg-7zrl{text-align:left;vertical-align:bottom}
+.tg .tg-j6zm{font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-8d8j{text-align:center;vertical-align:bottom}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-7zrl"></th>
+    <th class="tg-j6zm">Total Orders</th>
+    <th class="tg-j6zm">Closed Short</th>
+    <th class="tg-j6zm">Fulfilled</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-7zrl"></td>
+    <td class="tg-j6zm">(n=7585)</td>
+    <td class="tg-j6zm">(n=733)</td>
+    <td class="tg-j6zm">(n=6852)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Top Customers</td>
+    <td class="tg-7zrl"> </td>
+    <td class="tg-7zrl"> </td>
+    <td class="tg-7zrl"> </td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Smoothie Island</td>
+    <td class="tg-8d8j">1701 (22.43%)</td>
+    <td class="tg-8d8j">455 (62.07%)</td>
+    <td class="tg-8d8j">1246 (18.18%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Philly Bite</td>
+    <td class="tg-8d8j">1556 (20.51%)</td>
+    <td class="tg-8d8j">267 (36.43%)</td>
+    <td class="tg-8d8j">1289 (18.81%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">PlatePioneers</td>
+    <td class="tg-8d8j">1396 (18.40%)</td>
+    <td class="tg-8d8j">143 (19.51%)</td>
+    <td class="tg-8d8j">1253 (18.29%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Berl Company</td>
+    <td class="tg-8d8j">906 (11.94%)</td>
+    <td class="tg-8d8j">5 (0.68%)</td>
+    <td class="tg-8d8j">901 (13.15%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">DineLink Intl</td>
+    <td class="tg-8d8j">589 (7.77%)</td>
+    <td class="tg-8d8j">42 (5.73%)</td>
+    <td class="tg-8d8j">547 (7.98%)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Top Products</td>
+    <td class="tg-8d8j"></td>
+    <td class="tg-8d8j"></td>
+    <td class="tg-8d8j"></td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">DC-01</td>
+    <td class="tg-8d8j">1135 (14.96%)</td>
+    <td class="tg-8d8j">345 (47.07%)</td>
+    <td class="tg-8d8j">790 (11.53%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">TSC-PQB-01</td>
+    <td class="tg-8d8j">1087 (14.33%)</td>
+    <td class="tg-8d8j">389 (53.07%)</td>
+    <td class="tg-8d8j">698 (10.19%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">TSC-PW14X16-01</td>
+    <td class="tg-8d8j">848 (11.18%)</td>
+    <td class="tg-8d8j">283 (38.61%)</td>
+    <td class="tg-8d8j">565 (8.25%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">CMI-PCK-01</td>
+    <td class="tg-8d8j">802 (10.57%)</td>
+    <td class="tg-8d8j">288 (39.29%)</td>
+    <td class="tg-8d8j">514 (7.50%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">PC-05-B1</td>
+    <td class="tg-8d8j">745 (9.82%)</td>
+    <td class="tg-8d8j">220 (30.01%)</td>
+    <td class="tg-8d8j">525 (7.66%)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Top Distributors</td>
+    <td class="tg-8d8j"></td>
+    <td class="tg-8d8j"></td>
+    <td class="tg-8d8j"></td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Ed Don &amp; Company - Miramar</td>
+    <td class="tg-8d8j">210 (2.77%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">210 (3.06%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">PFG- Gainesville</td>
+    <td class="tg-8d8j">197 (2.60%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">197 (2.88%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Ed Don &amp; Company -&nbsp;&nbsp;&nbsp;Woodridge</td>
+    <td class="tg-8d8j">186 (2.45%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">186 (2.71%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Ed Don &amp; Company - Mira&nbsp;&nbsp;&nbsp;Loma</td>
+    <td class="tg-8d8j">180 (2.37%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">180 (2.63%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">.Ed Don - Miramar</td>
+    <td class="tg-8d8j">162 (2.14%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">162 (2.36%)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Top Substrates</td>
+    <td class="tg-bobw">Paper</td>
+    <td class="tg-bobw">Plastic</td>
+    <td class="tg-bobw">Bagasse</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Revenue($103,826,286)</td>
+    <td class="tg-8d8j">$54,838,585 (52.82%)</td>
+    <td class="tg-8d8j">$40,336,669 (38.85%)</td>
+    <td class="tg-8d8j">$4,350,337 (4.19%)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Quantity Ordered</td>
+    <td class="tg-bobw">Min</td>
+    <td class="tg-bobw">Mean</td>
+    <td class="tg-bobw">Max</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Total Ordered(1,971,237)</td>
+    <td class="tg-8d8j">1</td>
+    <td class="tg-8d8j">61.47</td>
+    <td class="tg-8d8j">23,160</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Unit Price</td>
+    <td class="tg-bobw">Min</td>
+    <td class="tg-bobw">Mean</td>
+    <td class="tg-bobw">Max</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Key Stats</td>
+    <td class="tg-8d8j">$0.16 </td>
+    <td class="tg-8d8j">$62.60 </td>
+    <td class="tg-8d8j">$864.00</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Total Price</td>
+    <td class="tg-bobw">Min</td>
+    <td class="tg-bobw">Mean</td>
+    <td class="tg-bobw">Max</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Key Stats</td>
+    <td class="tg-8d8j">$4.92 </td>
+    <td class="tg-8d8j">$3,430.74 </td>
+    <td class="tg-8d8j">$143,084.74</td>
+  </tr>
+</tbody></table>
+
+## Analysis - Stutti {.smaller}
+
+Predicting Customer Churn
+
+-   The churn indicator was created based on the Last Sales Date (0/1).
+-   **Predictors**: Class, Product, Qty Ordered, and Date Fulfilled.
+-   The model was evaluated using statistics from the Confusion Matrix.
+-   **80% Accuracy achieved**:
+    -   **Sensitivity**: The model correctly identifies 78.6% of the
+        actual 0 cases.
+    -   **Specificity**: The model correctly identifies 88.12% of the
+        actual 1 cases.
+    -   **Negative Predictive Value (NPV for class 1)**: When the model
+        predicts 1, it is correct only 47.62% of the time. This lower
+        NPV suggests the model might be missing some 1 cases.
+    -   **McNemar's Test P-value (\<2e-16)**: Indicates that the model
+        struggles slightly with misclassification between classes.
+-   **Conclusion**: Overall, the model has a good balance (0.8336)
+    between identifying both classes, though it is better at predicting
+    class 0.
+    
+## Analysis - Matt
+
+::: {style="font-size: 1rem; text-align: left;"}
+Random Forest Model Summary
+
+-   The Random Forest model was trained to predict `SalesOrderStatus` (Fulfilled vs. Unfulfilled) using 100 trees and `mtry = 2`.
+-   **OOB Error Rate**: 17.52%, indicating expected prediction errors on unseen data.
+
+Model Performance Metrics
+
+-   **Accuracy**: 77%, showing the model correctly classified 77% of test samples.
+-   **95% Confidence Interval (CI)**: The accuracy falls within a 95% CI
+    of (0.759, 0.781), reflecting the precision of the estimate.
+-   **Kappa**: The Kappa statistic, measuring the agreement beyond
+    chance, was 0.055, indicating low agreement beyond random chance.
+-   **Sensitivity**: 0.06198, showing a low ability to identify "Closed Short" cases.
+-   **Specificity**: 0.97642, indicating high accuracy in identifying "Fulfilled" cases.
+-   **PPV (Closed Short)**: 43.39%, suggesting the model correctly predicts "Closed Short" 43.39% of the time.
+-   **Balanced Accuracy**: 0.5192, considering both sensitivity and specificity.
+
+Conclusions
+
+-   The model showed high specificity but low sensitivity, performing better at predicting "Fulfilled" cases.
+-   `UnitPrice` and `Product` were the most significant predictors for classification.
+-   Kappa statistic of 0.055 means that the overall agreement between the model's predicted `SalesOrderStatus` (e.g., "Fulfilled" vs. "Closed Short") and the actual status is very low beyond what could be expected by random guessing.
+:::
+
+## Analysis - Mika
 
 ## References
 
