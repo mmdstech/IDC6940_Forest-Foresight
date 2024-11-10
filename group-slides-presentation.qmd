@@ -318,7 +318,9 @@ Classification
   </tr>
 </tbody></table>
 
-## Analysis - Stutti {.smaller}
+## Analysis - Stutti
+
+::: {style="font-size: 1.5rem; text-align: left;"}
 
 Predicting Customer Churn
 
@@ -338,6 +340,7 @@ Predicting Customer Churn
 -   **Conclusion**: Overall, the model has a good balance (0.8336)
     between identifying both classes, though it is better at predicting
     class 0.
+:::
     
 ## Analysis - Matt
 
