@@ -1,0 +1,134 @@
+---
+title: "Random Forest in Machine Learning"
+subtitle: "Through the Looking Glass"
+author: "Forest Foresight (Advisor: Dr. Seals)"
+date: last-modified
+date-format: long
+format:
+  revealjs:
+    theme: dark
+    css: custom.css
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+csl: ieee.csl
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Random Forest in Machine Learning: Through the Looking Glass
+
+![](images/rf-why.png)
+
+## A Random Forest Guided Tour
+
+::: {style="font-size: 1rem; text-align: left;"}
+by Gérard Biau and Erwan Scornet [@Biau2016-ac]
+:::
+
+::: flex-container
+::: flex-column
+-   **Origin & Success**: Introduced by Breiman (2001) [@Breiman_undated-tp], Random Forests
+    excel in classification/regression, combining decision trees for
+    strong performance.
+-   **Versatility**: Effective for large-scale tasks, adaptable, and
+    highlights important features across various domains.
+-   **Ease of Use**: Simple with minimal tuning, handles small samples
+    and high-dimensional data.
+:::
+
+::: flex-column
+-   **Theoretical Gaps**: Limited theoretical insights; known for
+    complexity and black-box nature.
+-   **Key Mechanisms**: Uses bagging and CART-split criteria for robust
+    performance, though hard to analyze rigorously.
+:::
+:::
+
+## The Forests
+
+::: {style="font-size: 1.25rem; text-align: left;"}
+-   **Regression Goal**: Estimate the function $m(x) = E[Y | X = x]$
+    using a training dataset $D_n$.
+-   **Forest Structure**: A Random Forest consists of $M$ independent
+    randomized regression trees.
+-   **Tree Prediction**[@Biau2016-ac]:
+    -   Each tree estimates the response at point $x$ as: $$
+        m_n(x; \Theta_j, D_n) = \frac{\sum_{i \in D_n(\Theta_j)} \mathbf{1}_{X_i \in A_n(x; \Theta_j, D_n)} Y_i}{N_n(x; \Theta_j, D_n)}
+        $$ where $D_n(\Theta_j)$ is the resampled data subset,
+        $A_n(x; \Theta_j, D_n)$ is the cell containing $x$, and
+        $N_n(x; \Theta_j, D_n)$ is the count of points in the cell.
+-   **Forest Prediction**:
+    -   The forest estimate for $M$ trees is: $$
+        m_{M, n}(x) = \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n)
+        $$ where $M$ is the total number of trees,
+        $m_n(x; \Theta_j, D_n)$ represents the prediction from each
+        tree, and the forest average yields the final prediction.
+:::
+
+## Through the Looking Glass
+
+Regression
+
+::: {style="font-size: 1rem; text-align: left;"}
+-   **Tree Construction**: Each node splits a hyperrectangular cell,
+    starting from the entire feature space $X$. Trees are grown using
+    $a_n$ sampled data points (with or without replacement) from the
+    training set $D_n$.
+    -   **Splitting Criteria**:
+        -   The CART-split criterion is used to find the best cut: $$
+            L_{\text{reg},n}(j, z) = \frac{1}{N_n(A)} \sum_{i=1}^{n} (Y_i - \bar{Y}_A)^2 \mathbf{1}_{X_i \in A} - \frac{1}{N_n(A)} \left(\sum_{i=1}^{n} (Y_i - \bar{Y}_{AL})^2 \mathbf{1}_{X_i \in AL} + \sum_{i=1}^{n} (Y_i - \bar{Y}_{AR})^2 \mathbf{1}_{X_i \in AR}\right)
+            $$
+        -   $N_n(A)$: Number of data points in cell $A$.
+        -   $Y_i$: Response variable for observation $i$.
+        -   $\bar{Y}_A$: Mean of $Y_i$ in cell $A$.
+        -   $AL$ and $AR$: Left and right child nodes after the split.
+    -   **Stopping Condition**: Nodes are not split if they contain
+        fewer than `nodesize` points or if all $X_i$ in the node are
+        identical.
+    -   **Prediction**:
+        -   Each tree's prediction at $x$ is the average $Y_i$ of points
+            in the cell containing $x$.
+        -   The forest prediction is: $$
+            m_{M, n}(x) = \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n)
+            $$
+        -   $M$: Total number of trees in the forest.
+        -   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
+:::
+
+## Through the Looking Glass
+
+Classification
+
+::: {style="font-size: 1rem; text-align: left;"}
+-   **Tree Construction**: Similar to regression but adapted for
+    classification tasks.
+    -   **Splitting Criteria**:
+        -   The Gini impurity measure is used to determine the best
+            split: $$
+            \text{Gini}(A) = 2 p_{0, n}(A) p_{1, n}(A)
+            $$ **where**:
+        -   $p_{0, n}(A)$: Empirical probability of class 0 in cell $A$.
+        -   $p_{1, n}(A)$: Empirical probability of class 1 in cell $A$.
+    -   **Prediction**:
+        -   Each tree makes a prediction using the majority class in the
+            cell containing $x$.
+        -   The forest classification rule uses a majority vote: $$
+            m_{M, n}(x; \Theta_1, \ldots, \Theta_M, D_n) = \begin{cases} 
+            1 & \text{if } \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n) > \frac{1}{2} \\
+            0 & \text{otherwise}
+            \end{cases}
+            $$ **where**:
+        -   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
+        -   $M$: Total number of trees in the forest.
+:::
+
+## References
+
+::: {#refs .small}
+:::
