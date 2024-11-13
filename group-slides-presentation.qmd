@@ -564,12 +564,12 @@ varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
 -   A wide confidence interval (198.3 to 1449.2) indicates high variability in prediction accuracy.
 -   Numerical variables (`qtyOrdered`, `TotalPrice`) are substantially more important than categorical ones.
 
-## Conclusion [@Biau2016-ac]
+## Conclusion
 
--   **High Performance & Versatile**: Robust, accurate, handles noisy/high-dimensional data.
--   **Ensemble Strength**: Averaging over many trees; identifies key variables.
--   **Challenges**: Limited theoretical understanding; complex interpretation.
--   **Future Focus**: Enhance theory, increase interpretability, broaden applications.
+-   **High Performance & Versatile**: Robust, accurate, handles noisy/high-dimensional data. [@Biau2016-ac]
+-   **Ensemble Strength**: Averaging over many trees; identifies key variables. [@Biau2016-ac]
+-   **Challenges**: Limited theoretical understanding; complex interpretation. [@Biau2016-ac]
+-   **Future Focus**: Enhance theory, increase interpretability, broaden applications. [@Biau2016-ac]
 
 ## References
 
