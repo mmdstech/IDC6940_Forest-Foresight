@@ -59,9 +59,9 @@ $$
 $$ 
 
 ::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
-  -   $D_n(\Theta_j)$ is the resampled data subset,
-  -   $A_n(x; \Theta_j, D_n)$ is the cell containing $x$, and
-  -   $N_n(x; \Theta_j, D_n)$ is the count of points in the cell
+-   $D_n(\Theta_j)$ is the resampled data subset,
+-   $A_n(x; \Theta_j, D_n)$ is the cell containing $x$, and
+-   $N_n(x; \Theta_j, D_n)$ is the count of points in the cell
 :::
 
 ## Forest Prediction
@@ -72,17 +72,17 @@ $$
 $$
 
 ::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
-  -   $M$ is the total number of trees
-  -   $m_n(x; \Theta_j, D_n)$ represents the prediction from each
+-   $M$ is the total number of trees
+-   $m_n(x; \Theta_j, D_n)$ represents the prediction from each
 tree, and 
-  -   the forest average yields the final prediction.
+-   the forest average yields the final prediction.
 :::
 
 ## Random Forest Regression
 
 **Splitting Criteria**:
 
-  -   The CART-split criterion is used to find the best cut applying:
+-   The CART-split criterion is used to find the best cut applying:
   
 ::: {style="font-size: 0.65em; text-align: left;"}
 $$
@@ -91,10 +91,10 @@ $$
 :::
 
 ::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
-  -   $N_n(A)$: Number of data points in cell $A$.
-  -   $Y_i$: Response variable for observation $i$.
-  -   $\bar{Y}_A$: Mean of $Y_i$ in cell $A$.
-  -   $AL$ and $AR$: Left and right child nodes after the split.
+-   $N_n(A)$: Number of data points in cell $A$.
+-   $Y_i$: Response variable for observation $i$.
+-   $\bar{Y}_A$: Mean of $Y_i$ in cell $A$.
+-   $AL$ and $AR$: Left and right child nodes after the split.
 :::
 
 ## {}
@@ -108,37 +108,36 @@ Nodes are not split if they contain fewer than `nodesize` points or if all $X_i$
 **Prediction**:
 
 $$
-      m_{M, n}(x) = \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n)
+  m_{M, n}(x) = \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n)
 $$
 
 ::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
-  -   $M$: Total number of trees in the forest.
-  -   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
+-   $M$: Total number of trees in the forest.
+-   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
 :::
 
 ## Random Forest Classification
 
 **Splitting Criteria**:
 
-  -   The Gini impurity measure is used to determine the best
-      split:
+-   The Gini impurity measure is used to determine the best split:
 
 $$
   G = 1 - \sum_{k=1}^{K} p_k^2
 $$
 
 ::: {.custom-circle-list style="font-size: 1.75rem; text-align: left; margin-left: 75px"}
-  -   $p_k$ represents the proportion of samples of class $k$ in the node.
-  -   $K$ is the number of classes.
+-   $p_k$ represents the proportion of samples of class $k$ in the node.
+-   $K$ is the number of classes.
 :::
   
 ## {}
 
 **Prediction**:
 
-  -   Each tree makes a prediction using the majority class in the
+-   Each tree makes a prediction using the majority class in the
       cell containing $x$.
-  -   Classification uses a majority vote: 
+-   Classification uses a majority vote: 
 
 $$
       m_{M, n}(x; \Theta_1, \ldots, \Theta_M, D_n) = \begin{cases} 
@@ -148,8 +147,8 @@ $$
 $$
 
 ::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
-  -   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
-  -   $M$: Total number of trees in the forest.
+-   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
+-   $M$: Total number of trees in the forest.
 :::
 
 ## Like this...
@@ -557,7 +556,7 @@ varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
 -   **Standard Error**: 292.65 (shows variability in predictions)
 -   **95% Confidence Interval**: (198.3, 1449.2) for MSE
 
-## Conclusions
+## Remarks
 
 -   The model predicts `QuantityFulfilled` with an average error of about 28 units (RMSE).
 -   Predictions are typically off by about 13 units (MAE).
@@ -565,11 +564,12 @@ varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
 -   A wide confidence interval (198.3 to 1449.2) indicates high variability in prediction accuracy.
 -   Numerical variables (`qtyOrdered`, `TotalPrice`) are substantially more important than categorical ones.
 
-## Conclusion
+## Conclusion [@Biau2016-ac]
 
-Mika, you got this!
-
-... coming soon
+-   **High Performance & Versatile**: Robust, accurate, handles noisy/high-dimensional data.
+-   **Ensemble Strength**: Averaging over many trees; identifies key variables.
+-   **Challenges**: Limited theoretical understanding; complex interpretation.
+-   **Future Focus**: Enhance theory, increase interpretability, broaden applications.
 
 ## References
 
