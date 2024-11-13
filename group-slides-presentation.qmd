@@ -69,7 +69,7 @@ where $M$ is the total number of trees,
 $m_n(x; \Theta_j, D_n)$ represents the prediction from each
 tree, and the forest average yields the final prediction.
 
-## Regression - Tree Construction
+## Random Forest Regression
 
 **Splitting Criteria**:
 
@@ -103,7 +103,7 @@ $$
   -   $M$: Total number of trees in the forest.
   -   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
 
-## Classification
+## Random Forest Classification
 
 **Splitting Criteria**:
 
@@ -141,8 +141,10 @@ $$
 
 ## Like this...
 
+<center>
 ![](images/rf-tree-ex.png){.enlarge-image}
 [@fu2017combination]
+</center>
 
 ## The Data
 
@@ -355,30 +357,176 @@ Predicting Customer Churn
     
 ## Analysis - Matt
 
-::: {style="font-size: 1rem; text-align: left;"}
-Random Forest Model Summary
+<h3>Confusion Matrix</h3>
 
--   The Random Forest model was trained to predict `SalesOrderStatus` (Fulfilled vs. Unfulfilled) using 100 trees and `mtry = 2`.
--   **OOB Error Rate**: 17.52%, indicating expected prediction errors on unseen data.
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
 
-Model Performance Metrics
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(randomForest)
+library(caret)
+library(kableExtra)
+```
 
--   **Accuracy**: 77%, showing the model correctly classified 77% of test samples.
--   **95% Confidence Interval (CI)**: The accuracy falls within a 95% CI
-    of (0.759, 0.781), reflecting the precision of the estimate.
--   **Kappa**: The Kappa statistic, measuring the agreement beyond
-    chance, was 0.055, indicating low agreement beyond random chance.
--   **Sensitivity**: 0.06198, showing a low ability to identify "Closed Short" cases.
--   **Specificity**: 0.97642, indicating high accuracy in identifying "Fulfilled" cases.
--   **PPV (Closed Short)**: 43.39%, suggesting the model correctly predicts "Closed Short" 43.39% of the time.
--   **Balanced Accuracy**: 0.5192, considering both sensitivity and specificity.
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
 
-Conclusions
+# Load the data
+sales_data <- read.csv("data_as_csv.csv")
 
--   The model showed high specificity but low sensitivity, performing better at predicting "Fulfilled" cases.
--   `UnitPrice` and `Product` were the most significant predictors for classification.
--   Kappa statistic of 0.055 means that the overall agreement between the model's predicted `SalesOrderStatus` (e.g., "Fulfilled" vs. "Closed Short") and the actual status is very low beyond what could be expected by random guessing.
+# Filter the data to remove shipping line items and any customer credits
+exclude_products <- c("OUTBOUND SHIPPING", "Outbound Shipping", "Shipping Charge", "SHIPPING CHARGE")
+filtered_data <- sales_data %>%
+  filter(UnitPrice > 0, TotalPrice > 0, qtyOrdered > 0, !Product %in% exclude_products) %>%
+  filter(!is.na(SalesOrderStatus), !is.na(qtyOrdered), !is.na(UnitPrice), !is.na(Substrate), !is.na(Product))
+
+# Convert SalesOrderStatus to a factor variable
+filtered_data$SalesOrderStatus <- as.factor(filtered_data$SalesOrderStatus)
+
+# Apply Top-N Encoding to the 'Product' column
+top_n <- 50  # Keep the top 50 most common categories
+top_products <- names(sort(table(filtered_data$Product), decreasing = TRUE))[1:top_n]
+filtered_data$Product <- factor(
+  ifelse(filtered_data$Product %in% top_products,
+         as.character(filtered_data$Product),
+         "Other")
+)
+
+# Aggregate TotalPrice by OPCO to get total revenue per OPCO
+opco_revenue <- filtered_data %>%
+  group_by(OPCO) %>%
+  summarise(total_revenue = sum(TotalPrice, na.rm = TRUE))
+
+# Create a binary/label column indicating if an OPCO is in the top 25% of revenue
+revenue_threshold <- quantile(opco_revenue$total_revenue, 0.75)  # 75th percentile
+opco_revenue <- opco_revenue %>%
+  mutate(high_revenue = ifelse(total_revenue >= revenue_threshold, 1, 0))
+
+# Merge this information back with the original data for feature use
+filtered_data <- left_join(filtered_data, opco_revenue, by = "OPCO")
+
+# Prepare features and target variable
+features <- filtered_data %>%
+  select(Product, Substrate, TotalPrice)
+
+# Convert character columns to factors
+features <- features %>%
+  mutate(across(where(is.character), as.factor))
+
+# Set target variable (high_revenue)
+target <- filtered_data$high_revenue
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+set.seed(123)
+
+train_index <- sample(1:nrow(features), 0.7 * nrow(features))
+train_features <- features[train_index, ]
+test_features <- features[-train_index, ]
+train_target <- target[train_index]
+test_target <- target[-train_index]
+
+rf_model <- randomForest(x = train_features, y = as.factor(train_target), ntree = 100, importance = TRUE)
+```
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-align: center
+
+# Predict on test set
+test_pred <- predict(rf_model, newdata = test_features)
+
+# Confusion matrix using the binary `high_revenue` variable as the reference
+conf_matrix <- confusionMatrix(as.factor(test_pred), as.factor(test_target))
+
+# Extract the confusion matrix table
+conf_matrix_table <- as.data.frame(conf_matrix$table)
+
+# Display Confusion Matrix
+colnames(conf_matrix_table) <- c("Predicted", "Actual", "Frequency")
+
+ggplot(conf_matrix_table, aes(x = Actual, y = Predicted, fill = Frequency)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = Frequency), color = "black", size = 5) +
+  scale_fill_gradient(low = "#F1EEF6", high = "#045A8D") +
+  theme_minimal() +
+  labs(title = "Confusion Matrix for High Revenue Prediction", x = "Actual", y = "Predicted") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+-   **0**: Non-high-revenue OPCO
+-   **1**: High-revenue OPCO
+
+## Model Statistics
+
+::: {style="font-size: 1.5rem; text-align: left;"}
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+# Extract relevant statistics from the confusion matrix object
+stats <- data.frame(
+  Metric = c("Accuracy", "95% CI", "Kappa", "Sensitivity", "Specificity", "Pos Pred Value", 
+             "Neg Pred Value", "Prevalence", "Detection Rate", "Balanced Accuracy"),
+  Value = c(
+    round(conf_matrix$overall['Accuracy'], 3),
+    paste0("(", round(conf_matrix$overall['AccuracyLower'], 3), ", ", round(conf_matrix$overall['AccuracyUpper'], 3), ")"),
+    round(conf_matrix$overall['Kappa'], 3),
+    round(conf_matrix$byClass['Sensitivity'], 5),
+    round(conf_matrix$byClass['Specificity'], 5),
+    round(conf_matrix$byClass['Pos Pred Value'], 5),
+    round(conf_matrix$byClass['Neg Pred Value'], 5),
+    round(conf_matrix$byClass['Prevalence'], 5),
+    round(conf_matrix$byClass['Detection Rate'], 5),
+    round(conf_matrix$byClass['Balanced Accuracy'], 5)
+  )
+)
+
+# Display Model Statistics
+stats %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+```
 :::
+
+## ROC Curve Analysis
+
+```{r}
+#| label: fig-roc-curve
+#| fig-cap: "ROC Curve for High Revenue Prediction"
+#| echo: false
+#| warning: false
+#| message: false
+
+# ROC Curve and AUC
+library(pROC) # Load lib here to avoid function overrides
+roc_curve <- roc(as.numeric(test_target), as.numeric(test_pred))
+plot.roc(roc_curve, print.auc = TRUE)
+```
+
+## Feature Importance
+
+```{r}
+#| label: fig-importance
+#| fig-cap: Feature Importance for High Revenue Prediction
+
+# Plot Mean Decrease in Accuracy and Mean Decrease in Gini
+varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
+```
 
 ## Analysis - Mika
 
@@ -407,7 +555,13 @@ Conclusions
 -   Numerical variables (`qtyOrdered`, `TotalPrice`) are substantially more important than categorical ones.
 :::
 
+## Conclusion
+
+Mika, you got this!
+
+... coming soon
+
 ## References
 
-::: {#refs .small}
+::: {#refs}
 :::
