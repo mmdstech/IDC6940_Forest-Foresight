@@ -1,6 +1,6 @@
 ---
 title: "Random Forest in Machine Learning"
-subtitle: "Through the Looking Glass"
+subtitle: "Foresight from the Forest"
 author: "Forest Foresight (Advisor: Dr. Seals)"
 date: last-modified
 date-format: long
@@ -21,7 +21,7 @@ editor:
     wrap: 72
 ---
 
-# Random Forest in Machine Learning: Through the Looking Glass
+# Random Forest in Machine Learning: Foresight from the Forest
 
 ![](images/rf-why.png)
 
