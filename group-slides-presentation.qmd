@@ -377,7 +377,6 @@ library(kableExtra)
 #| warning: false
 #| message: false
 
-# Load the data
 sales_data <- read.csv("data_as_csv.csv")
 
 # Filter the data to remove shipping line items and any customer credits
@@ -413,7 +412,7 @@ filtered_data <- left_join(filtered_data, opco_revenue, by = "OPCO")
 
 # Prepare features and target variable
 features <- filtered_data %>%
-  select(Product, Substrate, TotalPrice)
+  select(Product, Substrate, qtyOrdered)
 
 # Convert character columns to factors
 features <- features %>%

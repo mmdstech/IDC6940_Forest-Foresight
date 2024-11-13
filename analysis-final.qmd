@@ -1,0 +1,268 @@
+---
+title: "Random Forest Classification Analysis"
+subtitle: "Prelim Analysis"
+author: "Matt McGehee (Advisor: Dr. Seals)"
+date: last-modified
+date-format: long
+format:
+  html:
+    code-fold: true
+    embed-resources: true
+    self-contained-math: true
+course: Capstone Projects in Data Science
+bibliography: references.bib
+execute: 
+  warning: false
+  message: falseS
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Random Forest Classification Analysis
+
+The objective of this analysis is to apply a Random Forest
+classification model to predict whether an `OPCO` falls within the top
+25% of revenue generators (`high_revenue`) using various predictor
+variables. This approach helps identify key distribution channels that
+drive the most revenue, aiding strategic business decisions and targeted
+marketing efforts.
+
+The analysis is performed using the `randomForest` package in R
+[@r-cit], and all necessary steps for data cleaning and model training
+are outlined in the code sections below.
+
+### Data Cleaning and Preprocessing
+
+The dataset was initially examined for irrelevant product entries such
+as shipping line items and customer refunds. These were filtered out to
+focus exclusively on relevant sales data:
+
+-   **Excluded Items**: Shipping charges and other non-product entries,
+    including "OUTBOUND SHIPPING" and "Shipping Charge."
+-   **Filters Applied**: Rows with non-positive values for `UnitPrice`,
+    `TotalPrice`, and `qtyOrdered` were removed to ensure only genuine
+    sales transactions were analyzed.
+
+The data was then prepared for modeling, with key columns converted to
+appropriate types (e.g., categorical encoding of `Product`).
+
+### Feature Selection
+
+The key variables used for predicting high-revenue OPCOs include:
+
+-   **`Product`**: The type of product sold.
+
+-   **`Substrate`**: The material type of the product.
+
+-   **`qtyOrdered`**: The number of units ordered.
+
+These variables were chosen based on their potential impact on revenue
+generation and their importance in the supply chain.
+
+## Analysis
+
+### Loading Necessary Libraries
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(randomForest)
+library(caret)
+library(kableExtra)
+```
+
+### Data Cleaning and Preprocessing
+
+```{r}
+# Load the data
+sales_data <- read.csv("data_as_csv.csv")
+
+# Filter the data to remove shipping line items and any customer credits
+exclude_products <- c("OUTBOUND SHIPPING", "Outbound Shipping", "Shipping Charge", "SHIPPING CHARGE")
+filtered_data <- sales_data %>%
+  filter(UnitPrice > 0, TotalPrice > 0, qtyOrdered > 0, !Product %in% exclude_products) %>%
+  filter(!is.na(SalesOrderStatus), !is.na(qtyOrdered), !is.na(UnitPrice), !is.na(Substrate), !is.na(Product))
+
+# Convert SalesOrderStatus to a factor variable
+filtered_data$SalesOrderStatus <- as.factor(filtered_data$SalesOrderStatus)
+
+# Apply Top-N Encoding to the 'Product' column
+top_n <- 50  # Keep the top 50 most common categories
+top_products <- names(sort(table(filtered_data$Product), decreasing = TRUE))[1:top_n]
+filtered_data$Product <- factor(
+  ifelse(filtered_data$Product %in% top_products,
+         as.character(filtered_data$Product),
+         "Other")
+)
+
+# Aggregate TotalPrice by OPCO to get total revenue per OPCO
+opco_revenue <- filtered_data %>%
+  group_by(OPCO) %>%
+  summarise(total_revenue = sum(TotalPrice, na.rm = TRUE))
+
+# Create a binary/label column indicating if an OPCO is in the top 25% of revenue
+revenue_threshold <- quantile(opco_revenue$total_revenue, 0.75)  # 75th percentile
+opco_revenue <- opco_revenue %>%
+  mutate(high_revenue = ifelse(total_revenue >= revenue_threshold, 1, 0))
+
+# Merge this information back with the original data for feature use
+filtered_data <- left_join(filtered_data, opco_revenue, by = "OPCO")
+
+# Prepare features and target variable
+features <- filtered_data %>%
+  select(Product, Substrate, qtyOrdered)
+
+# Convert character columns to factors
+features <- features %>%
+  mutate(across(where(is.character), as.factor))
+
+# Set target variable (high_revenue)
+target <- filtered_data$high_revenue
+```
+
+### Model Training and Evaluation
+
+#### Training the Random Forest Model
+
+```{r}
+set.seed(123)
+
+train_index <- sample(1:nrow(features), 0.7 * nrow(features))
+train_features <- features[train_index, ]
+test_features <- features[-train_index, ]
+train_target <- target[train_index]
+test_target <- target[-train_index]
+
+rf_model <- randomForest(x = train_features, y = as.factor(train_target), ntree = 100, importance = TRUE)
+```
+
+#### Model Evaluation on Test Set
+
+```{r}
+#| label: tbl-conf-matrix
+#| tbl-cap: Confusion Matrix
+
+# Predict on test set
+test_pred <- predict(rf_model, newdata = test_features)
+
+# Confusion matrix using the binary `high_revenue` variable as the reference
+conf_matrix <- confusionMatrix(as.factor(test_pred), as.factor(test_target))
+
+# Extract the confusion matrix table
+conf_matrix_table <- as.data.frame(conf_matrix$table)
+
+# Display Confusion Matrix
+conf_matrix_table %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+```
+
+-   **True Negatives (TN)**: 591
+-   **False Positives (FP)**: 301
+-   **False Negatives (FN)**: 86
+-   **True Positives (TP)**: 7814
+
+#### Model Statistics
+
+```{r}
+#| label: tbl-model-stats
+#| tbl-cap: Model Statistics
+
+# Extract relevant statistics from the confusion matrix object
+stats <- data.frame(
+  Metric = c("Accuracy", "95% CI", "Kappa", "Sensitivity", "Specificity", "Pos Pred Value", 
+             "Neg Pred Value", "Prevalence", "Detection Rate", "Balanced Accuracy"),
+  Value = c(
+    round(conf_matrix$overall['Accuracy'], 3),
+    paste0("(", round(conf_matrix$overall['AccuracyLower'], 3), ", ", round(conf_matrix$overall['AccuracyUpper'], 3), ")"),
+    round(conf_matrix$overall['Kappa'], 3),
+    round(conf_matrix$byClass['Sensitivity'], 5),
+    round(conf_matrix$byClass['Specificity'], 5),
+    round(conf_matrix$byClass['Pos Pred Value'], 5),
+    round(conf_matrix$byClass['Neg Pred Value'], 5),
+    round(conf_matrix$byClass['Prevalence'], 5),
+    round(conf_matrix$byClass['Detection Rate'], 5),
+    round(conf_matrix$byClass['Balanced Accuracy'], 5)
+  )
+)
+
+# Display Model Statistics
+stats %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+```
+
+-   **Accuracy: 95.6%**
+    -   Indicates that 95.6% of all predictions (both high-revenue and
+        non-high-revenue OPCOs) were correct.
+-   **Balanced Accuracy: 82.6%**
+    -   Provides an average of sensitivity and specificity, showing the
+        model's ability to handle imbalanced data by considering both
+        true positive and true negative rates equally.
+-   **Kappa: 0.73**
+    -   Measures the agreement between the predicted and actual
+        classifications while accounting for the possibility of random
+        chance. A value of 0.73 indicates substantial agreement.
+-   **Sensitivity: 66.3%**
+    -   Represents the model's ability to correctly identify
+        high-revenue OPCOs. About 66.3% of true high-revenue cases were
+        correctly predicted.
+-   **Specificity: 98.9%**
+    -   Indicates the model's effectiveness in correctly identifying
+        non-high-revenue OPCOs. 98.9% of true non-high-revenue cases
+        were accurately classified.
+-   **AUC: 0.826**
+    -   The Area Under the ROC Curve (AUC) shows the model's ability to
+        distinguish between high-revenue and non-high-revenue OPCOs. A
+        value of 0.826 suggests good discriminative power.
+
+### ROC Curve Analysis
+
+```{r}
+#| label: fig-roc-curve
+#| fig-cap: "ROC Curve for High Revenue Prediction"
+
+# ROC Curve and AUC
+library(pROC)
+roc_curve <- roc(as.numeric(test_target), as.numeric(test_pred))
+plot.roc(roc_curve, print.auc = TRUE)  
+```
+
+The ROC curve shows that the model has an AUC of 0.826, indicating good
+discriminative ability. This suggests that the model can reliably
+differentiate between high-revenue and non-high-revenue OPCOs.
+
+### Feature Importance
+
+```{r}
+#| label: fig-importance
+#| fig-cap: Feature Importance for High Revenue Prediction
+
+# Plot Mean Decrease in Accuracy and Mean Decrease in Gini
+varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
+```
+
+The most critical features contributing to the model's predictive power
+are:
+
+-   **`qtyOrdered`**: The strongest predictor of whether an OPCO is a
+    high-revenue generator.
+-   **`Product`**: Indicates the type of product and its influence on
+    revenue generation.
+-   **`Substrate`**: Plays a meaningful role but has less impact
+    compared to `qtyOrdered` and `Product`.
+
+## Conclusion
+
+The analysis demonstrated that the Random Forest model effectively
+predicts high-revenue OPCOs with a high accuracy of 95.7% and a balanced
+accuracy of 84.3%. The most critical feature was `TotalPrice`, with
+`Product` following closely behind, indicating that revenue totals and
+product types are key drivers in identifying high-revenue OPCOs.
+
+Using this information, decision-makers will be able to predict with
+fair accuracy where to put their marketing dollars in future campaigns.
+There is also plenty of room for improvements. Gathering more
+information and effectively introducing newer predictors could further
+enhance the model.
