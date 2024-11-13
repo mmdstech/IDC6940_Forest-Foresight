@@ -529,14 +529,13 @@ varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
 
 ## Analysis - Mika
 
-::: {style="font-size: 1rem; text-align: left;"}
-Random Forest Model Summary
+<h3> Random Forest Model Summary </h3>
 
 -   The Random Forest model was trained to predict `QuantityFulfilled` using 100 records of sales data.
 -   The model used 8 predictor variables and 100 bootstrap iterations.
 -   Bootstrap validation was performed to assess model stability and performance.
 
-Model Performance Metrics
+## Model Performance Metrics
 
 -   **Original MSE**: 800.89 units²
 -   **RMSE**: 28.30 units (shows average prediction error in original units)
@@ -545,14 +544,13 @@ Model Performance Metrics
 -   **Standard Error**: 292.65 (shows variability in predictions)
 -   **95% Confidence Interval**: (198.3, 1449.2) for MSE
 
-Conclusions
+## Conclusions
 
 -   The model predicts `QuantityFulfilled` with an average error of about 28 units (RMSE).
 -   Predictions are typically off by about 13 units (MAE).
 -   The model shows consistent negative bias (-204.04), suggesting systematic underestimation.
 -   A wide confidence interval (198.3 to 1449.2) indicates high variability in prediction accuracy.
 -   Numerical variables (`qtyOrdered`, `TotalPrice`) are substantially more important than categorical ones.
-:::
 
 ## Conclusion
 
