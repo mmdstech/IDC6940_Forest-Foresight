@@ -1,6 +1,6 @@
 ---
-title: "Writing a great story for data science projects"
-subtitle: "This is a Report Template"
+title: "Random Forest in Machine Learning"
+subtitle: "Foresight from the Forest"
 author: "Matt McGehee (Advisor: Dr. Seals)"
 date: last-modified
 date-format: long
@@ -11,6 +11,7 @@ format:
     self-contained-math: true
 course: Capstone Projects in Data Science
 bibliography: references.bib # file contains bibtex for references
+csl: ieee.csl
 #always_allow_html: true # this allows to get PDF with HTML features
 execute: 
   warning: false
@@ -22,29 +23,23 @@ editor:
 
 ## Introduction
 
-The introduction should:
+Machine learning, and specifically the Random Forest (RF) algorithm, has become a highly valuable tool in various domains, from customer and supplier segmentation to predicting outcomes in complex datasets. Random Forest’s robustness, accuracy, and ability to handle both classification and regression tasks make it ideal for data that contain noise, uncertainty, or complex relationships between variables.
 
--   Develop a storyline that captures attention and maintains interest.
+This report synthesizes findings from six research articles, focusing on different aspects of machine learning applications using Random Forest. These include handling imbalanced data, supplier and customer segmentation, predicting customer retention, and leveraging online reviews for benefit segmentation. Each article emphasizes the flexibility and power of Random Forest in solving diverse problems across industries.
 
--   Your audience is your peers
+## Summary of Articles
 
--   Clearly state the problem or question you're addressing.
+The first article I reviewed compares two Random Forest-based algorithms: Random Credal Random Forest (RCRF) and Oblique Random Forest (oRF). Both models use bagging and feature randomness, but RCRF includes credal sets, which offer a range of probabilities, making the model more robust and accurate. This allows RCRF to handle noisy datasets better than oRF, while also improving computational efficiency. One limitation is the complexity of the credal set approach, which can add overhead to the model. [@Mantas2019-li]
 
--   Introduce why it is relevant needs.
+The second article explored how Random Forest (RF) performs on imbalanced datasets. The authors analyzed the effect of different tree numbers and feature selections on classification performance, using Area Under the ROC Curve (AUC) as the primary metric. RF outperformed several other models, including Naive Bayes and SVM, and provided recommendations on parameter settings for improving accuracy when handling imbalanced data. The findings emphasize RF’s capability to handle this challenging dataset type more effectively than most conventional methods. [@Khoshgoftaar2007-bo]
 
--   Provide an overview of your approach.
+The third article gave an in-depth review of Random Forest (RF), discussing how it works for both classification and regression tasks. RF creates multiple decision trees using subsets of the data and applies bagging to reduce variance and improve prediction accuracy. The article highlights RF’s ability to work with high-dimensional data while being resilient to overfitting. However, it also notes the difficulty of analyzing the algorithm due to its complex nature. [@Biau2016-ac]
 
-Example of writing including citing references:
+Next, I looked at a study that used Random Forest to predict customer retention and profitability. The goal was to assess "next buy," "partial defection," and "profitability evolution" for a European financial services company. RF outperformed logistic regression, particularly when predicting customer retention based on total product ownership and cross-buying habits. Additionally, the study highlighted the importance of salespeople’s behavior in influencing customer outcomes. One downside is that RF, while accurate, can be challenging to interpret for business users without technical expertise. [@Lariviere2005-uq]
 
-*This is an introduction to ..... regression, which is a non-parametric
-estimator that estimates the conditional expectation of two variables
-which is random. The goal of a kernel regression is to discover the
-non-linear relationship between two random variables. To discover the
-non-linear relationship, kernel estimator or kernel smoothing is the
-main method to estimate the curve for non-parametric statistics. In
-kernel estimator, weight function is known as kernel function
-[@efr2008]. Cite this paper [@bro2014principal]. The GEE [@wang2014].
-The PCA [@daffertshofer2004pca]*
+Another article focused on using Random Forest for supplier segmentation. This study aimed to identify core suppliers based on their impact on a buyer’s profitability using e-invoice data. The RF model performed well, achieving an AUC of 89.58%, which demonstrated its strong predictive ability. Automating supplier segmentation through RF improved accuracy and reduced human bias, making it a reliable method for procurement departments. However, the model's accuracy is highly dependent on the quality of input data. [@Hong2018-fr]
+
+Lastly, I examined a study on benefit segmentation using Random Forest with customer reviews from a hotel booking platform. The study used Non-Negative Matrix Factorization (NMF) to extract topics from reviews, then applied RF to classify the reviews based on benefits, such as business travel or leisure travel. RF achieved a precision of 81%, showcasing how it can effectively analyze text data for segmentation. The authors concluded that benefit segmentation with RF could help businesses tailor their products and services to specific customer needs, although it might require large datasets for optimal performance. [@Torizuka2018-if]
 
 ## Data
 
@@ -86,9 +81,14 @@ data_def <- data.frame(
 knitr::kable(data_def, caption = "Sales Transaction Dataset Definition", align = "l")
 ```
 
-### Sample Data
+<!-- ### Sample Data -->
 
 ```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| include: false
+
 sales_data <- read.csv("data_as_csv.csv")
 DT::datatable(head(sales_data), options = list(pageLength = 6), 
           caption = "Interactive Preview of Sales Data")
@@ -127,7 +127,7 @@ performance, customer segmentation, and pricing strategies.
 ### Table 1
 
 <style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;border-style: solid;border-width: 1px;border-color: black;}
+.tg  {border-collapse:collapse;border-spacing:0;border-style: solid;border-width: 1px;border-color: black; width: 100%;}
 .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
   overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:13px;
@@ -383,14 +383,10 @@ forest guided tour." [@Biau2016-ac]
 
     -   For regression analysis, the CART (Classification and Regression
         Trees) algorithm is used to evaluate splits:
-
-        ::: {style="font-size: 1rem; text-align: left;"}
         
         $$             
           L_{\text{reg},n}(j, z) = \frac{1}{N_n(A)} \sum_{i=1}^{n} (Y_i - \bar{Y}_A)^2 \mathbf{1}_{X_i \in A} - \frac{1}{N_n(A)} \left(\sum_{i=1}^{n} (Y_i - \bar{Y}_{AL})^2 \mathbf{1}_{X_i \in AL} + \sum_{i=1}^{n} (Y_i - \bar{Y}_{AR})^2 \mathbf{1}_{X_i \in AR}\right) 
         $$
-        
-        :::
 
         -   $N_n(A)$: Number of data points in cell $A$.
         -   $Y_i$: Response variable for observation $i$.
@@ -404,8 +400,9 @@ forest guided tour." [@Biau2016-ac]
           G = 1 - \sum_{k=1}^{K} p_k^2 
         $$
         
-        where $p_k$ represents the proportion of samples of class $k$ in
-        the node, and $K$ is the number of classes.
+        -   $p_k$ represents the proportion of samples of class $k$ in
+        the node, and 
+        -   $K$ is the number of classes.
 
 3.  **Voting/Aggregation**: For classification, the final prediction is
     based on the majority vote of the trees, while for regression, it is
@@ -423,8 +420,12 @@ $$
   OOB_{Error} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{1}(\hat{y}_{OOB, i} \neq y_i)
 $$
 
-where $N$ is the number of observations, and $\hat{y}_{OOB, i}$ is the
-prediction for observation $i$ based on the OOB data.
+::: {style="margin-left: 75px"}
+
+  -   $N$ is the number of observations, and 
+  -   $\hat{y}_{OOB, i}$ is the prediction for observation $i$ based on the OOB data.
+
+:::
 
 ### Feature Selection and Importance
 
@@ -441,7 +442,11 @@ different features used in model predictions:
       MDA(X_j) = \frac{1}{T} \sum_{t=1}^{T} (OOB_{Error_t} - OOB_{Error_{t, permuted(j)}})
     $$
     
-    where $OOB_{Error_{t, permuted(j)}}$ is the OOB error when feature $j$ is permuted.
+::: {style="margin-left: 75px"}
+    
+  -   $OOB_{Error_{t, permuted(j)}}$ is the OOB error when feature $j$ is permuted.
+    
+:::
 
 ### Hyperparameter Tuning
 
@@ -456,24 +461,6 @@ Key hyperparameters in Random Forests include:
 
 -   **Minimum Node Size (nodesize)**: Determines the minimum number of
     samples required in a node before a split can occur.
-
-A grid search or other optimization techniques can be employed to find
-the best combination of these hyperparameters. Cross-validation is
-commonly used to evaluate different configurations, ensuring robustness
-and generalizability of the model.
-
-### Theoretical Considerations
-
-Random Forests exhibit several notable theoretical properties:
-
--   **Consistency**: Under certain conditions, Random Forests can be
-    consistent estimators, meaning that as the number of trees and
-    sample size increase, the model's prediction error converges to the
-    minimum error possible.
-
--   **Asymptotic Behavior**: The asymptotic properties, including
-    normality and consistency, have been studied extensively, providing
-    a foundation for confidence intervals and hypothesis testing.
     
 ### Statistical Programming
 
@@ -481,21 +468,6 @@ Data management and analysis were performed using `R` Version 4.4.1
 [@r-cit]. The Random Forest model was implemented using the `randomForest` [@rf-cit] 
 package in R. Additional packages used for data management and evaluation include
 `dplyr` [@dplyr-cit], `caret` [@caret-cit], and `pROC` [@pROC-cit].
-
-### Model Evaluation
-
-Performance metrics for Random Forest classification include accuracy,
-precision, recall, F1 score, and the AUC (Area Under the ROC Curve). The
-AUC is particularly useful as it measures the model's ability to
-distinguish between classes.
-
-### Data Exploration and Visualization
-
--   Describe your data sources and collection process.
-
--   Present initial findings and insights through visualizations.
-
--   Highlight unexpected patterns or anomalies.
 
 ## Random Forest Classification Analysis
 

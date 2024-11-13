@@ -9,7 +9,7 @@
 <meta name="author" content="Matt McGehee (Advisor: Dr. Seals)">
 <meta name="dcterms.date" content="2024-11-13">
 
-<title>Writing a great story for data science projects</title>
+<title>Random Forest in Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -5898,8 +5898,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Writing a great story for data science projects</h1>
-<p class="subtitle lead">This is a Report Template</p>
+<h1 class="title">Random Forest in Machine Learning</h1>
+<p class="subtitle lead">Foresight from the Forest</p>
 </div>
 
 
@@ -5930,20 +5930,21 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The introduction should:</p>
-<ul>
-<li><p>Develop a storyline that captures attention and maintains interest.</p></li>
-<li><p>Your audience is your peers</p></li>
-<li><p>Clearly state the problem or question you’re addressing.</p></li>
-<li><p>Introduce why it is relevant needs.</p></li>
-<li><p>Provide an overview of your approach.</p></li>
-</ul>
-<p>Example of writing including citing references:</p>
-<p><em>This is an introduction to ….. regression, which is a non-parametric estimator that estimates the conditional expectation of two variables which is random. The goal of a kernel regression is to discover the non-linear relationship between two random variables. To discover the non-linear relationship, kernel estimator or kernel smoothing is the main method to estimate the curve for non-parametric statistics. In kernel estimator, weight function is known as kernel function <span class="citation" data-cites="efr2008">(<a href="#ref-efr2008" role="doc-biblioref"><strong>efr2008?</strong></a>)</span>. Cite this paper <span class="citation" data-cites="bro2014principal">(<a href="#ref-bro2014principal" role="doc-biblioref"><strong>bro2014principal?</strong></a>)</span>. The GEE <span class="citation" data-cites="wang2014">(<a href="#ref-wang2014" role="doc-biblioref"><strong>wang2014?</strong></a>)</span>. The PCA <span class="citation" data-cites="daffertshofer2004pca">(<a href="#ref-daffertshofer2004pca" role="doc-biblioref"><strong>daffertshofer2004pca?</strong></a>)</span></em></p>
+<p>Machine learning, and specifically the Random Forest (RF) algorithm, has become a highly valuable tool in various domains, from customer and supplier segmentation to predicting outcomes in complex datasets. Random Forest’s robustness, accuracy, and ability to handle both classification and regression tasks make it ideal for data that contain noise, uncertainty, or complex relationships between variables.</p>
+<p>This report synthesizes findings from six research articles, focusing on different aspects of machine learning applications using Random Forest. These include handling imbalanced data, supplier and customer segmentation, predicting customer retention, and leveraging online reviews for benefit segmentation. Each article emphasizes the flexibility and power of Random Forest in solving diverse problems across industries.</p>
+</section>
+<section id="summary-of-articles" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-articles">Summary of Articles</h2>
+<p>The first article I reviewed compares two Random Forest-based algorithms: Random Credal Random Forest (RCRF) and Oblique Random Forest (oRF). Both models use bagging and feature randomness, but RCRF includes credal sets, which offer a range of probabilities, making the model more robust and accurate. This allows RCRF to handle noisy datasets better than oRF, while also improving computational efficiency. One limitation is the complexity of the credal set approach, which can add overhead to the model. <span class="citation" data-cites="Mantas2019-li"><a href="#ref-Mantas2019-li" role="doc-biblioref">[1]</a></span></p>
+<p>The second article explored how Random Forest (RF) performs on imbalanced datasets. The authors analyzed the effect of different tree numbers and feature selections on classification performance, using Area Under the ROC Curve (AUC) as the primary metric. RF outperformed several other models, including Naive Bayes and SVM, and provided recommendations on parameter settings for improving accuracy when handling imbalanced data. The findings emphasize RF’s capability to handle this challenging dataset type more effectively than most conventional methods. <span class="citation" data-cites="Khoshgoftaar2007-bo"><a href="#ref-Khoshgoftaar2007-bo" role="doc-biblioref">[2]</a></span></p>
+<p>The third article gave an in-depth review of Random Forest (RF), discussing how it works for both classification and regression tasks. RF creates multiple decision trees using subsets of the data and applies bagging to reduce variance and improve prediction accuracy. The article highlights RF’s ability to work with high-dimensional data while being resilient to overfitting. However, it also notes the difficulty of analyzing the algorithm due to its complex nature. <span class="citation" data-cites="Biau2016-ac"><a href="#ref-Biau2016-ac" role="doc-biblioref">[3]</a></span></p>
+<p>Next, I looked at a study that used Random Forest to predict customer retention and profitability. The goal was to assess “next buy,” “partial defection,” and “profitability evolution” for a European financial services company. RF outperformed logistic regression, particularly when predicting customer retention based on total product ownership and cross-buying habits. Additionally, the study highlighted the importance of salespeople’s behavior in influencing customer outcomes. One downside is that RF, while accurate, can be challenging to interpret for business users without technical expertise. <span class="citation" data-cites="Lariviere2005-uq"><a href="#ref-Lariviere2005-uq" role="doc-biblioref">[4]</a></span></p>
+<p>Another article focused on using Random Forest for supplier segmentation. This study aimed to identify core suppliers based on their impact on a buyer’s profitability using e-invoice data. The RF model performed well, achieving an AUC of 89.58%, which demonstrated its strong predictive ability. Automating supplier segmentation through RF improved accuracy and reduced human bias, making it a reliable method for procurement departments. However, the model’s accuracy is highly dependent on the quality of input data. <span class="citation" data-cites="Hong2018-fr"><a href="#ref-Hong2018-fr" role="doc-biblioref">[5]</a></span></p>
+<p>Lastly, I examined a study on benefit segmentation using Random Forest with customer reviews from a hotel booking platform. The study used Non-Negative Matrix Factorization (NMF) to extract topics from reviews, then applied RF to classify the reviews based on benefits, such as business travel or leisure travel. RF achieved a precision of 81%, showcasing how it can effectively analyze text data for segmentation. The authors concluded that benefit segmentation with RF could help businesses tailor their products and services to specific customer needs, although it might require large datasets for optimal performance. <span class="citation" data-cites="Torizuka2018-if"><a href="#ref-Torizuka2018-if" role="doc-biblioref">[6]</a></span></p>
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>The dataset, provided by a fellow student <span class="citation" data-cites="stutti">(<a href="#ref-stutti" role="doc-biblioref">Stutti 2024</a>)</span>, contains sales transaction details from a B2B context. The data tracks information on sales orders, quantities ordered, shipping details, and item-level statuses. Below is the data definition table that explains the key attributes.</p>
+<p>The dataset, provided by a fellow student <span class="citation" data-cites="stutti"><a href="#ref-stutti" role="doc-biblioref">[7]</a></span>, contains sales transaction details from a B2B context. The data tracks information on sales orders, quantities ordered, shipping details, and item-level statuses. Below is the data definition table that explains the key attributes.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -6082,31 +6083,17 @@ window.Quarto = {
 </table>
 </div>
 </div>
-<section id="sample-data" class="level3">
-<h3 class="anchored" data-anchor-id="sample-data">Sample Data</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data_as_csv.csv&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="fu">head</span>(sales_data), <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">6</span>), </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Interactive Preview of Sales Data&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-4a05a35192007e78699a" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-4a05a35192007e78699a">{"x":{"filter":"none","vertical":false,"caption":"<caption>Interactive Preview of Sales Data<\/caption>","data":[["1","2","3","4","5","6"],[".Sysco - Riverside",".Sysco - Riverside",".Sysco - Atlanta",".Sysco - Baltimore",".Sysco - Central Illinois",".Sysco - Central Illinois"],["25897","25897","25836","25837","25843","25843"],["10268630","10268630","35759540","28413850","6939630","6939630"],["Bellus 460290","Bellus 433470","CMI-PLCCL107-01","CMI-PLCCL107-01","BBB-PLCC20-01","CMI-PLCCL107-01"],["Bagasse bowl lid  domestic 24oz-32oz","Bagasse Bowl 32oz","107MM PET Flat Lid with X Hole","107MM PET Flat Lid with X Hole","Bowl Bliss 20oz PET Drink Cup","107MM PET Flat Lid with X Hole"],["other","bagasse","plastic","plastic","plastic","plastic"],["2024-09-26","2024-09-26","2024-09-17","2024-09-17","2024-09-18","2024-09-18"],["2024-09-17","2024-09-17","2024-09-17","2024-09-17","2024-09-17","2024-09-17"],[12,12,20,30,30,50],[12,12,0,0,6,0],[38.79,32.94,18.13,18.13,56.99,18.13],[465.48,395.28,0,0,341.94,0],["Bowl Bliss","Bowl Bliss","Smoothie Island","Golly","Bowl Bliss","Golly"],[".Sysco Riverside",".Sysco Riverside",".Sysco Atlanta",".Sysco - Baltimore",".Sysco - Central Illinois",".Sysco - Central Illinois"],["15750 Meridian Pkwy, Riverside, CA","15750 Meridian Pkwy, Riverside, CA","4461 Wickersham Drive, College Park, GA","8000 Dorsey Run Rd, Jessup, MD","1 Sysco Drive, Lincoln, IL","1 Sysco Drive, Lincoln, IL"],["Fulfilled","Fulfilled","Closed Short","Closed Short","Closed Short","Closed Short"],["Fulfilled","Fulfilled","Closed Short","Closed Short","Closed Short","Closed Short"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>OPCO<\/th>\n      <th>SalesOrderID<\/th>\n      <th>CustomerPO<\/th>\n      <th>Product<\/th>\n      <th>Description<\/th>\n      <th>Substrate<\/th>\n      <th>RequestedDeliveryDate<\/th>\n      <th>DateFulfilled<\/th>\n      <th>qtyOrdered<\/th>\n      <th>QuantityFulfilled<\/th>\n      <th>UnitPrice<\/th>\n      <th>TotalPrice<\/th>\n      <th>Class<\/th>\n      <th>ShipToName<\/th>\n      <th>ShipToAddress<\/th>\n      <th>SalesOrderStatus<\/th>\n      <th>SalesItemStatus<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"columnDefs":[{"className":"dt-right","targets":[9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"OPCO","targets":1},{"name":"SalesOrderID","targets":2},{"name":"CustomerPO","targets":3},{"name":"Product","targets":4},{"name":"Description","targets":5},{"name":"Substrate","targets":6},{"name":"RequestedDeliveryDate","targets":7},{"name":"DateFulfilled","targets":8},{"name":"qtyOrdered","targets":9},{"name":"QuantityFulfilled","targets":10},{"name":"UnitPrice","targets":11},{"name":"TotalPrice","targets":12},{"name":"Class","targets":13},{"name":"ShipToName","targets":14},{"name":"ShipToAddress","targets":15},{"name":"SalesOrderStatus","targets":16},{"name":"SalesItemStatus","targets":17}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-</section>
+<!-- ### Sample Data -->
 <section id="summary-stats" class="level3">
 <h3 class="anchored" data-anchor-id="summary-stats">Summary Stats</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the pander package</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print a formatted summary of the dataset</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(sales_data), <span class="at">caption =</span> <span class="st">&quot;Summary Statistics of Sales Data&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the pander package</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print a formatted summary of the dataset</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(sales_data), <span class="at">caption =</span> <span class="st">&quot;Summary Statistics of Sales Data&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -6372,7 +6359,7 @@ window.Quarto = {
 <section id="table-1" class="level3">
 <h3 class="anchored" data-anchor-id="table-1">Table 1</h3>
 <style type="text/css">
-.tg {border-collapse:collapse;border-spacing:0;border-style: solid;border-width: 1px;border-color: black;}
+.tg {border-collapse:collapse;border-spacing:0;border-style: solid;border-width: 1px;border-color: black; width: 100%;}
 .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
 overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:13px;
@@ -6775,22 +6762,22 @@ $143,084.74
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data_as_csv.csv&quot;</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>product_qty <span class="ot">&lt;-</span> sales_data <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalQuantityOrdered =</span> <span class="fu">sum</span>(qtyOrdered, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TotalQuantityOrdered)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(product_qty, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Product, TotalQuantityOrdered), <span class="at">y =</span> TotalQuantityOrdered)) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Top 20 Products by Total Quantity Ordered&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Product&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total Quantity Ordered&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data_as_csv.csv&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>product_qty <span class="ot">&lt;-</span> sales_data <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalQuantityOrdered =</span> <span class="fu">sum</span>(qtyOrdered, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TotalQuantityOrdered)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(product_qty, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Product, TotalQuantityOrdered), <span class="at">y =</span> TotalQuantityOrdered)) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Top 20 Products by Total Quantity Ordered&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Product&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total Quantity Ordered&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -6803,30 +6790,30 @@ $143,084.74
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data_as_csv.csv&quot;</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>exclude_products <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;OUTBOUND SHIPPING&quot;</span>, <span class="st">&quot;Outbound Shipping&quot;</span>, <span class="st">&quot;Shipping Charge&quot;</span>, <span class="st">&quot;SHIPPING CHARGE&quot;</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> sales_data <span class="sc">%&gt;%</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TotalPrice <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">!</span>Product <span class="sc">%in%</span> exclude_products)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(filtered_data<span class="sc">$</span>TotalPrice, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>Q3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(filtered_data<span class="sc">$</span>TotalPrice, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>IQR_value <span class="ot">&lt;-</span> <span class="fu">IQR</span>(filtered_data<span class="sc">$</span>TotalPrice, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="ot">&lt;-</span> Q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR_value</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="ot">&lt;-</span> Q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR_value</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>filtered_data_IQR <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TotalPrice <span class="sc">&gt;=</span> lower_bound <span class="sc">&amp;</span> TotalPrice <span class="sc">&lt;=</span> upper_bound)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data_IQR, <span class="fu">aes</span>(<span class="at">x =</span> TotalPrice)) <span class="sc">+</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">100</span>, <span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribution of Total Prices (Filtered by IQR)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Total Price&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Frequency&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data_as_csv.csv&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>exclude_products <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;OUTBOUND SHIPPING&quot;</span>, <span class="st">&quot;Outbound Shipping&quot;</span>, <span class="st">&quot;Shipping Charge&quot;</span>, <span class="st">&quot;SHIPPING CHARGE&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> sales_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TotalPrice <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">!</span>Product <span class="sc">%in%</span> exclude_products)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(filtered_data<span class="sc">$</span>TotalPrice, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>Q3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(filtered_data<span class="sc">$</span>TotalPrice, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>IQR_value <span class="ot">&lt;-</span> <span class="fu">IQR</span>(filtered_data<span class="sc">$</span>TotalPrice, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="ot">&lt;-</span> Q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR_value</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="ot">&lt;-</span> Q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR_value</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>filtered_data_IQR <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TotalPrice <span class="sc">&gt;=</span> lower_bound <span class="sc">&amp;</span> TotalPrice <span class="sc">&lt;=</span> upper_bound)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data_IQR, <span class="fu">aes</span>(<span class="at">x =</span> TotalPrice)) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">100</span>, <span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribution of Total Prices (Filtered by IQR)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Total Price&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Frequency&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -6842,7 +6829,7 @@ $143,084.74
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <section id="random-forest-classification" class="level3">
 <h3 class="anchored" data-anchor-id="random-forest-classification">Random Forest Classification</h3>
-<p>The Random Forest algorithm, initially proposed by Breiman (2001), is a widely used ensemble learning method for classification and regression tasks. It operates by constructing multiple decision trees during training and outputs the mode of the classes (for classification) or mean prediction (for regression) of the individual trees <span class="citation" data-cites="Breiman_undated-tp">(<a href="#ref-Breiman_undated-tp" role="doc-biblioref">Breiman, n.d.</a>)</span>. The following methods and descriptions have all been derived from G’erard Biau and Erwan Scornet’s paper “A random forest guided tour.” <span class="citation" data-cites="Biau2016-ac">(<a href="#ref-Biau2016-ac" role="doc-biblioref">Biau and Scornet 2016</a>)</span></p>
+<p>The Random Forest algorithm, initially proposed by Breiman (2001), is a widely used ensemble learning method for classification and regression tasks. It operates by constructing multiple decision trees during training and outputs the mode of the classes (for classification) or mean prediction (for regression) of the individual trees <span class="citation" data-cites="Breiman_undated-tp"><a href="#ref-Breiman_undated-tp" role="doc-biblioref">[8]</a></span>. The following methods and descriptions have all been derived from G’erard Biau and Erwan Scornet’s paper “A random forest guided tour.” <span class="citation" data-cites="Biau2016-ac"><a href="#ref-Biau2016-ac" role="doc-biblioref">[3]</a></span></p>
 </section>
 <section id="tree-building-process" class="level3">
 <h3 class="anchored" data-anchor-id="tree-building-process">Tree Building Process</h3>
@@ -6851,11 +6838,9 @@ $143,084.74
 <li><p><strong>Node Splitting</strong>:</p>
 <ul>
 <li><p>For regression analysis, the CART (Classification and Regression Trees) algorithm is used to evaluate splits:</p>
-<div style="font-size: 1rem; text-align: left;">
 <p><span class="math display">\[             
   L_{\text{reg},n}(j, z) = \frac{1}{N_n(A)} \sum_{i=1}^{n} (Y_i - \bar{Y}_A)^2 \mathbf{1}_{X_i \in A} - \frac{1}{N_n(A)} \left(\sum_{i=1}^{n} (Y_i - \bar{Y}_{AL})^2 \mathbf{1}_{X_i \in AL} + \sum_{i=1}^{n} (Y_i - \bar{Y}_{AR})^2 \mathbf{1}_{X_i \in AR}\right)
 \]</span></p>
-</div>
 <ul>
 <li><span class="math inline">\(N_n(A)\)</span>: Number of data points in cell <span class="math inline">\(A\)</span>.</li>
 <li><span class="math inline">\(Y_i\)</span>: Response variable for observation <span class="math inline">\(i\)</span>.</li>
@@ -6866,7 +6851,10 @@ $143,084.74
 <p><span class="math display">\[
   G = 1 - \sum_{k=1}^{K} p_k^2
 \]</span></p>
-<p>where <span class="math inline">\(p_k\)</span> represents the proportion of samples of class <span class="math inline">\(k\)</span> in the node, and <span class="math inline">\(K\)</span> is the number of classes.</p></li>
+<ul>
+<li><span class="math inline">\(p_k\)</span> represents the proportion of samples of class <span class="math inline">\(k\)</span> in the node, and</li>
+<li><span class="math inline">\(K\)</span> is the number of classes.</li>
+</ul></li>
 </ul></li>
 <li><p><strong>Voting/Aggregation</strong>: For classification, the final prediction is based on the majority vote of the trees, while for regression, it is the average of the predictions.</p></li>
 </ol>
@@ -6877,7 +6865,12 @@ $143,084.74
 <p><span class="math display">\[
   OOB_{Error} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{1}(\hat{y}_{OOB, i} \neq y_i)
 \]</span></p>
-<p>where <span class="math inline">\(N\)</span> is the number of observations, and <span class="math inline">\(\hat{y}_{OOB, i}\)</span> is the prediction for observation <span class="math inline">\(i\)</span> based on the OOB data.</p>
+<div style="margin-left: 75px">
+<ul>
+<li><span class="math inline">\(N\)</span> is the number of observations, and</li>
+<li><span class="math inline">\(\hat{y}_{OOB, i}\)</span> is the prediction for observation <span class="math inline">\(i\)</span> based on the OOB data.</li>
+</ul>
+</div>
 </section>
 <section id="feature-selection-and-importance" class="level3">
 <h3 class="anchored" data-anchor-id="feature-selection-and-importance">Feature Selection and Importance</h3>
@@ -6887,9 +6880,13 @@ $143,084.74
 <li><p><strong>Mean Decrease Accuracy (MDA)</strong>: This metric evaluates how much the model’s accuracy decreases when a given feature is permuted:</p>
 <p><span class="math display">\[
   MDA(X_j) = \frac{1}{T} \sum_{t=1}^{T} (OOB_{Error_t} - OOB_{Error_{t, permuted(j)}})
-\]</span></p>
-<p>where <span class="math inline">\(OOB_{Error_{t, permuted(j)}}\)</span> is the OOB error when feature <span class="math inline">\(j\)</span> is permuted.</p></li>
+\]</span></p></li>
 </ol>
+<div style="margin-left: 75px">
+<ul>
+<li><span class="math inline">\(OOB_{Error_{t, permuted(j)}}\)</span> is the OOB error when feature <span class="math inline">\(j\)</span> is permuted.</li>
+</ul>
+</div>
 </section>
 <section id="hyperparameter-tuning" class="level3">
 <h3 class="anchored" data-anchor-id="hyperparameter-tuning">Hyperparameter Tuning</h3>
@@ -6899,37 +6896,16 @@ $143,084.74
 <li><p><strong>Number of Features (mtry)</strong>: Specifies the number of features considered at each split, typically set to <span class="math inline">\(\sqrt{p}\)</span> for classification tasks.</p></li>
 <li><p><strong>Minimum Node Size (nodesize)</strong>: Determines the minimum number of samples required in a node before a split can occur.</p></li>
 </ul>
-<p>A grid search or other optimization techniques can be employed to find the best combination of these hyperparameters. Cross-validation is commonly used to evaluate different configurations, ensuring robustness and generalizability of the model.</p>
-</section>
-<section id="theoretical-considerations" class="level3">
-<h3 class="anchored" data-anchor-id="theoretical-considerations">Theoretical Considerations</h3>
-<p>Random Forests exhibit several notable theoretical properties:</p>
-<ul>
-<li><p><strong>Consistency</strong>: Under certain conditions, Random Forests can be consistent estimators, meaning that as the number of trees and sample size increase, the model’s prediction error converges to the minimum error possible.</p></li>
-<li><p><strong>Asymptotic Behavior</strong>: The asymptotic properties, including normality and consistency, have been studied extensively, providing a foundation for confidence intervals and hypothesis testing.</p></li>
-</ul>
 </section>
 <section id="statistical-programming" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-programming">Statistical Programming</h3>
-<p>Data management and analysis were performed using <code>R</code> Version 4.4.1 <span class="citation" data-cites="r-cit">(<a href="#ref-r-cit" role="doc-biblioref">R Core Team 2024</a>)</span>. The Random Forest model was implemented using the <code>randomForest</code> <span class="citation" data-cites="rf-cit">(<a href="#ref-rf-cit" role="doc-biblioref">Liaw and Wiener 2002</a>)</span> package in R. Additional packages used for data management and evaluation include <code>dplyr</code> <span class="citation" data-cites="dplyr-cit">(<a href="#ref-dplyr-cit" role="doc-biblioref">Wickham et al. 2023</a>)</span>, <code>caret</code> <span class="citation" data-cites="caret-cit">(<a href="#ref-caret-cit" role="doc-biblioref">Kuhn and Max 2008</a>)</span>, and <code>pROC</code> <span class="citation" data-cites="pROC-cit">(<a href="#ref-pROC-cit" role="doc-biblioref">Robin et al. 2011</a>)</span>.</p>
-</section>
-<section id="model-evaluation" class="level3">
-<h3 class="anchored" data-anchor-id="model-evaluation">Model Evaluation</h3>
-<p>Performance metrics for Random Forest classification include accuracy, precision, recall, F1 score, and the AUC (Area Under the ROC Curve). The AUC is particularly useful as it measures the model’s ability to distinguish between classes.</p>
-</section>
-<section id="data-exploration-and-visualization" class="level3">
-<h3 class="anchored" data-anchor-id="data-exploration-and-visualization">Data Exploration and Visualization</h3>
-<ul>
-<li><p>Describe your data sources and collection process.</p></li>
-<li><p>Present initial findings and insights through visualizations.</p></li>
-<li><p>Highlight unexpected patterns or anomalies.</p></li>
-</ul>
+<p>Data management and analysis were performed using <code>R</code> Version 4.4.1 <span class="citation" data-cites="r-cit"><a href="#ref-r-cit" role="doc-biblioref">[9]</a></span>. The Random Forest model was implemented using the <code>randomForest</code> <span class="citation" data-cites="rf-cit"><a href="#ref-rf-cit" role="doc-biblioref">[10]</a></span> package in R. Additional packages used for data management and evaluation include <code>dplyr</code> <span class="citation" data-cites="dplyr-cit"><a href="#ref-dplyr-cit" role="doc-biblioref">[11]</a></span>, <code>caret</code> <span class="citation" data-cites="caret-cit"><a href="#ref-caret-cit" role="doc-biblioref">[12]</a></span>, and <code>pROC</code> <span class="citation" data-cites="pROC-cit"><a href="#ref-pROC-cit" role="doc-biblioref">[13]</a></span>.</p>
 </section>
 </section>
 <section id="random-forest-classification-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="random-forest-classification-analysis">Random Forest Classification Analysis</h2>
 <p>The objective of this analysis is to apply a Random Forest classification model to predict whether an <code>OPCO</code> falls within the top 25% of revenue generators (<code>high_revenue</code>) using various predictor variables. This approach helps identify key distribution channels that drive the most revenue, aiding strategic business decisions and targeted marketing efforts.</p>
-<p>The analysis is performed using the <code>randomForest</code> package in R <span class="citation" data-cites="r-cit">(<a href="#ref-r-cit" role="doc-biblioref">R Core Team 2024</a>)</span>, and all necessary steps for data cleaning and model training are outlined in the code sections below.</p>
+<p>The analysis is performed using the <code>randomForest</code> package in R <span class="citation" data-cites="r-cit"><a href="#ref-r-cit" role="doc-biblioref">[9]</a></span>, and all necessary steps for data cleaning and model training are outlined in the code sections below.</p>
 <section id="data-cleaning-and-preprocessing" class="level3">
 <h3 class="anchored" data-anchor-id="data-cleaning-and-preprocessing">Data Cleaning and Preprocessing</h3>
 <p>The dataset was initially examined for irrelevant product entries such as shipping line items and customer refunds. These were filtered out to focus exclusively on relevant sales data:</p>
@@ -6957,60 +6933,60 @@ $143,084.74
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data_as_csv.csv&quot;</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data to remove shipping line items and any customer credits</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>exclude_products <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;OUTBOUND SHIPPING&quot;</span>, <span class="st">&quot;Outbound Shipping&quot;</span>, <span class="st">&quot;Shipping Charge&quot;</span>, <span class="st">&quot;SHIPPING CHARGE&quot;</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> sales_data <span class="sc">%&gt;%</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(UnitPrice <span class="sc">&gt;</span> <span class="dv">0</span>, TotalPrice <span class="sc">&gt;</span> <span class="dv">0</span>, qtyOrdered <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">!</span>Product <span class="sc">%in%</span> exclude_products) <span class="sc">%&gt;%</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(SalesOrderStatus), <span class="sc">!</span><span class="fu">is.na</span>(qtyOrdered), <span class="sc">!</span><span class="fu">is.na</span>(UnitPrice), <span class="sc">!</span><span class="fu">is.na</span>(Substrate), <span class="sc">!</span><span class="fu">is.na</span>(Product))</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert SalesOrderStatus to a factor variable</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>SalesOrderStatus <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(filtered_data<span class="sc">$</span>SalesOrderStatus)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply Top-N Encoding to the &#39;Product&#39; column</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>top_n <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># Keep the top 50 most common categories</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>top_products <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">sort</span>(<span class="fu">table</span>(filtered_data<span class="sc">$</span>Product), <span class="at">decreasing =</span> <span class="cn">TRUE</span>))[<span class="dv">1</span><span class="sc">:</span>top_n]</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>Product <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(filtered_data<span class="sc">$</span>Product <span class="sc">%in%</span> top_products,</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>         <span class="fu">as.character</span>(filtered_data<span class="sc">$</span>Product),</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Other&quot;</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate TotalPrice by OPCO to get total revenue per OPCO</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>opco_revenue <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(OPCO) <span class="sc">%&gt;%</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(TotalPrice, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a binary/label column indicating if an OPCO is in the top 25% of revenue</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>revenue_threshold <span class="ot">&lt;-</span> <span class="fu">quantile</span>(opco_revenue<span class="sc">$</span>total_revenue, <span class="fl">0.75</span>)  <span class="co"># 75th percentile</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>opco_revenue <span class="ot">&lt;-</span> opco_revenue <span class="sc">%&gt;%</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high_revenue =</span> <span class="fu">ifelse</span>(total_revenue <span class="sc">&gt;=</span> revenue_threshold, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge this information back with the original data for feature use</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(filtered_data, opco_revenue, <span class="at">by =</span> <span class="st">&quot;OPCO&quot;</span>)</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare features and target variable</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>features <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Product, Substrate, qtyOrdered)</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert character columns to factors</span></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>features <span class="ot">&lt;-</span> features <span class="sc">%&gt;%</span></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor))</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Set target variable (high_revenue)</span></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>target <span class="ot">&lt;-</span> filtered_data<span class="sc">$</span>high_revenue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data_as_csv.csv&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data to remove shipping line items and any customer credits</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>exclude_products <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;OUTBOUND SHIPPING&quot;</span>, <span class="st">&quot;Outbound Shipping&quot;</span>, <span class="st">&quot;Shipping Charge&quot;</span>, <span class="st">&quot;SHIPPING CHARGE&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> sales_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(UnitPrice <span class="sc">&gt;</span> <span class="dv">0</span>, TotalPrice <span class="sc">&gt;</span> <span class="dv">0</span>, qtyOrdered <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">!</span>Product <span class="sc">%in%</span> exclude_products) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(SalesOrderStatus), <span class="sc">!</span><span class="fu">is.na</span>(qtyOrdered), <span class="sc">!</span><span class="fu">is.na</span>(UnitPrice), <span class="sc">!</span><span class="fu">is.na</span>(Substrate), <span class="sc">!</span><span class="fu">is.na</span>(Product))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert SalesOrderStatus to a factor variable</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>SalesOrderStatus <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(filtered_data<span class="sc">$</span>SalesOrderStatus)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply Top-N Encoding to the &#39;Product&#39; column</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>top_n <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># Keep the top 50 most common categories</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>top_products <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">sort</span>(<span class="fu">table</span>(filtered_data<span class="sc">$</span>Product), <span class="at">decreasing =</span> <span class="cn">TRUE</span>))[<span class="dv">1</span><span class="sc">:</span>top_n]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>Product <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(filtered_data<span class="sc">$</span>Product <span class="sc">%in%</span> top_products,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>         <span class="fu">as.character</span>(filtered_data<span class="sc">$</span>Product),</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Other&quot;</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate TotalPrice by OPCO to get total revenue per OPCO</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>opco_revenue <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(OPCO) <span class="sc">%&gt;%</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(TotalPrice, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a binary/label column indicating if an OPCO is in the top 25% of revenue</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>revenue_threshold <span class="ot">&lt;-</span> <span class="fu">quantile</span>(opco_revenue<span class="sc">$</span>total_revenue, <span class="fl">0.75</span>)  <span class="co"># 75th percentile</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>opco_revenue <span class="ot">&lt;-</span> opco_revenue <span class="sc">%&gt;%</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high_revenue =</span> <span class="fu">ifelse</span>(total_revenue <span class="sc">&gt;=</span> revenue_threshold, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge this information back with the original data for feature use</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(filtered_data, opco_revenue, <span class="at">by =</span> <span class="st">&quot;OPCO&quot;</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare features and target variable</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>features <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Product, Substrate, qtyOrdered)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert character columns to factors</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>features <span class="ot">&lt;-</span> features <span class="sc">%&gt;%</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor))</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Set target variable (high_revenue)</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>target <span class="ot">&lt;-</span> filtered_data<span class="sc">$</span>high_revenue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -7021,15 +6997,15 @@ $143,084.74
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(features), <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">nrow</span>(features))</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>train_features <span class="ot">&lt;-</span> features[train_index, ]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>test_features <span class="ot">&lt;-</span> features[<span class="sc">-</span>train_index, ]</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>train_target <span class="ot">&lt;-</span> target[train_index]</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>test_target <span class="ot">&lt;-</span> target[<span class="sc">-</span>train_index]</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> train_features, <span class="at">y =</span> <span class="fu">as.factor</span>(train_target), <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">importance =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(features), <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">nrow</span>(features))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>train_features <span class="ot">&lt;-</span> features[train_index, ]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>test_features <span class="ot">&lt;-</span> features[<span class="sc">-</span>train_index, ]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>train_target <span class="ot">&lt;-</span> target[train_index]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>test_target <span class="ot">&lt;-</span> target[<span class="sc">-</span>train_index]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> train_features, <span class="at">y =</span> <span class="fu">as.factor</span>(train_target), <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">importance =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -7038,25 +7014,25 @@ $143,084.74
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on test set</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>test_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_model, <span class="at">newdata =</span> test_features)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion matrix using the binary `high_revenue` variable as the reference</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(test_pred), <span class="fu">as.factor</span>(test_target))</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the confusion matrix table</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>conf_matrix_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(conf_matrix<span class="sc">$</span>table)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display Confusion Matrix</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(conf_matrix_table) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Predicted&quot;</span>, <span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Frequency&quot;</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(conf_matrix_table, <span class="fu">aes</span>(<span class="at">x =</span> Actual, <span class="at">y =</span> Predicted, <span class="at">fill =</span> Frequency)) <span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Frequency), <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;#F1EEF6&quot;</span>, <span class="at">high =</span> <span class="st">&quot;#045A8D&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Confusion Matrix for High Revenue Prediction&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Actual&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Predicted&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on test set</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>test_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_model, <span class="at">newdata =</span> test_features)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion matrix using the binary `high_revenue` variable as the reference</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(test_pred), <span class="fu">as.factor</span>(test_target))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the confusion matrix table</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>conf_matrix_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(conf_matrix<span class="sc">$</span>table)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display Confusion Matrix</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(conf_matrix_table) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Predicted&quot;</span>, <span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Frequency&quot;</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(conf_matrix_table, <span class="fu">aes</span>(<span class="at">x =</span> Actual, <span class="at">y =</span> Predicted, <span class="at">fill =</span> Frequency)) <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Frequency), <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;#F1EEF6&quot;</span>, <span class="at">high =</span> <span class="st">&quot;#045A8D&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Confusion Matrix for High Revenue Prediction&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Actual&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Predicted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="tbl-conf-matrix" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -7087,28 +7063,28 @@ Table 1: Confusion Matrix
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract relevant statistics from the confusion matrix object</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">&quot;Accuracy&quot;</span>, <span class="st">&quot;95% CI&quot;</span>, <span class="st">&quot;Kappa&quot;</span>, <span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>, <span class="st">&quot;Pos Pred Value&quot;</span>, </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Neg Pred Value&quot;</span>, <span class="st">&quot;Prevalence&quot;</span>, <span class="st">&quot;Detection Rate&quot;</span>, <span class="st">&quot;Balanced Accuracy&quot;</span>),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>overall[<span class="st">&#39;Accuracy&#39;</span>], <span class="dv">3</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">&quot;(&quot;</span>, <span class="fu">round</span>(conf_matrix<span class="sc">$</span>overall[<span class="st">&#39;AccuracyLower&#39;</span>], <span class="dv">3</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(conf_matrix<span class="sc">$</span>overall[<span class="st">&#39;AccuracyUpper&#39;</span>], <span class="dv">3</span>), <span class="st">&quot;)&quot;</span>),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>overall[<span class="st">&#39;Kappa&#39;</span>], <span class="dv">3</span>),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Sensitivity&#39;</span>], <span class="dv">5</span>),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Specificity&#39;</span>], <span class="dv">5</span>),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Pos Pred Value&#39;</span>], <span class="dv">5</span>),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Neg Pred Value&#39;</span>], <span class="dv">5</span>),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Prevalence&#39;</span>], <span class="dv">5</span>),</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Detection Rate&#39;</span>], <span class="dv">5</span>),</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Balanced Accuracy&#39;</span>], <span class="dv">5</span>)</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Display Model Statistics</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>stats <span class="sc">%&gt;%</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="st">&quot;html&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> F, <span class="at">position =</span> <span class="st">&quot;center&quot;</span>, <span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract relevant statistics from the confusion matrix object</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">&quot;Accuracy&quot;</span>, <span class="st">&quot;95% CI&quot;</span>, <span class="st">&quot;Kappa&quot;</span>, <span class="st">&quot;Sensitivity&quot;</span>, <span class="st">&quot;Specificity&quot;</span>, <span class="st">&quot;Pos Pred Value&quot;</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Neg Pred Value&quot;</span>, <span class="st">&quot;Prevalence&quot;</span>, <span class="st">&quot;Detection Rate&quot;</span>, <span class="st">&quot;Balanced Accuracy&quot;</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>overall[<span class="st">&#39;Accuracy&#39;</span>], <span class="dv">3</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">&quot;(&quot;</span>, <span class="fu">round</span>(conf_matrix<span class="sc">$</span>overall[<span class="st">&#39;AccuracyLower&#39;</span>], <span class="dv">3</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(conf_matrix<span class="sc">$</span>overall[<span class="st">&#39;AccuracyUpper&#39;</span>], <span class="dv">3</span>), <span class="st">&quot;)&quot;</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>overall[<span class="st">&#39;Kappa&#39;</span>], <span class="dv">3</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Sensitivity&#39;</span>], <span class="dv">5</span>),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Specificity&#39;</span>], <span class="dv">5</span>),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Pos Pred Value&#39;</span>], <span class="dv">5</span>),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Neg Pred Value&#39;</span>], <span class="dv">5</span>),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Prevalence&#39;</span>], <span class="dv">5</span>),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Detection Rate&#39;</span>], <span class="dv">5</span>),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(conf_matrix<span class="sc">$</span>byClass[<span class="st">&#39;Balanced Accuracy&#39;</span>], <span class="dv">5</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Display Model Statistics</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>stats <span class="sc">%&gt;%</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="st">&quot;html&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> F, <span class="at">position =</span> <span class="st">&quot;center&quot;</span>, <span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="tbl-model-stats" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -7220,10 +7196,10 @@ Table 2: Model Statistics
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ROC Curve and AUC</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>roc_curve <span class="ot">&lt;-</span> <span class="fu">roc</span>(<span class="fu">as.numeric</span>(test_target), <span class="fu">as.numeric</span>(test_pred))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.roc</span>(roc_curve, <span class="at">print.auc =</span> <span class="cn">TRUE</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ROC Curve and AUC</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>roc_curve <span class="ot">&lt;-</span> <span class="fu">roc</span>(<span class="fu">as.numeric</span>(test_target), <span class="fu">as.numeric</span>(test_pred))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.roc</span>(roc_curve, <span class="at">print.auc =</span> <span class="cn">TRUE</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-roc-curve" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -7245,8 +7221,8 @@ Figure 1: ROC Curve for High Revenue Prediction
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Mean Decrease in Accuracy and Mean Decrease in Gini</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_model, <span class="at">main =</span> <span class="st">&quot;Feature Importance for High Revenue Prediction&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Mean Decrease in Accuracy and Mean Decrease in Gini</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_model, <span class="at">main =</span> <span class="st">&quot;Feature Importance for High Revenue Prediction&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-importance" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -7279,30 +7255,45 @@ Figure 2: Feature Importance for High Revenue Prediction
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-Mantas2019-li" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">C. J. Mantas, J. G. Castellano, S. Moral-Garcı́a, and J. Abellán, <span>“A comparison of random forest based algorithms: Random credal random forest versus oblique random forest,”</span> <em>Soft Comput.</em>, vol. 23, no. 21, pp. 10739–10754, Nov. 2019.</div>
+</div>
+<div id="ref-Khoshgoftaar2007-bo" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">T. M. Khoshgoftaar, M. Golawala, and J. Van Hulse, <span>“An empirical study of learning from imbalanced data using random forest,”</span> in <em>19th <span>IEEE</span> international conference on tools with artificial <span>Intelligence(ICTAI</span> 2007)</em>, Patras, Greece: IEEE, Oct. 2007.</div>
+</div>
 <div id="ref-Biau2016-ac" class="csl-entry" role="listitem">
-Biau, Gérard, and Erwan Scornet. 2016. <span>“A Random Forest Guided Tour.”</span> <em>Test (Madr.)</em> 25 (2): 197–227.
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">G. Biau and E. Scornet, <span>“A random forest guided tour,”</span> <em>Test (Madr.)</em>, vol. 25, no. 2, pp. 197–227, Jun. 2016.</div>
 </div>
-<div id="ref-Breiman_undated-tp" class="csl-entry" role="listitem">
-Breiman, Leo. n.d. <span>“<span>RANDOM</span> <span>FORESTS</span>.”</span> <a href="https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf" class="uri">https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf</a>.
+<div id="ref-Lariviere2005-uq" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">B. Lariviere and D. Vandenpoel, <span>“Predicting customer retention and profitability by using random forests and regression forests techniques,”</span> <em>Expert Syst. Appl.</em>, vol. 29, no. 2, pp. 472–484, Aug. 2005.</div>
 </div>
-<div id="ref-caret-cit" class="csl-entry" role="listitem">
-Kuhn, and Max. 2008. <span>“Building Predictive Models in r Using the Caret Package.”</span> <em>Journal of Statistical Software</em> 28 (5): 1–26. <a href="https://doi.org/10.18637/jss.v028.i05">https://doi.org/10.18637/jss.v028.i05</a>.
+<div id="ref-Hong2018-fr" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">J.-S. Hong, H. Yeo, N.-W. Cho, and T. Ahn, <span>“Identification of core suppliers based on e-invoice data using supervised machine learning,”</span> <em>J. Risk Fin. Manag.</em>, vol. 11, no. 4, p. 70, Oct. 2018.</div>
 </div>
-<div id="ref-rf-cit" class="csl-entry" role="listitem">
-Liaw, Andy, and Matthew Wiener. 2002. <span>“Classification and Regression by randomForest.”</span> <em>R News</em> 2 (3): 18–22. <a href="https://CRAN.R-project.org/doc/Rnews/">https://CRAN.R-project.org/doc/Rnews/</a>.
-</div>
-<div id="ref-r-cit" class="csl-entry" role="listitem">
-R Core Team. 2024. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
-</div>
-<div id="ref-pROC-cit" class="csl-entry" role="listitem">
-Robin, Xavier, Natacha Turck, Alexandre Hainard, Natalia Tiberti, Frédérique Lisacek, Jean-Charles Sanchez, and Markus Müller. 2011. <span>“pROC: An Open-Source Package for r and s+ to Analyze and Compare ROC Curves.”</span> <em>BMC Bioinformatics</em> 12: 77.
+<div id="ref-Torizuka2018-if" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">K. Torizuka, H. Oi, F. Saitoh, and S. Ishizu, <span>“Benefit segmentation of online customer reviews using random forest,”</span> in <em>2018 <span>IEEE</span> international conference on industrial engineering and engineering management (<span>IEEM</span>)</em>, Bangkok: IEEE, Dec. 2018.</div>
 </div>
 <div id="ref-stutti" class="csl-entry" role="listitem">
-Stutti. 2024. <span>“Dataset for Random Forest Classification Analysis.”</span> Personal communication.
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">Stutti, <span>“Dataset for random forest classification analysis.”</span> Personal communication, 2024.</div>
+</div>
+<div id="ref-Breiman_undated-tp" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">L. Breiman, <span>“<span>RANDOM</span> <span>FORESTS</span>.”</span> <a href="https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf" class="uri">https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf</a>.</div>
+</div>
+<div id="ref-r-cit" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2024. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-rf-cit" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">A. Liaw and M. Wiener, <span>“Classification and regression by randomForest,”</span> <em>R News</em>, vol. 2, no. 3, pp. 18–22, 2002, Available: <a href="https://CRAN.R-project.org/doc/Rnews/">https://CRAN.R-project.org/doc/Rnews/</a></div>
 </div>
 <div id="ref-dplyr-cit" class="csl-entry" role="listitem">
-Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, and Davis Vaughan. 2023. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">H. Wickham, R. François, L. Henry, K. Müller, and D. Vaughan, <em>Dplyr: A grammar of data manipulation</em>. 2023. Available: <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a></div>
+</div>
+<div id="ref-caret-cit" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">Kuhn and Max, <span>“Building predictive models in r using the caret package,”</span> <em>Journal of Statistical Software</em>, vol. 28, no. 5, pp. 1–26, 2008, doi: <a href="https://doi.org/10.18637/jss.v028.i05">10.18637/jss.v028.i05</a>.</div>
+</div>
+<div id="ref-pROC-cit" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">X. Robin <em>et al.</em>, <span>“pROC: An open-source package for r and s+ to analyze and compare ROC curves,”</span> <em>BMC Bioinformatics</em>, vol. 12, p. 77, 2011.</div>
 </div>
 </div></section></div></main>
 <!-- /main column -->
