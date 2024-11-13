@@ -20,21 +20,6 @@ editor:
     wrap: 72
 ---
 
-Slides: [Slides](group-slides.html){target="_blank"}
-
-Journal Summaries: [Summaries](summaries.html){target="_blank"}
-
-Literature Review: [Literature Review](lit-review.html){target="_blank"}
-
-::: callout-important
-**Remember:** Your goal is to make your audience understand and care
-about your findings. By crafting a compelling story, you can effectively
-communicate the value of your data science project.
-
-Carefully read this template since it has instructions and tips to
-writing!
-:::
-
 ## Introduction
 
 The introduction should:
@@ -44,8 +29,6 @@ The introduction should:
 -   Your audience is your peers
 
 -   Clearly state the problem or question you're addressing.
-
-<!-- -->
 
 -   Introduce why it is relevant needs.
 
@@ -63,36 +46,448 @@ kernel estimator, weight function is known as kernel function
 [@efr2008]. Cite this paper [@bro2014principal]. The GEE [@wang2014].
 The PCA [@daffertshofer2004pca]*
 
-*This is my work and I want to add more work...*
+## Data
+
+The dataset, provided by a fellow student [@stutti], contains sales
+transaction details from a B2B context. The data tracks information on
+sales orders, quantities ordered, shipping details, and item-level
+statuses. Below is the data definition table that explains the key
+attributes.
+
+```{r}
+data_def <- data.frame(
+  Attribute = c("OPCO", "SalesOrderID", "CustomerPO", "Product", "Description", 
+                "Substrate", "RequestedDeliveryDate", "DateFulfilled", 
+                "qtyOrdered", "qtyFulfilled", "UnitPrice", "TotalPrice", 
+                "Class", "ShipToName", "ShipToAddress", "SalesOrderStatus", "SalesItemStatus"),
+  Format = c("Varchar", "Numeric", "Numeric", "Varchar", "Varchar", 
+             "Varchar", "Date", "Date", 
+             "Numeric", "Numeric", "Numeric", "Numeric", 
+             "Varchar", "Varchar", "Varchar", "Varchar", "Varchar"),
+  Description = c("The customer placing the order, typically a distributor.",
+                  "Unique identifier assigned to each sales order.",
+                  "Customer's identifier for their order, sent to BCC.",
+                  "Unique identifier assigned to each product.",
+                  "Description of the product being sold.",
+                  "Type of product/material.",
+                  "Date the delivery was scheduled originally.",
+                  "Date the delivery was made.",
+                  "Quantity ordered on the order.",
+                  "Quantity delivered on the order.",
+                  "Price of each case of product SSI charges the customer.",
+                  "Total price of the sales order.",
+                  "Customer name.",
+                  "Name of the ordering party.",
+                  "Address where the order needs to be delivered.",
+                  "Status of sales order.",
+                  "Status of each line item on the sales order.")
+)
+
+knitr::kable(data_def, caption = "Sales Transaction Dataset Definition", align = "l")
+```
+
+### Sample Data
+
+```{r}
+sales_data <- read.csv("data_as_csv.csv")
+DT::datatable(head(sales_data), options = list(pageLength = 6), 
+          caption = "Interactive Preview of Sales Data")
+```
+
+### Summary Stats
+
+```{r}
+# Load the pander package
+library(pander)
+
+# Print a formatted summary of the dataset
+pander(summary(sales_data), caption = "Summary Statistics of Sales Data")
+
+```
+
+This dataset allows for various analyses including:
+
+  -   Order fulfillment performance: By comparing the qtyOrdered and
+    qtyFulfilled attributes, and the RequestedDeliveryDate against the
+    DateFulfilled, one can analyze how efficiently orders are being
+    fulfilled and whether delivery deadlines are met.
+
+  -   Sales trends and pricing: The UnitPrice and TotalPrice fields,
+    alongside Product and Class, provide opportunities to evaluate
+    product pricing strategies and customer buying patterns.
+
+  -   Customer segmentation: With attributes like Class and ShipToName,
+    you can analyze customer behavior and segment them based on order
+    sizes, frequency, or geography.
+
+This dataset provides a detailed overview of the company's sales
+transactions. By leveraging these attributes, one can assess order
+performance, customer segmentation, and pricing strategies.
+
+### Table 1
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;border-style: solid;border-width: 1px;border-color: black;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:13px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-bobw{font-weight:bold;text-align:center;vertical-align:bottom}
+.tg .tg-7zrl{text-align:left;vertical-align:bottom}
+.tg .tg-j6zm{font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-8d8j{text-align:center;vertical-align:bottom}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-7zrl"></th>
+    <th class="tg-j6zm">Total Orders</th>
+    <th class="tg-j6zm">Closed Short</th>
+    <th class="tg-j6zm">Fulfilled</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-7zrl"></td>
+    <td class="tg-j6zm">(n=7585)</td>
+    <td class="tg-j6zm">(n=733)</td>
+    <td class="tg-j6zm">(n=6852)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Top Customers</td>
+    <td class="tg-7zrl"> </td>
+    <td class="tg-7zrl"> </td>
+    <td class="tg-7zrl"> </td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Smoothie Island</td>
+    <td class="tg-8d8j">1701 (22.43%)</td>
+    <td class="tg-8d8j">455 (62.07%)</td>
+    <td class="tg-8d8j">1246 (18.18%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Philly Bite</td>
+    <td class="tg-8d8j">1556 (20.51%)</td>
+    <td class="tg-8d8j">267 (36.43%)</td>
+    <td class="tg-8d8j">1289 (18.81%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">PlatePioneers</td>
+    <td class="tg-8d8j">1396 (18.40%)</td>
+    <td class="tg-8d8j">143 (19.51%)</td>
+    <td class="tg-8d8j">1253 (18.29%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Berl Company</td>
+    <td class="tg-8d8j">906 (11.94%)</td>
+    <td class="tg-8d8j">5 (0.68%)</td>
+    <td class="tg-8d8j">901 (13.15%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">DineLink Intl</td>
+    <td class="tg-8d8j">589 (7.77%)</td>
+    <td class="tg-8d8j">42 (5.73%)</td>
+    <td class="tg-8d8j">547 (7.98%)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Top Products</td>
+    <td class="tg-8d8j"></td>
+    <td class="tg-8d8j"></td>
+    <td class="tg-8d8j"></td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">DC-01</td>
+    <td class="tg-8d8j">1135 (14.96%)</td>
+    <td class="tg-8d8j">345 (47.07%)</td>
+    <td class="tg-8d8j">790 (11.53%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">TSC-PQB-01</td>
+    <td class="tg-8d8j">1087 (14.33%)</td>
+    <td class="tg-8d8j">389 (53.07%)</td>
+    <td class="tg-8d8j">698 (10.19%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">TSC-PW14X16-01</td>
+    <td class="tg-8d8j">848 (11.18%)</td>
+    <td class="tg-8d8j">283 (38.61%)</td>
+    <td class="tg-8d8j">565 (8.25%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">CMI-PCK-01</td>
+    <td class="tg-8d8j">802 (10.57%)</td>
+    <td class="tg-8d8j">288 (39.29%)</td>
+    <td class="tg-8d8j">514 (7.50%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">PC-05-B1</td>
+    <td class="tg-8d8j">745 (9.82%)</td>
+    <td class="tg-8d8j">220 (30.01%)</td>
+    <td class="tg-8d8j">525 (7.66%)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Top Distributors</td>
+    <td class="tg-8d8j"></td>
+    <td class="tg-8d8j"></td>
+    <td class="tg-8d8j"></td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Ed Don &amp; Company - Miramar</td>
+    <td class="tg-8d8j">210 (2.77%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">210 (3.06%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">PFG- Gainesville</td>
+    <td class="tg-8d8j">197 (2.60%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">197 (2.88%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Ed Don &amp; Company -&nbsp;&nbsp;&nbsp;Woodridge</td>
+    <td class="tg-8d8j">186 (2.45%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">186 (2.71%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Ed Don &amp; Company - Mira&nbsp;&nbsp;&nbsp;Loma</td>
+    <td class="tg-8d8j">180 (2.37%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">180 (2.63%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">.Ed Don - Miramar</td>
+    <td class="tg-8d8j">162 (2.14%)</td>
+    <td class="tg-8d8j">0 (0.00%)</td>
+    <td class="tg-8d8j">162 (2.36%)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Top Substrates</td>
+    <td class="tg-bobw">Paper</td>
+    <td class="tg-bobw">Plastic</td>
+    <td class="tg-bobw">Bagasse</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Revenue($103,826,286)</td>
+    <td class="tg-8d8j">$54,838,585 (52.82%)</td>
+    <td class="tg-8d8j">$40,336,669 (38.85%)</td>
+    <td class="tg-8d8j">$4,350,337 (4.19%)</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Quantity Ordered</td>
+    <td class="tg-bobw">Min</td>
+    <td class="tg-bobw">Mean</td>
+    <td class="tg-bobw">Max</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Total Ordered(1,971,237)</td>
+    <td class="tg-8d8j">1</td>
+    <td class="tg-8d8j">61.47</td>
+    <td class="tg-8d8j">23,160</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Unit Price</td>
+    <td class="tg-bobw">Min</td>
+    <td class="tg-bobw">Mean</td>
+    <td class="tg-bobw">Max</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Key Stats</td>
+    <td class="tg-8d8j">$0.16 </td>
+    <td class="tg-8d8j">$62.60 </td>
+    <td class="tg-8d8j">$864.00</td>
+  </tr>
+  <tr>
+    <td class="tg-j6zm">Total Price</td>
+    <td class="tg-bobw">Min</td>
+    <td class="tg-bobw">Mean</td>
+    <td class="tg-bobw">Max</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Key Stats</td>
+    <td class="tg-8d8j">$4.92 </td>
+    <td class="tg-8d8j">$3,430.74 </td>
+    <td class="tg-8d8j">$143,084.74</td>
+  </tr>
+</tbody></table>
+
+### Data Visualizations
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+sales_data <- read.csv("data_as_csv.csv")
+
+product_qty <- sales_data %>%
+  group_by(Product) %>%
+  summarise(TotalQuantityOrdered = sum(qtyOrdered, na.rm = TRUE)) %>%
+  arrange(desc(TotalQuantityOrdered)) %>%
+  slice(1:20)
+
+ggplot(product_qty, aes(x = reorder(Product, TotalQuantityOrdered), y = TotalQuantityOrdered)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  theme_minimal() +
+  coord_flip() +
+  labs(title = "Top 20 Products by Total Quantity Ordered", x = "Product", y = "Total Quantity Ordered")
+
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+sales_data <- read.csv("data_as_csv.csv")
+
+exclude_products <- c("OUTBOUND SHIPPING", "Outbound Shipping", "Shipping Charge", "SHIPPING CHARGE")
+
+filtered_data <- sales_data %>%
+  filter(TotalPrice > 0, !Product %in% exclude_products)
+
+Q1 <- quantile(filtered_data$TotalPrice, 0.25, na.rm = TRUE)
+Q3 <- quantile(filtered_data$TotalPrice, 0.75, na.rm = TRUE)
+IQR_value <- IQR(filtered_data$TotalPrice, na.rm = TRUE)
+
+lower_bound <- Q1 - 1.5 * IQR_value
+upper_bound <- Q3 + 1.5 * IQR_value
+
+filtered_data_IQR <- filtered_data %>%
+  filter(TotalPrice >= lower_bound & TotalPrice <= upper_bound)
+
+ggplot(filtered_data_IQR, aes(x = TotalPrice)) +
+  geom_histogram(binwidth = 100, fill = "lightblue", color = "black") +
+  theme_minimal() +
+  labs(title = "Distribution of Total Prices (Filtered by IQR)", x = "Total Price", y = "Frequency")
+
+```
 
 ## Methods
 
--   Detail the models or algorithms used.
+### Random Forest Classification
 
--   Justify your choices based on the problem and data.
+The Random Forest algorithm, initially proposed by Breiman (2001), is a
+widely used ensemble learning method for classification and regression
+tasks. It operates by constructing multiple decision trees during
+training and outputs the mode of the classes (for classification) or
+mean prediction (for regression) of the individual trees
+[@Breiman_undated-tp]. The following methods and descriptions have all
+been derived from G'erard Biau and Erwan Scornet's paper "A random
+forest guided tour." [@Biau2016-ac]
 
-*The common non-parametric regression model is*
-$Y_i = m(X_i) + \varepsilon_i$*, where* $Y_i$ *can be defined as the sum
-of the regression function value* $m(x)$ *for* $X_i$*. Here* $m(x)$ *is
-unknown and* $\varepsilon_i$ *some errors. With the help of this
-definition, we can create the estimation for local averaging i.e.*
-$m(x)$ *can be estimated with the product of* $Y_i$ *average and* $X_i$
-*is near to* $x$*. In other words, this means that we are discovering
-the line through the data points with the help of surrounding data
-points. The estimation formula is printed below [@R-base]:*
+### Tree Building Process
 
+1.  **Bootstrap Sampling**: The algorithm selects a random subset of
+    data with replacement from the training dataset to build each
+    decision tree. This sampling technique is known as "bagging"
+    (bootstrap aggregating) .
+
+2.  **Node Splitting**:
+
+    -   For regression analysis, the CART (Classification and Regression
+        Trees) algorithm is used to evaluate splits:
+
+        ::: {style="font-size: 1rem; text-align: left;"}
+        
+        $$             
+          L_{\text{reg},n}(j, z) = \frac{1}{N_n(A)} \sum_{i=1}^{n} (Y_i - \bar{Y}_A)^2 \mathbf{1}_{X_i \in A} - \frac{1}{N_n(A)} \left(\sum_{i=1}^{n} (Y_i - \bar{Y}_{AL})^2 \mathbf{1}_{X_i \in AL} + \sum_{i=1}^{n} (Y_i - \bar{Y}_{AR})^2 \mathbf{1}_{X_i \in AR}\right) 
+        $$
+        
+        :::
+
+        -   $N_n(A)$: Number of data points in cell $A$.
+        -   $Y_i$: Response variable for observation $i$.
+        -   $\bar{Y}_A$: Mean of $Y_i$ in cell $A$.
+        -   $AL$ and $AR$: Left and right child nodes after the split.
+
+    -   For classification analysis, the Gini impurity criterion is
+        used to evaluate splits:
+        
+        $$ 
+          G = 1 - \sum_{k=1}^{K} p_k^2 
+        $$
+        
+        where $p_k$ represents the proportion of samples of class $k$ in
+        the node, and $K$ is the number of classes.
+
+3.  **Voting/Aggregation**: For classification, the final prediction is
+    based on the majority vote of the trees, while for regression, it is
+    the average of the predictions.
+
+### Out-of-Bag (OOB) Error Estimation
+
+Random Forests incorporate an in-built cross-validation technique known
+as Out-of-Bag (OOB) error estimation. Since each tree is trained on a
+bootstrapped sample, approximately one-third of the data is left out of
+the training set, serving as an internal validation set to calculate
+model performance:
+
+$$ 
+  OOB_{Error} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{1}(\hat{y}_{OOB, i} \neq y_i)
 $$
-M_n(x) = \sum_{i=1}^{n} W_n (X_i) Y_i  \tag{1}
-$$$W_n(x)$ *is the sum of weights that belongs to all real numbers.
-Weights are positive numbers and small if* $X_i$ *is far from* $x$*.*
 
-*Another equation:*
+where $N$ is the number of observations, and $\hat{y}_{OOB, i}$ is the
+prediction for observation $i$ based on the OOB data.
 
-$$
-y_i = \beta_0 + \beta_1 X_1 +\varepsilon_i
-$$
+### Feature Selection and Importance
 
-## Analysis and Results
+Random Forests provide mechanisms for evaluating the importance of
+different features used in model predictions:
+
+1.  **Mean Decrease Impurity (MDI)**: This metric measures the average
+    reduction in impurity (e.g., Gini impurity) achieved by each feature
+    across all trees in the forest.
+2.  **Mean Decrease Accuracy (MDA)**: This metric evaluates how much the
+    model's accuracy decreases when a given feature is permuted:
+    
+    $$ 
+      MDA(X_j) = \frac{1}{T} \sum_{t=1}^{T} (OOB_{Error_t} - OOB_{Error_{t, permuted(j)}})
+    $$
+    
+    where $OOB_{Error_{t, permuted(j)}}$ is the OOB error when feature $j$ is permuted.
+
+### Hyperparameter Tuning
+
+Key hyperparameters in Random Forests include:
+
+-    **Number of Trees (ntree)**: Controls the number of decision trees
+    in the forest.
+
+-   **Number of Features (mtry)**: Specifies the number of features
+    considered at each split, typically set to $\sqrt{p}$ for
+    classification tasks.
+
+-   **Minimum Node Size (nodesize)**: Determines the minimum number of
+    samples required in a node before a split can occur.
+
+A grid search or other optimization techniques can be employed to find
+the best combination of these hyperparameters. Cross-validation is
+commonly used to evaluate different configurations, ensuring robustness
+and generalizability of the model.
+
+### Theoretical Considerations
+
+Random Forests exhibit several notable theoretical properties:
+
+-   **Consistency**: Under certain conditions, Random Forests can be
+    consistent estimators, meaning that as the number of trees and
+    sample size increase, the model's prediction error converges to the
+    minimum error possible.
+
+-   **Asymptotic Behavior**: The asymptotic properties, including
+    normality and consistency, have been studied extensively, providing
+    a foundation for confidence intervals and hypothesis testing.
+    
+### Statistical Programming
+
+Data management and analysis were performed using `R` Version 4.4.1
+[@r-cit]. The Random Forest model was implemented using the `randomForest` [@rf-cit] 
+package in R. Additional packages used for data management and evaluation include
+`dplyr` [@dplyr-cit], `caret` [@caret-cit], and `pROC` [@pROC-cit].
+
+### Model Evaluation
+
+Performance metrics for Random Forest classification include accuracy,
+precision, recall, F1 score, and the AUC (Area Under the ROC Curve). The
+AUC is particularly useful as it measures the model's ability to
+distinguish between classes.
 
 ### Data Exploration and Visualization
 
@@ -102,55 +497,256 @@ $$
 
 -   Highlight unexpected patterns or anomalies.
 
-A study was conducted to determine how...
+## Random Forest Classification Analysis
 
-```{r, warning=FALSE, echo=T, message=FALSE}
-# loading packages 
-library(tidyverse)
-library(knitr)
-library(ggthemes)
-library(ggrepel)
-library(dslabs)
-```
+The objective of this analysis is to apply a Random Forest
+classification model to predict whether an `OPCO` falls within the top
+25% of revenue generators (`high_revenue`) using various predictor
+variables. This approach helps identify key distribution channels that
+drive the most revenue, aiding strategic business decisions and targeted
+marketing efforts.
 
-```{r, warning=FALSE, echo=TRUE}
-# Load Data
-kable(head(murders))
+The analysis is performed using the `randomForest` package in R
+[@r-cit], and all necessary steps for data cleaning and model training
+are outlined in the code sections below.
 
-ggplot1 = murders %>% ggplot(mapping = aes(x=population/10^6, y=total)) 
+### Data Cleaning and Preprocessing
 
-  ggplot1 + geom_point(aes(col=region), size = 4) +
-  geom_text_repel(aes(label=abb)) +
-  scale_x_log10() +
-  scale_y_log10() +
-  geom_smooth(formula = "y~x", method=lm,se = F)+
-  xlab("Populations in millions (log10 scale)") + 
-  ylab("Total number of murders (log10 scale)") +
-  ggtitle("US Gun Murders in 2010") +
-  scale_color_discrete(name = "Region")+
-      theme_bw()
-  
+The dataset was initially examined for irrelevant product entries such
+as shipping line items and customer refunds. These were filtered out to
+focus exclusively on relevant sales data:
 
-```
+-   **Excluded Items**: Shipping charges and other non-product entries,
+    including "OUTBOUND SHIPPING" and "Shipping Charge."
+-   **Filters Applied**: Rows with non-positive values for `UnitPrice`,
+    `TotalPrice`, and `qtyOrdered` were removed to ensure only genuine
+    sales transactions were analyzed.
 
-### Modeling and Results
+The data was then prepared for modeling, with key columns converted to
+appropriate types (e.g., categorical encoding of `Product`).
 
--   Explain your data preprocessing and cleaning steps.
+### Feature Selection
 
--   Present your key findings in a clear and concise manner.
+The key variables used for predicting high-revenue OPCOs include:
 
--   Use visuals to support your claims.
+-   **`Product`**: The type of product sold.
 
--   **Tell a story about what the data reveals.**
+-   **`Substrate`**: The material type of the product.
+
+-   **`qtyOrdered`**: The number of units ordered.
+
+These variables were chosen based on their potential impact on revenue
+generation and their importance in the supply chain.
+
+## Analysis
+
+### Load R Libraries
 
 ```{r}
-
+library(ggplot2)
+library(dplyr)
+library(randomForest)
+library(caret)
+library(kableExtra)
 ```
 
-### Conclusion
+```{r}
+# Load the data
+sales_data <- read.csv("data_as_csv.csv")
 
--   Summarize your key findings.
+# Filter the data to remove shipping line items and any customer credits
+exclude_products <- c("OUTBOUND SHIPPING", "Outbound Shipping", "Shipping Charge", "SHIPPING CHARGE")
+filtered_data <- sales_data %>%
+  filter(UnitPrice > 0, TotalPrice > 0, qtyOrdered > 0, !Product %in% exclude_products) %>%
+  filter(!is.na(SalesOrderStatus), !is.na(qtyOrdered), !is.na(UnitPrice), !is.na(Substrate), !is.na(Product))
 
--   Discuss the implications of your results.
+# Convert SalesOrderStatus to a factor variable
+filtered_data$SalesOrderStatus <- as.factor(filtered_data$SalesOrderStatus)
+
+# Apply Top-N Encoding to the 'Product' column
+top_n <- 50  # Keep the top 50 most common categories
+top_products <- names(sort(table(filtered_data$Product), decreasing = TRUE))[1:top_n]
+filtered_data$Product <- factor(
+  ifelse(filtered_data$Product %in% top_products,
+         as.character(filtered_data$Product),
+         "Other")
+)
+
+# Aggregate TotalPrice by OPCO to get total revenue per OPCO
+opco_revenue <- filtered_data %>%
+  group_by(OPCO) %>%
+  summarise(total_revenue = sum(TotalPrice, na.rm = TRUE))
+
+# Create a binary/label column indicating if an OPCO is in the top 25% of revenue
+revenue_threshold <- quantile(opco_revenue$total_revenue, 0.75)  # 75th percentile
+opco_revenue <- opco_revenue %>%
+  mutate(high_revenue = ifelse(total_revenue >= revenue_threshold, 1, 0))
+
+# Merge this information back with the original data for feature use
+filtered_data <- left_join(filtered_data, opco_revenue, by = "OPCO")
+
+# Prepare features and target variable
+features <- filtered_data %>%
+  select(Product, Substrate, qtyOrdered)
+
+# Convert character columns to factors
+features <- features %>%
+  mutate(across(where(is.character), as.factor))
+
+# Set target variable (high_revenue)
+target <- filtered_data$high_revenue
+```
+
+### Model Training and Evaluation
+
+#### Training the Random Forest Model
+
+```{r}
+set.seed(123)
+
+train_index <- sample(1:nrow(features), 0.7 * nrow(features))
+train_features <- features[train_index, ]
+test_features <- features[-train_index, ]
+train_target <- target[train_index]
+test_target <- target[-train_index]
+
+rf_model <- randomForest(x = train_features, y = as.factor(train_target), ntree = 100, importance = TRUE)
+```
+
+#### Model Evaluation on Test Set
+
+```{r}
+#| label: tbl-conf-matrix
+#| tbl-cap: Confusion Matrix
+
+# Predict on test set
+test_pred <- predict(rf_model, newdata = test_features)
+
+# Confusion matrix using the binary `high_revenue` variable as the reference
+conf_matrix <- confusionMatrix(as.factor(test_pred), as.factor(test_target))
+
+# Extract the confusion matrix table
+conf_matrix_table <- as.data.frame(conf_matrix$table)
+
+# Display Confusion Matrix
+colnames(conf_matrix_table) <- c("Predicted", "Actual", "Frequency")
+
+ggplot(conf_matrix_table, aes(x = Actual, y = Predicted, fill = Frequency)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = Frequency), color = "black", size = 5) +
+  scale_fill_gradient(low = "#F1EEF6", high = "#045A8D") +
+  theme_minimal() +
+  labs(title = "Confusion Matrix for High Revenue Prediction", x = "Actual", y = "Predicted") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+-   **True Negatives (TN)**: 591
+-   **False Positives (FP)**: 301
+-   **False Negatives (FN)**: 86
+-   **True Positives (TP)**: 7814
+
+#### Model Statistics
+
+```{r}
+#| label: tbl-model-stats
+#| tbl-cap: Model Statistics
+
+# Extract relevant statistics from the confusion matrix object
+stats <- data.frame(
+  Metric = c("Accuracy", "95% CI", "Kappa", "Sensitivity", "Specificity", "Pos Pred Value", 
+             "Neg Pred Value", "Prevalence", "Detection Rate", "Balanced Accuracy"),
+  Value = c(
+    round(conf_matrix$overall['Accuracy'], 3),
+    paste0("(", round(conf_matrix$overall['AccuracyLower'], 3), ", ", round(conf_matrix$overall['AccuracyUpper'], 3), ")"),
+    round(conf_matrix$overall['Kappa'], 3),
+    round(conf_matrix$byClass['Sensitivity'], 5),
+    round(conf_matrix$byClass['Specificity'], 5),
+    round(conf_matrix$byClass['Pos Pred Value'], 5),
+    round(conf_matrix$byClass['Neg Pred Value'], 5),
+    round(conf_matrix$byClass['Prevalence'], 5),
+    round(conf_matrix$byClass['Detection Rate'], 5),
+    round(conf_matrix$byClass['Balanced Accuracy'], 5)
+  )
+)
+
+# Display Model Statistics
+stats %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+```
+
+-   **Accuracy: 95.6%**
+    -   Indicates that 95.6% of all predictions (both high-revenue and
+        non-high-revenue OPCOs) were correct.
+-   **Balanced Accuracy: 82.6%**
+    -   Provides an average of sensitivity and specificity, showing the
+        model's ability to handle imbalanced data by considering both
+        true positive and true negative rates equally.
+-   **Kappa: 0.73**
+    -   Measures the agreement between the predicted and actual
+        classifications while accounting for the possibility of random
+        chance. A value of 0.73 indicates substantial agreement.
+-   **Sensitivity: 66.3%**
+    -   Represents the model's ability to correctly identify
+        high-revenue OPCOs. About 66.3% of true high-revenue cases were
+        correctly predicted.
+-   **Specificity: 98.9%**
+    -   Indicates the model's effectiveness in correctly identifying
+        non-high-revenue OPCOs. 98.9% of true non-high-revenue cases
+        were accurately classified.
+-   **AUC: 0.826**
+    -   The Area Under the ROC Curve (AUC) shows the model's ability to
+        distinguish between high-revenue and non-high-revenue OPCOs. A
+        value of 0.826 suggests good discriminative power.
+
+### ROC Curve Analysis
+
+```{r}
+#| label: fig-roc-curve
+#| fig-cap: "ROC Curve for High Revenue Prediction"
+
+# ROC Curve and AUC
+library(pROC)
+roc_curve <- roc(as.numeric(test_target), as.numeric(test_pred))
+plot.roc(roc_curve, print.auc = TRUE)  
+```
+
+The ROC curve shows that the model has an AUC of 0.826, indicating good
+discriminative ability. This suggests that the model can reliably
+differentiate between high-revenue and non-high-revenue OPCOs.
+
+### Feature Importance
+
+```{r}
+#| label: fig-importance
+#| fig-cap: Feature Importance for High Revenue Prediction
+
+# Plot Mean Decrease in Accuracy and Mean Decrease in Gini
+varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
+```
+
+The most critical features contributing to the model's predictive power
+are:
+
+-   **`qtyOrdered`**: The strongest predictor of whether an OPCO is a
+    high-revenue generator.
+-   **`Product`**: Indicates the type of product and its influence on
+    revenue generation.
+-   **`Substrate`**: Plays a meaningful role but has less impact
+    compared to `qtyOrdered` and `Product`.
+
+## Conclusion
+
+The analysis demonstrated that the Random Forest model effectively
+predicts high-revenue OPCOs with a high accuracy of 95.7% and a balanced
+accuracy of 84.3%. The most critical feature was `TotalPrice`, with
+`Product` following closely behind, indicating that revenue totals and
+product types are key drivers in identifying high-revenue OPCOs.
+
+Using this information, decision-makers will be able to predict with
+fair accuracy where to put their marketing dollars in future campaigns.
+There is also plenty of room for improvements. Gathering more
+information and effectively introducing newer predictors could further
+enhance the model.
 
 ## References
