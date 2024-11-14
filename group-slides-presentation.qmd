@@ -505,7 +505,123 @@ varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
 
 ## Analysis - Mika
 
-<h3> Random Forest Model Summary </h3>
+```{r}
+#| warning: false
+
+
+# Load required libraries
+library(readxl)
+library(randomForest)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(gridExtra)
+
+sample_data <- read.csv("data_as_csv.csv")
+# Take first 100 rows
+sample_data <- head(sample_data, 100)
+
+# Prepare data for modeling
+model_data <- sample_data %>%
+  # Select relevant columns
+  select(OPCO, Product, Class, SalesOrderStatus, SalesItemStatus,
+         qtyOrdered, QuantityFulfilled, UnitPrice, TotalPrice) %>%
+  # Convert categorical variables to factors
+  mutate(across(c(OPCO, Product, Class, SalesOrderStatus, SalesItemStatus), as.factor)) %>%
+  na.omit()
+
+# Split predictors and response
+X <- model_data %>% select(-TotalPrice)
+y <- model_data$TotalPrice
+
+# Train random forest model
+set.seed(123)
+rf_model <- randomForest(
+  x = X,
+  y = y,
+  ntree = 500,
+  importance = TRUE
+)
+
+# Create performance analysis dataframe
+performance_df <- data.frame(
+  predicted = predict(rf_model),
+  actual = y
+)
+
+# Calculate performance metrics
+metrics <- data.frame(
+  Metric = c("R-squared", "Mean Abs Error", "RMSE", "Mean Error %"),
+  Value = c(
+    round(1 - sum((performance_df$actual - performance_df$predicted)^2) / 
+          sum((performance_df$actual - mean(performance_df$actual))^2), 3),
+    round(mean(abs(performance_df$actual - performance_df$predicted)), 2),
+    round(sqrt(mean((performance_df$actual - performance_df$predicted)^2)), 2),
+    round(mean(abs(performance_df$actual - performance_df$predicted)/performance_df$actual * 100), 2)
+  )
+)
+
+# Create visualizations
+# 1. Actual vs Predicted Plot
+p1 <- ggplot(performance_df, aes(x = actual, y = predicted)) +
+  geom_point(alpha = 0.6, color = "blue") +
+  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
+  labs(title = "Actual vs Predicted Total Price",
+       x = "Actual Total Price",
+       y = "Predicted Total Price") +
+  theme_minimal()
+
+# 2. Variable Importance Plot
+imp_df <- data.frame(
+  Variable = rownames(importance(rf_model)),
+  IncMSE = importance(rf_model)[,1]
+) %>%
+  arrange(desc(IncMSE))
+
+p2 <- ggplot(imp_df, aes(x = reorder(Variable, IncMSE), y = IncMSE)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  labs(title = "Variable Importance",
+       x = "Variables",
+       y = "% Increase in MSE") +
+  theme_minimal()
+
+# 3. Error Analysis by OPCO
+performance_df$OPCO <- model_data$OPCO
+error_by_opco <- performance_df %>%
+  group_by(OPCO) %>%
+  summarise(
+    mean_error = mean(abs(actual - predicted)),
+    count = n()
+  ) %>%
+  arrange(desc(mean_error))
+
+error_by_opco <- error_by_opco[-1, ]
+
+p3 <- ggplot(error_by_opco, aes(x = reorder(OPCO, -mean_error), y = mean_error)) +
+  geom_bar(stat = "identity", fill = "lightgreen") +
+  labs(title = "Mean Absolute Error by OPCO",
+       x = "OPCO",
+       y = "Mean Absolute Error") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# 4. Error Distribution
+performance_df$error_percent <- (performance_df$predicted - performance_df$actual) / 
+                               performance_df$actual * 100
+
+p4 <- ggplot(performance_df, aes(x = error_percent)) +
+  geom_histogram(fill = "salmon", bins = 20) +
+  labs(title = "Distribution of Prediction Errors (%)",
+       x = "Prediction Error (%)",
+       y = "Count") +
+  theme_minimal()
+
+# Display plots in a grid
+grid.arrange(p1, p2, p3, p4, ncol = 2)
+```
+
+## Random Forest Model Summary
 
 -   The Random Forest model was trained to predict `QuantityFulfilled` using 100 records of sales data.
 -   The model used 8 predictor variables and 100 bootstrap iterations.
