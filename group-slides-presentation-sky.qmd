@@ -1,0 +1,540 @@
+---
+title: "Random Forest in Machine Learning"
+subtitle: "Foresight from the Forest"
+author: "Forest Foresight (Advisor: Dr. Seals)"
+date: last-modified
+date-format: long
+format:
+  revealjs:
+    theme: sky
+    css: custom.css
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+csl: ieee.csl
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(randomForest)
+library(caret)
+library(kableExtra)
+library(lubridate)
+library(scales)
+```
+
+# Random Forest in Machine Learning: Foresight from the ForestS
+
+![](images/rf-why.png)
+
+## A Random Forest Guided Tour
+
+::: {style="font-size: 1rem; text-align: left;"}
+by Gérard Biau and Erwan Scornet [@Biau2016-ac]
+:::
+
+::: flex-container
+::: flex-column
+-   **Origin & Success**: Introduced by Breiman (2001) [@Breiman_undated-tp], Random Forests
+    excel in classification/regression, combining decision trees for
+    strong performance.
+-   **Versatility**: Effective for large-scale tasks, adaptable, and
+    highlights important features across various domains.
+-   **Ease of Use**: Simple with minimal tuning, handles small samples
+    and high-dimensional data.
+:::
+
+::: flex-column
+-   **Theoretical Gaps**: Limited theoretical insights; known for
+    complexity and black-box nature.
+-   **Key Mechanisms**: Uses bagging and CART-split criteria for robust
+    performance, though hard to analyze rigorously.
+:::
+:::
+
+## Tree Prediction
+
+Each tree estimates the response at point $x$ as:
+
+$$
+        m_n(x; \Theta_j, D_n) = \frac{\sum_{i \in D_n(\Theta_j)} \mathbf{1}_{X_i \in A_n(x; \Theta_j, D_n)} Y_i}{N_n(x; \Theta_j, D_n)}
+$$ 
+
+::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
+-   $D_n(\Theta_j)$ is the resampled data subset,
+-   $A_n(x; \Theta_j, D_n)$ is the cell containing $x$, and
+-   $N_n(x; \Theta_j, D_n)$ is the count of points in the cell
+:::
+
+## Forest Prediction
+The forest estimate for $M$ trees is:
+
+$$
+        m_{M, n}(x) = \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n)
+$$
+
+::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
+-   $M$ is the total number of trees
+-   $m_n(x; \Theta_j, D_n)$ represents the prediction from each
+tree, and 
+-   the forest average yields the final prediction.
+:::
+
+## Random Forest Regression
+
+**Splitting Criteria**:
+
+-   The CART-split criterion is used to find the best cut applying:
+  
+::: {style="font-size: 0.65em; text-align: left;"}
+$$
+            L_{\text{reg},n}(j, z) = \frac{1}{N_n(A)} \sum_{i=1}^{n} (Y_i - \bar{Y}_A)^2 \mathbf{1}_{X_i \in A} - \frac{1}{N_n(A)} \left(\sum_{i=1}^{n} (Y_i - \bar{Y}_{AL})^2 \mathbf{1}_{X_i \in AL} + \sum_{i=1}^{n} (Y_i - \bar{Y}_{AR})^2 \mathbf{1}_{X_i \in AR}\right)
+$$
+:::
+
+::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
+-   $N_n(A)$: Number of data points in cell $A$.
+-   $Y_i$: Response variable for observation $i$.
+-   $\bar{Y}_A$: Mean of $Y_i$ in cell $A$.
+-   $AL$ and $AR$: Left and right child nodes after the split.
+:::
+
+## {}
+
+**Stopping Condition**: 
+
+Nodes are not split if they contain fewer than `nodesize` points or if all $X_i$ in the node are identical.
+
+<br>
+
+**Prediction**:
+
+$$
+  m_{M, n}(x) = \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n)
+$$
+
+::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
+-   $M$: Total number of trees in the forest.
+-   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
+:::
+
+## Random Forest Classification
+
+**Splitting Criteria**:
+
+-   The Gini impurity measure is used to determine the best split:
+
+$$
+  G = 1 - \sum_{k=1}^{K} p_k^2
+$$
+
+::: {.custom-circle-list style="font-size: 1.75rem; text-align: left; margin-left: 75px"}
+-   $p_k$ represents the proportion of samples of class $k$ in the node.
+-   $K$ is the number of classes.
+:::
+  
+## {}
+
+**Prediction**:
+
+-   Each tree makes a prediction using the majority class in the
+      cell containing $x$.
+-   Classification uses a majority vote: 
+
+$$
+      m_{M, n}(x; \Theta_1, \ldots, \Theta_M, D_n) = \begin{cases} 
+      1 & \text{if } \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n) > \frac{1}{2} \\
+      0 & \text{otherwise}
+      \end{cases}
+$$
+
+::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
+-   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
+-   $M$: Total number of trees in the forest.
+:::
+
+## Like this...
+
+<center>
+![](images/rf-tree-ex.png){.enlarge-image}
+[@fu2017combination]
+</center>
+
+## The Data
+
+1.    Where the data came from 
+2.    Size of data 
+3.    Key variables - Demographic, Behavioral, Seasonal 
+4.    Preprocessing needed
+
+## SSI Sales Data
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-rrvj{background-color:#656565;text-align:left;vertical-align:bottom}
+.tg .tg-wxs0{background-color:#dae8fc;font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-jwcu{background-color:#fffc9e;color:#000000;font-weight:bold;text-align:center;vertical-align:bottom}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-ih5g{background-color:#96fffb;font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-7zrl{text-align:left;vertical-align:bottom}
+.tg .tg-8d8j{text-align:center;vertical-align:bottom}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-jwcu" colspan="4"><span style="font-weight:bold">Forest Foresight - SSI Sales Data</span></th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-rrvj"></td>
+    <td class="tg-rrvj"></td>
+    <td class="tg-rrvj"></td>
+    <td class="tg-rrvj"></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax" rowspan="2"></td>
+    <td class="tg-wxs0"><span style="font-weight:bold">Total Orders</span></td>
+    <td class="tg-wxs0"><span style="font-weight:bold">Closed Short</span></td>
+    <td class="tg-wxs0"><span style="font-weight:bold">Fulfilled</span></td>
+  </tr>
+  <tr>
+    <td class="tg-wxs0"><span style="font-weight:bold">(n=7585)</span></td>
+    <td class="tg-wxs0"><span style="font-weight:bold">(n=733)</span></td>
+    <td class="tg-wxs0"><span style="font-weight:bold">(n=6852)</span></td>
+  </tr>
+  <tr>
+    <td class="tg-ih5g"><span style="font-weight:bold">Top Customers</span></td>
+    <td class="tg-7zrl"></td>
+    <td class="tg-7zrl"></td>
+    <td class="tg-7zrl"></td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl"><span style="font-weight:normal">Smoothie Island</span></td>
+    <td class="tg-8d8j"><span style="font-weight:normal">1701 (22.43%)</span></td>
+    <td class="tg-8d8j">455 (62.07%)</td>
+    <td class="tg-8d8j">1246 (18.18%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Philly Bite</td>
+    <td class="tg-8d8j">1556 (20.51%)</td>
+    <td class="tg-8d8j">267 (36.43%)</td>
+    <td class="tg-8d8j">1289 (18.81%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">PlatePioneers</td>
+    <td class="tg-8d8j">1396 (18.40%)</td>
+    <td class="tg-8d8j">143 (19.51%)</td>
+    <td class="tg-8d8j">1253 (18.29%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">Berl Company</td>
+    <td class="tg-8d8j">906 (11.94%)</td>
+    <td class="tg-8d8j">5 (0.68%)</td>
+    <td class="tg-8d8j">901 (13.15%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">DineLink Intl</td>
+    <td class="tg-8d8j">589 (7.77%)</td>
+    <td class="tg-8d8j">42 (5.73%)</td>
+    <td class="tg-8d8j">547 (7.98%)</td>
+  </tr>
+  <tr>
+    <td class="tg-ih5g"><span style="font-weight:bold">Top Products</span></td>
+    <td class="tg-7zrl"></td>
+    <td class="tg-7zrl"></td>
+    <td class="tg-7zrl"></td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl"><span style="font-weight:normal">DC-01&nbsp;&nbsp;(Drink carrier) </span></td>
+    <td class="tg-8d8j">1135 (14.96%)</td>
+    <td class="tg-8d8j">345 (47.07%)</td>
+    <td class="tg-8d8j">790 (11.53%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl"><span style="font-weight:normal">TSC-PQB-01&nbsp;&nbsp;(Paper Quesadilla Clamshell)&nbsp;&nbsp;&nbsp;</span></td>
+    <td class="tg-8d8j">1087 (14.33%)</td>
+    <td class="tg-8d8j">389 (53.07%)</td>
+    <td class="tg-8d8j">698 (10.19%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl"><span style="font-weight:normal">TSC-PW14X16-01&nbsp;&nbsp;(1-Play Paper Wrapper)</span></td>
+    <td class="tg-8d8j">848 (11.18%)</td>
+    <td class="tg-8d8j">283 (38.61%)</td>
+    <td class="tg-8d8j">565 (8.25%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl"><span style="font-weight:normal">CMI-PCK-01&nbsp;&nbsp;(Wrapped Plastic Cutlery Kit)</span></td>
+    <td class="tg-8d8j">802 (10.57%)</td>
+    <td class="tg-8d8j">288 (39.29%)</td>
+    <td class="tg-8d8j">514 (7.50%)</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl"><span style="font-weight:normal">PC-05-B1&nbsp;&nbsp;(Black 5oz Container)</span></td>
+    <td class="tg-8d8j">745 (9.82%)</td>
+    <td class="tg-8d8j">220 (30.01%)</td>
+    <td class="tg-8d8j">525 (7.66%)</td>
+  </tr>
+</tbody></table>
+
+## Sales over Time
+
+```{r}
+
+sales_data <- read.csv("data_as_csv.csv")
+SaleData1 <- sales_data %>%
+  filter(UnitPrice > 0, TotalPrice > 0)
+
+SaleData1$parsed_dates <- parse_date_time(SaleData1$DateFulfilled, orders = c("ymd", "mdy", "dmy", "Ymd", "Y-m-d"))
+SaleData1$parsed_dates <- ymd(SaleData1$parsed_dates)
+
+sales_over_time <- SaleData1 %>%
+  mutate(nDate = floor_date(parsed_dates, "quarter")) %>%
+  group_by(nDate) %>%
+  summarize(TotalSales = sum(TotalPrice, na.rm = TRUE))
+
+sales_over_time$Quarter <- quarter(sales_over_time$nDate)
+
+ggplot(sales_over_time, aes(x = nDate, y = TotalSales)) +
+  geom_line(color = "blue") +
+  geom_point() +
+  scale_x_date(date_labels = "Q%q %Y", date_breaks = "3 months") +
+  labs(title = "Total Sales Over Time (Quarterly)", x = "Quarter", y = "Total Sales") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+## Analysis - Stutti
+
+::: {style="font-size: 1.5rem; text-align: left;"}
+
+Predicting Customer Churn
+
+-   The churn indicator was created based on the Last Sales Date (0/1).
+-   **Predictors**: Class, Product, Qty Ordered, and Date Fulfilled.
+-   The model was evaluated using statistics from the Confusion Matrix.
+-   **80% Accuracy achieved**:
+    -   **Sensitivity**: The model correctly identifies 78.6% of the
+        actual 0 cases.
+    -   **Specificity**: The model correctly identifies 88.12% of the
+        actual 1 cases.
+    -   **Negative Predictive Value (NPV for class 1)**: When the model
+        predicts 1, it is correct only 47.62% of the time. This lower
+        NPV suggests the model might be missing some 1 cases.
+    -   **McNemar's Test P-value (\<2e-16)**: Indicates that the model
+        struggles slightly with misclassification between classes.
+-   **Conclusion**: Overall, the model has a good balance (0.8336)
+    between identifying both classes, though it is better at predicting
+    class 0.
+:::
+    
+## Analysis - Matt
+
+<h3>Confusion Matrix</h3>
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+sales_data <- read.csv("data_as_csv.csv")
+
+# Filter the data to remove shipping line items and any customer credits
+exclude_products <- c("OUTBOUND SHIPPING", "Outbound Shipping", "Shipping Charge", "SHIPPING CHARGE")
+filtered_data <- sales_data %>%
+  filter(UnitPrice > 0, TotalPrice > 0, qtyOrdered > 0, !Product %in% exclude_products) %>%
+  filter(!is.na(SalesOrderStatus), !is.na(qtyOrdered), !is.na(UnitPrice), !is.na(Substrate), !is.na(Product))
+
+# Convert SalesOrderStatus to a factor variable
+filtered_data$SalesOrderStatus <- as.factor(filtered_data$SalesOrderStatus)
+
+# Apply Top-N Encoding to the 'Product' column
+top_n <- 50  # Keep the top 50 most common categories
+top_products <- names(sort(table(filtered_data$Product), decreasing = TRUE))[1:top_n]
+filtered_data$Product <- factor(
+  ifelse(filtered_data$Product %in% top_products,
+         as.character(filtered_data$Product),
+         "Other")
+)
+
+# Aggregate TotalPrice by OPCO to get total revenue per OPCO
+opco_revenue <- filtered_data %>%
+  group_by(OPCO) %>%
+  summarise(total_revenue = sum(TotalPrice, na.rm = TRUE))
+
+# Create a binary/label column indicating if an OPCO is in the top 25% of revenue
+revenue_threshold <- quantile(opco_revenue$total_revenue, 0.75)  # 75th percentile
+opco_revenue <- opco_revenue %>%
+  mutate(high_revenue = ifelse(total_revenue >= revenue_threshold, 1, 0))
+
+# Merge this information back with the original data for feature use
+filtered_data <- left_join(filtered_data, opco_revenue, by = "OPCO")
+
+# Prepare features and target variable
+features <- filtered_data %>%
+  select(Product, Substrate, qtyOrdered)
+
+# Convert character columns to factors
+features <- features %>%
+  mutate(across(where(is.character), as.factor))
+
+# Set target variable (high_revenue)
+target <- filtered_data$high_revenue
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+set.seed(123)
+
+train_index <- sample(1:nrow(features), 0.7 * nrow(features))
+train_features <- features[train_index, ]
+test_features <- features[-train_index, ]
+train_target <- target[train_index]
+test_target <- target[-train_index]
+
+rf_model <- randomForest(x = train_features, y = as.factor(train_target), ntree = 100, importance = TRUE)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-align: center
+
+# Predict on test set
+test_pred <- predict(rf_model, newdata = test_features)
+
+# Confusion matrix using the binary `high_revenue` variable as the reference
+conf_matrix <- confusionMatrix(as.factor(test_pred), as.factor(test_target))
+
+# Extract the confusion matrix table
+conf_matrix_table <- as.data.frame(conf_matrix$table)
+
+# Display Confusion Matrix
+colnames(conf_matrix_table) <- c("Predicted", "Actual", "Frequency")
+
+ggplot(conf_matrix_table, aes(x = Actual, y = Predicted, fill = Frequency)) +
+  geom_tile(color = "black") +
+  geom_text(aes(label = Frequency), color = "black", size = 5) +
+  scale_fill_gradient(low = "#F1EEF6", high = "#045A8D") +
+  theme_minimal() +
+  labs(title = "Confusion Matrix for High Revenue Prediction", x = "Actual", y = "Predicted") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+-   **0**: Non-high-revenue OPCO
+-   **1**: High-revenue OPCO
+
+## Model Statistics
+
+::: {style="font-size: 1.5rem; text-align: left;"}
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+# Extract relevant statistics from the confusion matrix object
+stats <- data.frame(
+  Metric = c("Accuracy", "95% CI", "Kappa", "Sensitivity", "Specificity", "Pos Pred Value", 
+             "Neg Pred Value", "Prevalence", "Detection Rate", "Balanced Accuracy"),
+  Value = c(
+    round(conf_matrix$overall['Accuracy'], 3),
+    paste0("(", round(conf_matrix$overall['AccuracyLower'], 3), ", ", round(conf_matrix$overall['AccuracyUpper'], 3), ")"),
+    round(conf_matrix$overall['Kappa'], 3),
+    round(conf_matrix$byClass['Sensitivity'], 5),
+    round(conf_matrix$byClass['Specificity'], 5),
+    round(conf_matrix$byClass['Pos Pred Value'], 5),
+    round(conf_matrix$byClass['Neg Pred Value'], 5),
+    round(conf_matrix$byClass['Prevalence'], 5),
+    round(conf_matrix$byClass['Detection Rate'], 5),
+    round(conf_matrix$byClass['Balanced Accuracy'], 5)
+  )
+)
+
+# Display Model Statistics
+stats %>%
+  kable("html") %>%
+  kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+```
+:::
+
+## ROC Curve Analysis
+
+```{r}
+#| label: fig-roc-curve
+#| fig-cap: "ROC Curve for High Revenue Prediction"
+#| echo: false
+#| warning: false
+#| message: false
+
+# ROC Curve and AUC
+library(pROC) # Load lib here to avoid function overrides
+roc_curve <- roc(as.numeric(test_target), as.numeric(test_pred))
+plot.roc(roc_curve, print.auc = TRUE)
+```
+
+## Feature Importance
+
+```{r}
+#| label: fig-importance
+#| fig-cap: Feature Importance for High Revenue Prediction
+
+# Plot Mean Decrease in Accuracy and Mean Decrease in Gini
+varImpPlot(rf_model, main = "Feature Importance for High Revenue Prediction")
+```
+
+## Analysis - Mika
+
+<h3> Random Forest Model Summary </h3>
+
+-   The Random Forest model was trained to predict `QuantityFulfilled` using 100 records of sales data.
+-   The model used 8 predictor variables and 100 bootstrap iterations.
+-   Bootstrap validation was performed to assess model stability and performance.
+
+## Model Performance Metrics
+
+-   **Original MSE**: 800.89 units²
+-   **RMSE**: 28.30 units (shows average prediction error in original units)
+-   **MAE**: 13.09 units (shows average absolute prediction error)
+-   **Bias**: -204.04 (indicates the model tends to underestimate)
+-   **Standard Error**: 292.65 (shows variability in predictions)
+-   **95% Confidence Interval**: (198.3, 1449.2) for MSE
+
+## Remarks
+
+-   The model predicts `QuantityFulfilled` with an average error of about 28 units (RMSE).
+-   Predictions are typically off by about 13 units (MAE).
+-   The model shows consistent negative bias (-204.04), suggesting systematic underestimation.
+-   A wide confidence interval (198.3 to 1449.2) indicates high variability in prediction accuracy.
+-   Numerical variables (`qtyOrdered`, `TotalPrice`) are substantially more important than categorical ones.
+
+## Conclusion
+
+-   **High Performance & Versatile**: Robust, accurate, handles noisy/high-dimensional data. [@Biau2016-ac]
+-   **Ensemble Strength**: Averaging over many trees; identifies key variables. [@Biau2016-ac]
+-   **Challenges**: Limited theoretical understanding; complex interpretation. [@Biau2016-ac]
+-   **Future Focus**: Enhance theory, increase interpretability, broaden applications. [@Biau2016-ac]
+
+## References
+
+::: {#refs}
+:::
