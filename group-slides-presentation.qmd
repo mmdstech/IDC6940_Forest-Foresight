@@ -1,8 +1,12 @@
 ---
 title: "Random Forest in Machine Learning"
-subtitle: "Foresight from the Forest"
-author: "Forest Foresight (Advisor: Dr. Seals)"
-date: last-modified
+subtitle: "Forest Foresight"
+author:
+  - Mika Goins
+  - Matt McGehee
+  - Stutti Smit-Johnson
+  - "Advisor: Dr. Seals"
+Advisor: Dr. Seals
 date-format: long
 format:
   revealjs:
@@ -77,58 +81,6 @@ $$
 -   $D_n(\Theta_j)$ is the resampled data subset,
 -   $A_n(x; \Theta_j, D_n)$ is the cell containing $x$, and
 -   $N_n(x; \Theta_j, D_n)$ is the count of points in the cell
-:::
-
-## Forest Prediction
-The forest estimate for $M$ trees is:
-
-$$
-        m_{M, n}(x) = \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n)
-$$
-
-::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
--   $M$ is the total number of trees
--   $m_n(x; \Theta_j, D_n)$ represents the prediction from each
-tree, and 
--   the forest average yields the final prediction.
-:::
-
-## Random Forest Regression
-
-**Splitting Criteria**:
-
--   The CART-split criterion is used to find the best cut applying:
-  
-::: {style="font-size: 0.65em; text-align: left;"}
-$$
-            L_{\text{reg},n}(j, z) = \frac{1}{N_n(A)} \sum_{i=1}^{n} (Y_i - \bar{Y}_A)^2 \mathbf{1}_{X_i \in A} - \frac{1}{N_n(A)} \left(\sum_{i=1}^{n} (Y_i - \bar{Y}_{AL})^2 \mathbf{1}_{X_i \in AL} + \sum_{i=1}^{n} (Y_i - \bar{Y}_{AR})^2 \mathbf{1}_{X_i \in AR}\right)
-$$
-:::
-
-::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
--   $N_n(A)$: Number of data points in cell $A$.
--   $Y_i$: Response variable for observation $i$.
--   $\bar{Y}_A$: Mean of $Y_i$ in cell $A$.
--   $AL$ and $AR$: Left and right child nodes after the split.
-:::
-
-## {}
-
-**Stopping Condition**: 
-
-Nodes are not split if they contain fewer than `nodesize` points or if all $X_i$ in the node are identical.
-
-<br>
-
-**Prediction**:
-
-$$
-  m_{M, n}(x) = \frac{1}{M} \sum_{j=1}^{M} m_n(x; \Theta_j, D_n)
-$$
-
-::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
--   $M$: Total number of trees in the forest.
--   $m_n(x; \Theta_j, D_n)$: Prediction from the $j$-th tree.
 :::
 
 ## Random Forest Classification
@@ -346,7 +298,11 @@ Predicting Customer Churn
     
 ## Analysis - Matt
 
-<h3>Confusion Matrix</h3>
+**Goal**:
+
+Predict whether an OPCO (distributor) falls within the top 25% of revenue using the `quantity ordered`, `product`, and `substrate` to try and identify key distribution channels where the company could focus marketing and advertising dollars.
+
+## Confusion Matrix
 
 ```{r}
 #| echo: false
