@@ -577,29 +577,6 @@ p4 <- ggplot(performance_df, aes(x = error_percent)) +
 grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
-## Random Forest Model Summary
-
--   The Random Forest model was trained to predict `QuantityFulfilled` using 100 records of sales data.
--   The model used 8 predictor variables and 100 bootstrap iterations.
--   Bootstrap validation was performed to assess model stability and performance.
-
-## Model Performance Metrics
-
--   **Original MSE**: 800.89 units²
--   **RMSE**: 28.30 units (shows average prediction error in original units)
--   **MAE**: 13.09 units (shows average absolute prediction error)
--   **Bias**: -204.04 (indicates the model tends to underestimate)
--   **Standard Error**: 292.65 (shows variability in predictions)
--   **95% Confidence Interval**: (198.3, 1449.2) for MSE
-
-## Remarks
-
--   The model predicts `QuantityFulfilled` with an average error of about 28 units (RMSE).
--   Predictions are typically off by about 13 units (MAE).
--   The model shows consistent negative bias (-204.04), suggesting systematic underestimation.
--   A wide confidence interval (198.3 to 1449.2) indicates high variability in prediction accuracy.
--   Numerical variables (`qtyOrdered`, `TotalPrice`) are substantially more important than categorical ones.
-
 ## Conclusion
 
 -   **High Performance & Versatile**: Robust, accurate, handles noisy/high-dimensional data. [@Biau2016-ac]
