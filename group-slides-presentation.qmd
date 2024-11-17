@@ -127,10 +127,135 @@ $$
 
 ## The Data
 
-1.    Where the data came from 
-2.    Size of data 
-3.    Key variables - Demographic, Behavioral, Seasonal 
-4.    Preprocessing needed
+1. Where the data came from – FL based food packaging company
+2. Size of data – 33,818 records, 17 variables
+3. Key variables - Demographic, Behavioral, Seasonal
+4. Preprocessing needed -
+   
+   a. TotalPrice – negative values
+   b. Quantity – highly skewed
+   c. Substrate – missing values
+
+
+## Data Schema
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-kwbv{background-color:#EA9999;color:#212529;text-align:left;vertical-align:bottom}
+.tg .tg-jxge{background-color:#0F9ED5;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-9gf5{background-color:#9FC5E8;color:#212529;text-align:left;vertical-align:bottom}
+.tg .tg-17il{background-color:#B6D7A8;color:#212529;text-align:left;vertical-align:bottom}
+.tg .tg-xgeg{background-color:#CFE2F3;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-7zrl{text-align:left;vertical-align:bottom}
+.tg .tg-w43o{background-color:#FFF;color:#212529;font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-jx9g{color:#212529;text-align:left;vertical-align:bottom}
+.tg .tg-t3vo{background-color:#EA9999;color:#212529;font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-csoy{background-color:#B6D7A8;color:#212529;font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-4jse{background-color:#9FC5E8;color:#212529;font-weight:bold;text-align:left;vertical-align:bottom}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-xgeg" colspan="3"><span style="font-weight:bold;background-color:#CFE2F3;color:#000000">Data Dictionary</span></th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-7zrl" colspan="3"></td>
+  </tr>
+  <tr>
+    <td class="tg-jxge"><span style="font-weight:bold;color:#FFF;background-color:#0F9ED5">Attribute</span></td>
+    <td class="tg-jxge"><span style="font-weight:bold;color:#FFF;background-color:#0F9ED5">Format</span></td>
+    <td class="tg-jxge"><span style="font-weight:bold;color:#FFF;background-color:#0F9ED5">Description</span></td>
+  </tr>
+  <tr>
+    <td class="tg-w43o"><span style="font-weight:bold;color:#212529;background-color:#FFF">OPCO</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Varchar</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">The customer placing the order. In this case, typically a Distributor.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-w43o"><span style="font-weight:bold;color:#212529;background-color:#FFF">SalesOrderID</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Varchar</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Unique identifier assigned to each sales order.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-w43o"><span style="font-weight:bold;color:#212529;background-color:#FFF">CustomerPO</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Varchar</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Customer’s identifier of their order sent to BCC.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-t3vo"><span style="font-weight:bold;color:#212529;background-color:#EA9999">Product</span></td>
+    <td class="tg-kwbv"><span style="font-weight:normal;color:#212529;background-color:#EA9999">Varchar</span></td>
+    <td class="tg-kwbv"><span style="font-weight:normal;color:#212529;background-color:#EA9999">Unique identifier assigned to each product.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-w43o"><span style="font-weight:bold;color:#212529;background-color:#FFF">Description</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Varchar</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Description of the product being sold.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-t3vo"><span style="font-weight:bold;color:#212529;background-color:#EA9999">Substrate</span></td>
+    <td class="tg-kwbv"><span style="font-weight:normal;color:#212529;background-color:#EA9999">Varchar</span></td>
+    <td class="tg-kwbv"><span style="font-weight:normal;color:#212529;background-color:#EA9999">Type of product/material.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-csoy"><span style="font-weight:bold;color:#212529;background-color:#B6D7A8">RequestedDeliveryDate</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Varchar</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Date the delivery was scheduled originally.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-csoy"><span style="font-weight:bold;color:#212529;background-color:#B6D7A8">DateFulfilled</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Varchar</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Date the delivery was made.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-csoy"><span style="font-weight:bold;color:#212529;background-color:#B6D7A8">qtyOrdered</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Numeric</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Quantity ordered on the order.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-csoy"><span style="font-weight:bold;color:#212529;background-color:#B6D7A8">qtyFulfilled</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Numeric</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Quantity delivered on the order.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-csoy"><span style="font-weight:bold;color:#212529;background-color:#B6D7A8">UnitPrice</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Numeric</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Price of each case of product SSI charges the customer.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-csoy"><span style="font-weight:bold;color:#212529;background-color:#B6D7A8">TotalPrice</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Numeric</span></td>
+    <td class="tg-17il"><span style="font-weight:normal;color:#212529;background-color:#B6D7A8">Total price of the sales order.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-w43o"><span style="font-weight:bold;color:#212529;background-color:#FFF">Class</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Varchar</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Customer name</span></td>
+  </tr>
+  <tr>
+    <td class="tg-w43o"><span style="font-weight:bold;color:#212529;background-color:#FFF">ShipToName</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Varchar</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Address name of ordering party</span></td>
+  </tr>
+  <tr>
+    <td class="tg-4jse"><span style="font-weight:bold;color:#212529;background-color:#9FC5E8">ShipToAddress</span></td>
+    <td class="tg-9gf5"><span style="font-weight:normal;color:#212529;background-color:#9FC5E8">Varchar</span></td>
+    <td class="tg-9gf5"><span style="font-weight:normal;color:#212529;background-color:#9FC5E8">Address where order needs to be delivered</span></td>
+  </tr>
+  <tr>
+    <td class="tg-w43o"><span style="font-weight:bold;color:#212529;background-color:#FFF">SalesOrderStatus</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Varchar</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Status of Sales order</span></td>
+  </tr>
+  <tr>
+    <td class="tg-w43o"><span style="font-weight:bold;color:#212529;background-color:#FFF">SalesItemStatus</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Varchar</span></td>
+    <td class="tg-w43o"><span style="font-weight:normal;color:#212529">Status of each line item on the sales order</span></td>
+  </tr>
+</tbody></table>
 
 ## SSI Sales Data
 
