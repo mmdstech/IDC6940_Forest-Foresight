@@ -62,10 +62,10 @@ by Gérard Biau and Erwan Scornet [@Biau2016-ac]
 :::
 
 ::: flex-column
--   **Theoretical Gaps**: Limited theoretical insights; known for
-    complexity and black-box nature.
 -   **Key Mechanisms**: Uses bagging and CART-split criteria for robust
     performance, though hard to analyze rigorously.
+-   **Theoretical Gaps**: Limited theoretical insights; known for
+    complexity and black-box nature.
 :::
 :::
 
