@@ -40,7 +40,7 @@ library(lubridate)
 library(scales)
 ```
 
-# Random Forest in Machine Learning: Foresight from the ForestS
+# Random Forest in Machine Learning: Foresight from the Forest
 
 ![](images/rf-why.png)
 
