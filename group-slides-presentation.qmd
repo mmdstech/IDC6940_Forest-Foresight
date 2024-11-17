@@ -74,7 +74,7 @@ by Gérard Biau and Erwan Scornet [@Biau2016-ac]
 Each tree estimates the response at point $x$ as:
 
 $$
-        m_n(x; \Theta_j, D_n) = \frac{\sum_{i \in D_n(\Theta_j)} \mathbf{1}_{X_i \in A_n(x; \Theta_j, D_n)} Y_i}{N_n(x; \Theta_j, D_n)}
+        m_n(x; \Theta_j, D_n) = \sum_{i \in D_n(\Theta_j)} \frac{\mathbf{1}_{X_i \in A_n(x; \Theta_j, D_n)} Y_i}{N_n(x; \Theta_j, D_n)}
 $$ 
 
 ::: {.custom-circle-list style="font-size: 1.5rem; text-align: left; margin-left: 75px; list-style-type: circle;"}
