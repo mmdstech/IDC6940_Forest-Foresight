@@ -595,7 +595,7 @@ rf_model <- randomForest(x = train_features, y = as.factor(train_target), ntree 
 test_pred <- predict(rf_model, newdata = test_features)
 
 # Confusion matrix using the binary `high_revenue` variable as the reference
-conf_matrix <- confusionMatrix(as.factor(test_pred), as.factor(test_target))
+conf_matrix <- confusionMatrix(as.factor(test_pred), as.factor(test_target), positive = "1")
 
 # Extract the confusion matrix table
 conf_matrix_table <- as.data.frame(conf_matrix$table)
@@ -658,14 +658,15 @@ stats %>%
     -   Measures the agreement between the predicted and actual
         classifications while accounting for the possibility of random
         chance. A value of 0.73 indicates substantial agreement.
--   **Sensitivity: 66.3%**
+-   **Sensitivity: 98.9%**
     -   Represents the model's ability to correctly identify
-        high-revenue OPCOs. About 66.3% of true high-revenue cases were
-        correctly predicted.
--   **Specificity: 98.9%**
+        high-revenue OPCOs. About 98.9% of true high-revenue cases were
+        correctly predicted, which is great news for our stakeholders.
+-   **Specificity: 66.3%**
     -   Indicates the model's effectiveness in correctly identifying
-        non-high-revenue OPCOs. 98.9% of true non-high-revenue cases
-        were accurately classified.
+        non-high-revenue OPCOs. 66.3% of true non-high-revenue cases
+        were accurately classified. Not terrible, considering we're not focused
+        on this group for marketing purposes.
 -   **AUC: 0.826**
     -   The Area Under the ROC Curve (AUC) shows the model's ability to
         distinguish between high-revenue and non-high-revenue OPCOs. A

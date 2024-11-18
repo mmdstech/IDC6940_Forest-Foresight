@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Matt McGehee (Advisor: Dr. Seals)">
-<meta name="dcterms.date" content="2024-11-13">
+<meta name="dcterms.date" content="2024-11-18">
 
 <title>Random Forest in Machine Learning</title>
 <style>
@@ -5916,7 +5916,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 13, 2024</p>
+      <p class="date">November 18, 2024</p>
     </div>
   </div>
   
@@ -7018,7 +7018,7 @@ $143,084.74
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>test_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_model, <span class="at">newdata =</span> test_features)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion matrix using the binary `high_revenue` variable as the reference</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(test_pred), <span class="fu">as.factor</span>(test_target))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(test_pred), <span class="fu">as.factor</span>(test_target), <span class="at">positive =</span> <span class="st">&quot;1&quot;</span>)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the confusion matrix table</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>conf_matrix_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(conf_matrix<span class="sc">$</span>table)</span>
@@ -7121,32 +7121,32 @@ Table 2: Model Statistics
 <tr class="even">
 <td style="text-align: left;">Sensitivity</td>
 <td style="text-align: left;">Sensitivity</td>
-<td style="text-align: left;">0.66256</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Specificity</td>
-<td style="text-align: left;">Specificity</td>
 <td style="text-align: left;">0.98911</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">Specificity</td>
+<td style="text-align: left;">Specificity</td>
+<td style="text-align: left;">0.66256</td>
+</tr>
 <tr class="even">
 <td style="text-align: left;">Pos Pred Value</td>
 <td style="text-align: left;">Pos Pred Value</td>
-<td style="text-align: left;">0.87297</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Neg Pred Value</td>
-<td style="text-align: left;">Neg Pred Value</td>
 <td style="text-align: left;">0.96291</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">Neg Pred Value</td>
+<td style="text-align: left;">Neg Pred Value</td>
+<td style="text-align: left;">0.87297</td>
+</tr>
 <tr class="even">
 <td style="text-align: left;">Prevalence</td>
 <td style="text-align: left;">Prevalence</td>
-<td style="text-align: left;">0.10146</td>
+<td style="text-align: left;">0.89854</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Detection Rate</td>
 <td style="text-align: left;">Detection Rate</td>
-<td style="text-align: left;">0.06722</td>
+<td style="text-align: left;">0.88876</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Balanced Accuracy</td>
@@ -7176,13 +7176,13 @@ Table 2: Model Statistics
 <ul>
 <li>Measures the agreement between the predicted and actual classifications while accounting for the possibility of random chance. A value of 0.73 indicates substantial agreement.</li>
 </ul></li>
-<li><strong>Sensitivity: 66.3%</strong>
+<li><strong>Sensitivity: 98.9%</strong>
 <ul>
-<li>Represents the model’s ability to correctly identify high-revenue OPCOs. About 66.3% of true high-revenue cases were correctly predicted.</li>
+<li>Represents the model’s ability to correctly identify high-revenue OPCOs. About 98.9% of true high-revenue cases were correctly predicted, which is great news for our stakeholders.</li>
 </ul></li>
-<li><strong>Specificity: 98.9%</strong>
+<li><strong>Specificity: 66.3%</strong>
 <ul>
-<li>Indicates the model’s effectiveness in correctly identifying non-high-revenue OPCOs. 98.9% of true non-high-revenue cases were accurately classified.</li>
+<li>Indicates the model’s effectiveness in correctly identifying non-high-revenue OPCOs. 66.3% of true non-high-revenue cases were accurately classified. Not terrible, considering we’re not focused on this group for marketing purposes.</li>
 </ul></li>
 <li><strong>AUC: 0.826</strong>
 <ul>
