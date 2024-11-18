@@ -506,7 +506,7 @@ rf_model <- randomForest(x = train_features, y = as.factor(train_target), ntree 
 test_pred <- predict(rf_model, newdata = test_features)
 
 # Confusion matrix using the binary `high_revenue` variable as the reference
-conf_matrix <- confusionMatrix(as.factor(test_pred), as.factor(test_target))
+conf_matrix <- confusionMatrix(as.factor(test_pred), as.factor(test_target), positive = "1")
 
 # Extract the confusion matrix table
 conf_matrix_table <- as.data.frame(conf_matrix$table)
