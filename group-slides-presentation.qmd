@@ -454,21 +454,6 @@ stats %>%
 ```
 :::
 
-## ROC Curve Analysis
-
-```{r}
-#| label: fig-roc-curve
-#| fig-cap: "ROC Curve for High Revenue Prediction"
-#| echo: false
-#| warning: false
-#| message: false
-
-# ROC Curve and AUC
-library(pROC) # Load lib here to avoid function overrides
-roc_curve <- roc(as.numeric(test_target), as.numeric(test_pred))
-plot.roc(roc_curve, print.auc = TRUE)
-```
-
 ## Feature Importance
 
 ```{r}
