@@ -6,6 +6,7 @@ date: last-modified
 date-format: long
 format:
   html:
+    toc: true
     code-fold: true
     embed-resources: true
     self-contained-math: true
@@ -510,7 +511,7 @@ The key variables used for predicting high-revenue OPCOs include:
 These variables were chosen based on their potential impact on revenue
 generation and their importance in the supply chain.
 
-## Analysis
+## Results
 
 ### Load R Libraries
 
